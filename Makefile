@@ -2,21 +2,20 @@ NAME	=	minishell
 CC		=	cc
 FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft
 SRC		=	main.c
-OBJ		=	$(SRC:.c=.o)
-
-$(NAME):	$(OBJ)
-			make -C ./libft
-			$(CC) $(SRC) $(FLAGS) -o $(NAME)
 
 all:		$(NAME)
 
+
+$(NAME):	
+			@make -C ./libft
+			@$(CC) $(SRC) $(FLAGS) -o $(NAME)
+
 clean:
-			make clean -C ./libft
-			rm -f $(OBJ)
+			@make clean -C ./libft
+			@rm -f $(NAME)
 
 fclean:		clean
-			make fclean -C ./libft
-			rm -f $(NAME)
+				make fclean -C ./libft
 
 re:			fclean all
 

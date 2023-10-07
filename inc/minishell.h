@@ -5,4 +5,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# include <errno.h>
+
+//builtins
+void	find_builtins(int fd);
+void	func_pwd(int fd);
+void	func_echo(char **cmd, int fd);
+
 #endif
