@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/10/06 15:54:09 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/10/13 14:55:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(void)
 	while(1)
 	{
 		a = readline("cleitonshell:");
+		parse_input(a);
 		free(a);
 	}
 }

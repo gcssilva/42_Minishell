@@ -12,4 +12,7 @@ void	find_builtins(int fd);
 void	func_pwd(int fd);
 void	func_echo(char **cmd, int fd);
 
+//parse
+void	parse_input(char *input);
+
 #endif

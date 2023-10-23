@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 08:24:43 by gsilva            #+#    #+#             */
-/*   Updated: 2023/10/06 15:59:30 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/10/13 15:05:05 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	ft_wc(char *s, char c)
 
 static char	*ft_chrtrim(char *s, char c)
 {
-	while (*s == c)
+	while (*s == c || *s == ' ' || *s == '\t')
 		s++;
 	return (s);
 }

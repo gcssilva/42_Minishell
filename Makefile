@@ -1,21 +1,26 @@
 NAME	=	minishell
 CC		=	cc
-FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft
-SRC		=	main.c
+FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -fdiagnostics-color=always -g
+INC		=	inc/minishell.h
+SRC		=	main.c \
+			parse/parse.c \
+
+OBJ		=	$(SRC:.c=.o)
 
 all:		$(NAME)
-
 
 $(NAME):	
 			@make -C ./libft
 			@$(CC) $(SRC) $(FLAGS) -o $(NAME)
 
+.c.o:
+			@$(CC) $(FLAGS) -c $< -o $@
+
 clean:
-			@make clean -C ./libft
-			@rm -f $(NAME)
+			@make fclean -C ./libft
 
 fclean:		clean
-				make fclean -C ./libft
+			@rm -f $(NAME)
 
 re:			fclean all
 

@@ -1,6 +1,6 @@
 NAME		=	libft.a
 
-CC			=	gcc
+CC			=	cc
 
 CFLAGS		=	-Wall -Wextra -Werror
 
@@ -74,12 +74,15 @@ OBJ			=	$(SRC:.c=.o)
 all:			$(NAME)
 
 $(NAME):		$(OBJ)
-		ar -rc	$(NAME) $(OBJ)
+				@ar -r	$(NAME) $(OBJ)
+
+.c.o:
+				@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-				$(RM) $(OBJ)
+				@$(RM) $(OBJ)
 
 fclean:			clean
-				$(RM) $(NAME)
+				@$(RM) $(NAME)
 
 re:				fclean $(NAME)
