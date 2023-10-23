@@ -3,34 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/13 16:09:57 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/10/23 14:00:45 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /*falta argumentos para linkar isto com o resto do projeto
-  mas fora isso esta pronto*/
+  mas fora isso esta pronto
+builtins finalizado porem sem testes
+*/
 
-void	find_builtins(int fd)
+
+void	find_builtins(int fd, char **cmd, char ***env)
 {
 	char **cmd;
 
 	if (!ft_strncmp(cmd[0], "pwd", 3))
 		func_pwd(fd);
 	else if (!ft_strncmp(cmd[0], "echo", 4))
-		func_echo(fd);
+		func_echo(cmd, fd);
 	else if (!ft_strncmp(cmd[0], "cd", 2))
-		func_cd(fd);
-	else if (!ft_strncmp(cmd[0], "env", 3))
-		func_env(fd);
-	else if (!ft_strncmp(cmd[0], "export", 6))
-		func_export(fd);
+		func_cd(cmd, env);
 	else if (!ft_strncmp(cmd[0], "exit", 4))
-		func_exit(fd);
+		func_exit(cmd, env);
+	else if (!ft_strncmp(cmd[0], "export", 6))
+		func_export(cmd, env, fd);
+	else if (!ft_strncmp(cmd[0], "env", 3))
+		func_env(*env, fd);
 	else if (!ft_strncmp(cmd[0], "unset", 5))
-		func_unset(fd);
+		func_unset(cmd, *env);
 }
