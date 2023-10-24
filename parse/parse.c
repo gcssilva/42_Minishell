@@ -6,33 +6,35 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/10/18 17:35:16 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/10/24 15:29:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	**add_str(char **arr, char *str)
+int	n_cmds(char	*input)
 {
-	char	**new_arr;
-	int		i;
+	int	i;
+	int	cmds;
 
-	if (!str)
-		return (arr);
-	i = 0;
-	while (arr[i])
-		i++;
-	new_arr = (char **)malloc((i + 2) * sizeof(char *));
 	i = -1;
-	while (arr[++i])
+	cmds = 1;
+	while(input[++i])
 	{
-		new_arr[i] = ft_strdup(arr[i]);
-		free(arr[i]);
+		if (input[i] == '|')
+			cmds += 1;
+		else if (input[i] == '"')
+		{
+			while (input[++i] != '"')
+				continue;
+		}
+		else if (input[i] == '\'')
+		{
+			while (input[++i] != '\'')
+				continue;
+		}
 	}
-	new_arr[i] = ft_strdup(str);
-	new_arr[i + 1] = 0;
-	free(arr);
-	return (new_arr);
+	return (cmds);
 }
 
 char	*cjoin(char *str, char c)
@@ -61,46 +63,85 @@ char	*cjoin(char *str, char c)
 	return(new_str);
 }
 
-char	*add_quote(char *str, char *quote)
-{
-	char	*new_str;
-	int		i;
-
-	i = -1;
-	while (quote[++i] && quote[i] != '\"')
-		new_str = cjoin(str, quote[i]);
-	free(str);
-	return(new_str);
-}
-
 void	parse_input(char *input)
 {
-	char	**cmds;
-	char	*cmd;
 	int		i;
+	int		c;
+	int		a;
+	char	*cmd;
 
-	cmds = (char **)malloc(1 * sizeof(char *));
-	cmds[0] = 0;
-	cmd = 0;
 	i = -1;
+	c = -1;
+	a = -1;
+	cmd = 0;
+	data()->cmds = (char **)malloc(sizeof(char *) * (n_cmds(input) + 1));
+	data()->args = (char **)malloc(sizeof(char *) * (n_cmds(input) + 1));
 	while (input[++i])
 	{
+		while((input[i] >= 9 && input[i] <= 13) || input[i] == 32)
+			i++;
+		while ((input[i] < 9 || input[i] > 13) && input[i] != 32)
+		{
+			if (input[i] == '|')
+				break ;
+			else if (input[i] == '"')
+			{
+				while(input[++i] != '"')
+				{
+					if (input[i] == '\\')
+						i++;
+					cjoin(cmd, input[i]);
+				}
+			}
+			else if (input[i] == '\'')
+			{
+				while(input[++i] != '\'')
+				{
+					if (input[i] == '\\')
+						i++;
+					cjoin(cmd, input[i]);
+				}
+			}
+			else
+				cjoin(cmd, input[i]);
+		}
+		data()->cmds[++c] = ft_strdup(cmd);
+		free(cmd);
+		cmd = 0;
 		if (input[i] == '|')
+			break ;
+		while((input[i] >= 9 && input[i] <= 13) || input[i] == 32)
+			i++;
+		while ((input[i] < 9 || input[i] > 13) && input[i] != 32)
 		{
-			cmds = add_str(cmds, cmd);
-			free(cmd);
-			cmd = 0;
+			if (input[i] == '|')
+				break ;
+			else if (input[i] == '"')
+			{
+				while(input[++i] != '"')
+				{
+					if (input[i] == '\\')
+						i++;
+					cjoin(cmd, input[i]);
+				}
+			}
+			else if (input[i] == '\'')
+			{
+				while(input[++i] != '\'')
+				{
+					if (input[i] == '\\')
+						i++;
+					cjoin(cmd, input[i]);
+				}
+			}
+			else
+				cjoin(cmd, input[i]);
 		}
-		else if (input[i] == '\"')
-		{
-			cmd = add_quote(cmd, &input[i]);
-		}
-		else
-		{
-			cmd = cjoin(cmd, input[i]);
-		}
+		data()->args[++a] = ft_strdup(cmd);
+		free(cmd);
+		cmd = 0;
 	}
-	cmds = add_str(cmds, cmd);
-	printf("opa fio\n");
-	printf("%s\n", cmds[0]);
+	c = -1;
+	while (data()->cmds[++c])
+		printf("%s\n%s\n\n", data()->cmds[c], data()->args[c]);
 }

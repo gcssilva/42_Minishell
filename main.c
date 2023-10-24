@@ -6,11 +6,18 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/10/13 14:55:00 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/10/24 15:30:56 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
+
+t_data	*data(void)
+{
+	static t_data	_data;
+	
+	return(&_data);
+}
 
 int	main(void)
 {
@@ -18,7 +25,7 @@ int	main(void)
 
 	while(1)
 	{
-		a = readline("cleitonshell:");
+		a = readline("minishell:");
 		parse_input(a);
 		free(a);
 	}

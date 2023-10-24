@@ -7,6 +7,14 @@
 # include "../libft/libft.h"
 # include <errno.h>
 
+typedef struct s_data
+{
+	char	**cmds;
+	char	**args;
+}	t_data;
+
+t_data	*data(void);
+
 //builtins
 void	find_builtins(int fd);
 void	func_pwd(int fd);
