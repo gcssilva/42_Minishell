@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/23 14:01:29 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:42:12 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	type_exit(char *line)
 	return (0);
 }
 
-void	builtin_exit(char **line, char **env)
+void	func_exit(char **line, char **env)
 {
 	int	status;
 	int	i;

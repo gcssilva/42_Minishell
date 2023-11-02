@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:21:34 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/07 13:24:19 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/10/30 12:04:09 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 /*getcwd apanha o diretorio/arquivo que estamos a utilizar
 	(algo parecido com isso)*/
 
-void	func_pwd(int fd)
+void	func_pwd(void)
 {
 	char	*path;
 	
 	path = getcwd(NULL, 1025);
 	if (path == NULL)
 	{
-		ft_putstr_fd("Error: ", fd);
-		ft_putstr_fd(strerror(errno), fd);
-		ft_putstr_fd("\n", fd);
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr("\n");
 		free(path);
 	}
 	else
 	{
-		ft_putstr_fd(path, fd);
-		ft_putstr_fd("\n", fd);
+		ft_putstr(path);
+		ft_putstr("\n");
 		free(path);
 	}
 }

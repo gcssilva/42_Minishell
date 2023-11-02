@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_bin.c                                         :+:      :+:    :+:   */
+/*   func_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/24 15:49:00 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/10/30 15:33:19 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static int	check(char *cmd)
+{
+	int	flag;
+	int	i;
+
+	flag = 0;
+	i = 0;
+	if (!cmd)
+		return (0);
+	while (cmd[i] != '\0')
+	{
+		if (cmd[i] == '/')
+			flag = 1;
+		if (flag == 1)
+		{
+			if (access(cmd, F_OK) == 0)
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 char	*find_path(char *cmd, char **env, int i)
 {
@@ -18,6 +41,8 @@ char	*find_path(char *cmd, char **env, int i)
 	char	*path;
 	char	*part_path;
 
+	if (check(cmd))
+		return (cmd);
 	while (ft_strnstr(env[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(env[i] + 5, ':');

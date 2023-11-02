@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/23 14:01:38 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/10/30 12:07:52 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 #include "../inc/minishell.h"
 
-void	func_export(char **line, char ***env, int fd)
+void	func_export(char **line, char ***env)
 {
 	int	i;
 
 	i = 0;
 	if (!line[1])
-		func_env(*env, fd);
+		func_env(*env);
 	else
 	{
 		while (line[i])
@@ -28,7 +28,7 @@ void	func_export(char **line, char ***env, int fd)
 			if (ft_strchr(line[i], '='))
 				add_var(line[i], env);
 			else
-				ft_putstr_fd("export: not an identifier\n", fd);
+				ft_putstr_fd("export: not an identifier\n", 2);
 			i++;
 		}
 	}

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_env.c                                         :+:      :+:    :+:   */
+/*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/30 12:07:13 by gmorais-         ###   ########.fr       */
+/*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
+/*   Updated: 2023/11/01 12:51:33 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*falta teste*/
-
-void	func_env(char **env)
+int	is_path(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while(cmd[i])
 	{
-		ft_putstr(env[i]);
-		ft_putchar('\n');
+		if (cmd[i] == '/' || cmd[i] == '.')
+		{
+			find_builtins(cmd, data()->env, 1);
+			break;
+		}
 		i++;
 	}
 }
