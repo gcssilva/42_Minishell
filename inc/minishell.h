@@ -9,10 +9,12 @@
 
 typedef struct s_data
 {
+	int		n_cmd;
 	char	**cmds;
 	char	**args;
 }	t_data;
 
+t_data	*data(void);
 
 //builtins
 void	find_builtins(char **cmd, char ***env, int flag);

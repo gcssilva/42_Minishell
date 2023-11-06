@@ -3,45 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/10/25 11:38:28 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:27:34 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	**add_str(char **arr, char *str)
+void	n_cmds(char	*input)
 {
-	char	**new_arr;
-	int		i;
+	int	i;
+	int	cmds;
 
-	if (!str)
-		return (arr);
-	i = 0;
-	while (arr[i])
-		i++;
-	new_arr = (char **)malloc((i + 2) * sizeof(char *));
 	i = -1;
-	while (arr[++i])
+	cmds = 1;
+	while(input[++i])
 	{
-		new_arr[i] = ft_strdup(arr[i]);
-		free(arr[i]);
+		if (input[i] == '|')
+			cmds += 1;
+		else if (input[i] == '"')
+		{
+			while (input[++i] != '"')
+				continue;
+		}
+		else if (input[i] == '\'')
+		{
+			while (input[++i] != '\'')
+				continue;
+		}
 	}
-	new_arr[i] = ft_strdup(str);
-	new_arr[i + 1] = 0;
-	free(arr);
-	return (new_arr);
+	data()->n_cmd = cmds;
 }
 
-char	*cjoin(char *str, char c)
+int	check_quotes(char *input)
+{
+	int	i;
+	int	sflag;
+	int	dflag;
+
+	i = 0;
+	sflag = 0;
+	dflag = 0;
+	if (input[0] == '\'')
+	{
+		sflag = 1;
+	}
+	else if (input[0] == '"')
+	{
+		dflag = 1;
+	}
+	while(input[++i])
+	{
+		if (input[i] == '\'')
+		{
+			if (dflag == 0 && input[i - 1] != '\\')
+			{
+				if (sflag == 0)
+					sflag = 1;
+				else
+					sflag = 0;
+			}
+		}
+		else if (input[i] == '"')
+		{
+			if (sflag == 0 && input[i - 1] != '\\')
+			{
+				if (dflag == 0)
+					dflag = 1;
+				else
+					dflag = 0;
+			}
+		}
+	}
+	if (sflag != 0 || (dflag != 0))
+		return (0);
+	return (1);
+}
+
+char	*cjoin(char **str, char c)
 {
 	char	*new_str;
 	int		i;
 	size_t	len;
 
-	if (!str)
+	if (!*str)
 	{
 		new_str = (char *)malloc(2 * sizeof(char));
 		new_str[0] = c;
@@ -49,58 +96,104 @@ char	*cjoin(char *str, char c)
 	}
 	else
 	{
-		len = ft_strlen(str);
+		len = ft_strlen(*str);
 		new_str = (char *)malloc((len + 2) * sizeof(char));
 		i = -1;
-		while (str[++i])
-			new_str[i] = str[i];
+		while (*str[++i])
+			new_str[i] = *str[i];
 		new_str[i] = c;
 		new_str[i + 1] = 0;
-		free(str);
+		free(*str);
 	}
 	return(new_str);
 }
 
-char	*add_quote(char *str, char *quote)
+void	create_struct(void)
 {
-	char	*new_str;
-	int		i;
+	int	cmds;
+	
+	cmds = data()->n_cmd;
+	data()->cmds = (char **)malloc(sizeof(char *) * (cmds + 1));
+	data()->args = (char **)malloc(sizeof(char *) * (cmds + 1));
+	while (cmds >= 0)
+	{
+		data()->cmds[cmds] = 0;
+		data()->args[cmds] = 0;
+	}
+}
 
-	i = -1;
-	while (quote[++i] && quote[i] != '\"')
-		new_str = cjoin(str, quote[i]);
-	free(str);
-	return(new_str);
+void	split_cmd(char *str, int j)
+{
+	int	i;
+
+	i = 0;
+	while(str[i] && str[i] != 32 && (str[i] < 9 || str[i] > 13))
+		i++;
+	data()->cmds[j] = ft_substr(str, 0, i);
+	if (str[i])
+		data()->args[j] = ft_substr(str, i + 1, (ft_strlen(str) - (i + 1)));
+	else
+	{
+		data()->args[j] = (char *)malloc(sizeof(char));
+		data()->args[j][0] = 0;
+	}
+}
+
+void	quote_join(char **cmd, char *input, int *i)
+{
+	cjoin(&*cmd, input[*i]);
+	while (input[++*i])
+	{
+		if (input[*i] == '\\' && input[*i + 1] == '"')
+			cjoin(&*cmd, input[++*i]);
+		else if (input[*i] == '"' && input[*i - 1] != '\\')
+			break ;
+		else
+			cjoin(&*cmd, input[*i]);
+	}
+	cjoin(&*cmd, '"');
 }
 
 void	parse_input(char *input)
 {
-	char	**cmds;
-	char	*cmd;
 	int		i;
+	int		c;
+	int		flag;
+	char	*cmd;
 
-	cmds = (char **)malloc(1 * sizeof(char *));
-	cmds[0] = 0;
+	i = 0;
+	c = -1;
 	cmd = 0;
-	i = -1;
-	while (input[++i])
+	n_cmds(input);
+	create_struct();
+	if (!check_quotes(input))
+		return ;
+	while(input[i] && ((input[i] >= 9 && input[i] <= 13) || input[i] == 32))
+		i++;
+	while (input[i])
 	{
-		if (input[i] == '|')
+		flag = 0;
+		while(input[i] && ((input[i] >= 9 && input[i] <= 13) || input[i] == 32))
 		{
-			cmds = add_str(cmds, cmd);
-			free(cmd);
-			cmd = 0;
+			i++;
+			flag = 1;
 		}
-		else if (input[i] == '\"')
-		{
-			cmd = add_quote(cmd, &input[i]);
-		}
+		if (flag == 1 && input[i] && input[i] != '|')
+			cjoin(&cmd, ' ');
+		if (input[i] == '\\')
+			cjoin(*cmd, input[++i]);
+		else if (input[i] == '$')
+			exp_var(cmd, input, &i);
+		else if (input[i] == '"')
+			quote_join(&cmd, input, &i);
+		else if (input[i] == '\'')
+			squote_join(cmd, input, &i);
+		else if (input[i] == '|')
+			split_cmd(cmd, ++c);
 		else
-		{
-			cmd = cjoin(cmd, input[i]);
-		}
+			cjoin(&cmd, input[i]);
 	}
-	cmds = add_str(cmds, cmd);
-	//printf("opa fio\n");
-	printf("%s\n", cmds[0]);
+	c = -1;
+	while (data()->cmds[++c])
+		printf("%s\n%s\n\n", data()->cmds[c], data()->args[c]);
 }
