@@ -7,11 +7,21 @@
 # include <stdio.h>
 # include <errno.h>
 
+typedef struct s_cmd
+{
+	char	*in[10];
+	char	*out[10];
+	char	*ap[10];
+	char	*delimiters[10];
+	char	*cmd;
+	char	**arg;
+}	t_cmd;
+
 typedef struct s_data
 {
 	int		n_cmd;
-	char	**cmds;
-	char	**args;
+	t_cmd	**cmds;
+	char	**env;
 }	t_data;
 
 t_data	*data(void);
@@ -32,5 +42,12 @@ void	executer(char *cmd, char *arg, char ***env);
 
 //parse
 void	parse_input(char *input);
+void	n_cmds(char	*input);
+int		check_quotes(char *input);
+int		ft_isblank(int c);
+char	*cjoin(char **str, char c);
+void	split_cmd(char *str, int *flag);
+void	quote_join(char **cmd, char *input, int *i);
+
 
 #endif
