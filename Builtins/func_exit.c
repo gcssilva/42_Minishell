@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/24 15:42:12 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:22:21 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	type_exit(char *line)
 	return (0);
 }
 
-void	func_exit(char **line, char **env)
+void	func_exit(char **line)
 {
 	int	status;
 	int	i;
@@ -62,15 +62,15 @@ void	func_exit(char **line, char **env)
 	else if (line[1] && line[2])
 	{
 		ft_putstr_fd("exit: too many arguments\n", 1);
-		while (env[++i])
-			free (env[i]);
-		free (env);
+		while (data()->copy_env[++i])
+			free (data()->copy_env[i]);
+		free (data()->copy_env);
 		return ;
 	}
 	else
 		status = type_exit(line[1]);
-	while (env[++i])
-		free (env[i]);
-	free (env);
+	while (data()->copy_env[++i])
+		free (data()->copy_env[i]);
+	free (data()->copy_env);
 	exit (status);
 }

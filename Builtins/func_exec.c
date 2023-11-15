@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/30 15:33:19 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:39:02 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ char	*find_path(char *cmd, char **env, int i)
 	return (0);
 }
 
-void	func_exec(char **line, char **env)
+void	func_exec(char **line)
 {
 	char	**cmd;
 	int		i;
 	char	*path;
 
 	i = -1;
-	path = find_path(line[0], env, 0);
+	path = find_path(line[0], data()->copy_env, 0);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
@@ -80,6 +80,6 @@ void	func_exec(char **line, char **env)
 			free(cmd[i]);
 		free(cmd);
 	}
-	if (execve(path, line, env) == -1)
-		ft_putstr_fd("error execve\n", 2);
+	if (execve(path, line, data()->copy_env) == -1)
+		ft_putstr_fd("este erro está no if do excev\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/24 15:41:15 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:35:42 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 //work on progress
 
-void	update_env(char *old_path, char *new_path, char ***env)
+void	update_env(char *old_path, char *new_path)
 {
 	int	i;
 
 	i = 0;
-	while ((*env)[i])
+	while ((data()->copy_env)[i])
 	{
-		if (ft_strncmp((*env)[i], "OLDPWD=", 7) == 0)
+		if (ft_strncmp((data()->copy_env)[i], "OLDPWD=", 7) == 0)
 		{
-			if ((*env)[i])
-				free((*env)[i]);
-			(*env)[i] = ft_strjoin("OLDPWD=", old_path);
+			if ((data()->copy_env)[i])
+				free((data()->copy_env)[i]);
+			(data()->copy_env)[i] = ft_strjoin("OLDPWD=", old_path);
 		}
-		if (ft_strncmp((*env)[i], "PWD=", 4) == 0)
+		if (ft_strncmp((data()->copy_env)[i], "PWD=", 4) == 0)
 		{
-			if ((*env)[i])
-				free((*env)[i]);
-			(*env)[i] = ft_strjoin("PWD=", new_path);
+			if ((data()->copy_env)[i])
+				free((data()->copy_env)[i]);
+			(data()->copy_env)[i] = ft_strjoin("PWD=", new_path);
 			if (new_path)
 				free(new_path);
 		}
@@ -70,21 +70,21 @@ char	*home(char **env)
 
 void	cd_error(char *token)
 {
-	ft_putstr_fd("cd: ", 1);
-	ft_putstr_fd(token, 1);
-	ft_putstr_fd(": ", 1);
-	ft_putstr_fd(strerror(errno), 1);
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd(token, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 1);
 }
 
-void	func_cd(char **line, char **env)
+void	func_cd(char **line)
 {
 	char	*old_path;
 	char	*new_path;
 	char	*home_path;
 	
 	old_path = getcwd(NULL, 1025);
-	home_path = home(*env);
+	home_path = home(data()->copy_env);
 	if(!line)
 		chdir(home_path);
 	else if (chdir(home_path) == -1)
@@ -95,7 +95,7 @@ void	func_cd(char **line, char **env)
 		return ;
 	}
 	new_path = getcwd(NULL, 1025);
-	update_env(old_path, new_path, &env);
+	update_env(old_path, new_path);
 	free(home_path);
 	free(old_path);
 }

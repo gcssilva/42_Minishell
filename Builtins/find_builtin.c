@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/30 15:57:19 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:41:45 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,27 @@
 builtins finalizado porem sem testes
 */
 
-static void	cmd_mode(char **cmd, char ***env)
+static void	cmd_mode(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "pwd", 3))
 		func_pwd();
 	else if (!ft_strncmp(cmd[0], "echo", 4))
 		func_echo(cmd);
 	else if (!ft_strncmp(cmd[0], "cd", 2))
-		func_cd(cmd, env);
+		func_cd(cmd);
 	else if (!ft_strncmp(cmd[0], "exit", 4))
-		func_exit(cmd, env);
+		func_exit(cmd);
 	else if (!ft_strncmp(cmd[0], "export", 6))
-		func_export(cmd, env);
+		func_export(cmd);
 	else if (!ft_strncmp(cmd[0], "env", 3))
-		func_env(*env);
+		func_env();
 	else if (!ft_strncmp(cmd[0], "unset", 5))
-		func_unset(cmd, *env);
+		func_unset(cmd);
 	else
-		func_exec(cmd[0], env);
+		func_exec(cmd[0]);
 }
 
-static int	path_mode(char **cmd, char ***env)
+static int	path_mode(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "pwd", 3))
 		return (1);
@@ -54,17 +54,17 @@ static int	path_mode(char **cmd, char ***env)
 	else if (!ft_strncmp(cmd[0], "unset", 5))
 		return (1);
 	else
-		func_exec(cmd[0], env);
+		func_exec(cmd[0]);
 	return (0);
 }
 
-void	find_builtins(char **cmd, char ***env, int flag)
+void	find_builtins(char cmd, int flag)
 {
 	if (flag == 1)
 	{
-		if (path_mode(cmd, env) == 1)
+		if (path_mode(cmd) == 1)
 			ft_putstr_fd("minishell: error: path is a builtin", 2);
 	}
 	else if (flag == 0)
-		cmd_mode(cmd, env);
+		cmd_mode(cmd);
 }
