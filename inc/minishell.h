@@ -7,7 +7,17 @@
 # include <stdio.h>
 # include <errno.h>
 
-typedef struct s_cmd
+extern int	err_code;
+
+//A struct s_cmd guarda as informacoes de 1 comando ate o proximo pipe ou ate o fim do input
+//a variavel *in[] representa um array de nomes de arquivos que estao associados a um '<' (redirect in)
+//a variavel *out[] representa um array de nomes de arquivos que estao associados a um '>' (redirect out)
+//a variavel *ap[] representa um array de nomes de arquivos que estao associados a um '>>' (append)
+//a variavel *delimiters[] representa um array de delimitadores de heredoc '<<'
+//a variavel *cmd contem apenas o nome do comando
+//a variavel **arg representa um array de argumentos passados ao comando (arg[0] sempre contem o nome do comando)
+
+typedef struct	s_cmd
 {
 	char	*in[10];
 	char	*out[10];
@@ -21,7 +31,7 @@ typedef struct s_data
 {
 	int		n_cmd;
 	t_cmd	**cmds;
-	char	**env;
+	char	**copy_env;
 }	t_data;
 
 t_data	*data(void);

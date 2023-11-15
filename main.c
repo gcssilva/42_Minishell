@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/06 18:13:53 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/15 15:45:51 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_data	*data(void)
 	
 	return(&_data);
 }
+
+int	err_code = 0;
 
 int	main(void)
 {

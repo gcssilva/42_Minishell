@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 00:20:31 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/13 00:23:25 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/15 17:01:55 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,16 @@ void	n_cmds(char	*input)
 int	check_quotes(char *input)
 {
 	int	i;
-	int	sflag;
-	int	dflag;
+	int	q;
 
-	i = 0;
-	sflag = 0;
-	dflag = 0;
-	if (input[0] == '\'')
-	{
-		sflag = 1;
-	}
-	else if (input[0] == '"')
-	{
-		dflag = 1;
-	}
 	while(input[++i])
 	{
-		if (input[i] == '\'')
-		{
-			if (dflag == 0 && input[i - 1] != '\\')
-			{
-				if (sflag == 0)
-					sflag = 1;
-				else
-					sflag = 0;
-			}
-		}
-		else if (input[i] == '"')
-		{
-			if (sflag == 0 && input[i - 1] != '\\')
-			{
-				if (dflag == 0)
-					dflag = 1;
-				else
-					dflag = 0;
-			}
-		}
+		if ((input[i] == '\'' || input[i] == '"') && q == 0)
+			q = input[i];
+		else if ((input[i] == '\'' || input[i] == '"') && q == input[i])
+			q = 0;
 	}
-	if (sflag != 0 || (dflag != 0))
+	if (q != 0)
 		return (0);
 	return (1);
 }
@@ -87,4 +59,56 @@ int	ft_isblank(int c)
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
 	return (0);
+}
+
+void	exp_var(char **cmd, char *input, int *i)
+{
+	
+}
+
+int	check_pipes(char *input)
+{
+	int	i;
+	int	flag;
+	int	q;
+
+	i = -1;
+	flag = 0;
+	while (input[++i])
+	{
+		if (input[i] == '\'' || input[i] == '"')
+		{
+			q = input[i];
+			flag = 1;
+			while (input[++i] != q)
+				continue;
+		}
+		if (input[i] != '|' && !ft_isblank(input[i]))
+			flag = 1;
+		else if (input[i] == '|')
+		{
+			if (flag == 1)
+				flag = 0;
+			else
+				return (0);
+		}
+	}
+	if (flag == 0)
+		return (0);
+	return (1);
+}
+
+int	lexer(char *input)
+{
+	if (!check_quotes(input))
+	{
+		err_code = 1;
+		return (0);
+	}
+	if (!check_pipes(input))
+	{
+		err_code = 2;
+		return (0);
+	}
+	return (1);
 }
