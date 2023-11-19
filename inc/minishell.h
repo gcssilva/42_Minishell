@@ -24,13 +24,13 @@ typedef struct	s_cmd
 	char	*ap[10];
 	char	*delimiters[10];
 	char	*cmd;
-	char	**arg;
+	char	*arg[10];
 }	t_cmd;
 
 typedef struct s_data
 {
 	int		n_cmd;
-	t_cmd	**cmds;
+	t_cmd	*cmds;
 	char	**copy_env;
 }	t_data;
 
@@ -55,9 +55,13 @@ void	parse_input(char *input);
 void	n_cmds(char	*input);
 int		check_quotes(char *input);
 int		ft_isblank(int c);
-char	*cjoin(char **str, char c);
-void	split_cmd(char *str, int *flag);
-void	quote_join(char **cmd, char *input, int *i);
-
+int		ft_isredir(int c);
+int		split_cmd(char *str, int flag);
+char	*quote_join(char *cmd, char *input, int *i);
+void	copy_var(char *cmd, char *var);
+void	exp_var(char *cmd, char *input, int *i);
+int		check_pipes(char *input);
+int		lexer(char *input);
+char	*cjoin(char *str, char c);
 
 #endif

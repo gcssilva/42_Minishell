@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 00:20:31 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/15 17:01:55 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/18 20:01:20 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	n_cmds(char	*input)
 		}
 	}
 	data()->n_cmd = cmds;
+	data()->cmds = (t_cmd *)malloc(sizeof(t_cmd) * (cmds + 1));
 }
 
 int	check_quotes(char *input)
@@ -42,6 +43,8 @@ int	check_quotes(char *input)
 	int	i;
 	int	q;
 
+	i = -1;
+	q = 0;
 	while(input[++i])
 	{
 		if ((input[i] == '\'' || input[i] == '"') && q == 0)
@@ -61,9 +64,11 @@ int	ft_isblank(int c)
 	return (0);
 }
 
-void	exp_var(char **cmd, char *input, int *i)
+int	ft_isredir(int c)
 {
-	
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
 }
 
 int	check_pipes(char *input)
@@ -93,9 +98,7 @@ int	check_pipes(char *input)
 				return (0);
 		}
 	}
-	if (flag == 0)
-		return (0);
-	return (1);
+	return (flag);
 }
 
 int	lexer(char *input)

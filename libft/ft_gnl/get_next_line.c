@@ -6,13 +6,12 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:29:06 by gsilva            #+#    #+#             */
-/*   Updated: 2023/10/06 16:02:57 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/18 22:40:50 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static char	*add_to_str(char *s1, char *s2);
 static void	ft_strclean(char *dest, char *src);
 static int	find_nl(char *str);
 static int	nl_len(char *str);
@@ -44,7 +43,7 @@ char	*get_next_line(int fd)
 	return (str);
 }
 
-static char	*add_to_str(char *s1, char *s2)
+char	*add_to_str(char *s1, char *s2)
 {
 	char	*str;
 	int		i;

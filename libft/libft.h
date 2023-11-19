@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 10:32:55 by gsilva            #+#    #+#             */
-/*   Updated: 2022/12/06 16:30:35 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/18 22:33:54 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_itoa(int n);
 
 char	*get_next_line(int fd);
+
+char	*add_to_str(char *s1, char *s2);
 
 char	**ft_split(char const *s, char c);
 

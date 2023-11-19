@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:41:00 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:54:36 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	executer(void)
 	flag = 0;
 	if (n_cmd == 1)
 	{
-		just_one_cmd(data()->cmds, data()->args, data()->copy_env);
+		just_one_cmd(data()->copy_env);
 		return ;
 	}
 	pipe_create(i, flag, fd);

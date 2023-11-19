@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:12:47 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:56:37 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ int	is_path(char *cmd)
 	return (0);
 }
 
-void	just_one_cmd(char *cmds, char *args, char *copy_env)
+void	just_one_cmd(char *copy_env)
 {
 	int	i;
 	
 	i = 0;
-	while(cmds[i++])
+	while(++i < data()->n_cmd)
 	{
-		if (!ft_strncmp(cmds[i], "/", 1))
+		if (!ft_strncmp(data()->cmds[i].cmd, "/", 1))
 		{
-			find_builtins(cmds, copy_env, 1);
+			find_builtins(data()->cmds[i].cmd, copy_env, 1);
 			break;
 		}
 		else
 		{
-			find_builtins(cmds, copy_env, 0);
+			find_builtins(data()->cmds[i].cmd, copy_env, 0);
 			return ;
 		}
 	}
