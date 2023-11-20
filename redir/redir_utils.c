@@ -3,16 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 13:43:34 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/20 13:43:55 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:41:27 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	check_outfile(void)
-{
-	
-}

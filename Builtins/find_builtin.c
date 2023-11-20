@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:41:45 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:47:29 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	cmd_mode(char **cmd)
 
 static int	path_mode(char **cmd)
 {
-	if (!ft_strncmp(cmd[0], "pwd", 3))
+	if (!ft_strnstr(cmd[0], "pwd", 3))
 		return (1);
 	else if (!ft_strncmp(cmd[0], "echo", 4))
 		return (1);

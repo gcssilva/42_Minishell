@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 00:20:31 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/18 20:01:20 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/20 18:02:55 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,7 @@ int	check_pipes(char *input)
 
 int	lexer(char *input)
 {
-	if (!check_quotes(input))
-	{
-		err_code = 1;
+	if (!check_quotes(input) || !check_pipes(input))
 		return (0);
-	}
-	if (!check_pipes(input))
-	{
-		err_code = 2;
-		return (0);
-	}
 	return (1);
 }

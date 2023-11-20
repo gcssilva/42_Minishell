@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/18 21:18:38 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/20 17:50:01 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_data	*data(void)
 	
 	return(&_data);
 }
-
-int	err_code = 0;
 
 static void	print_struc(void)
 {
@@ -37,16 +35,12 @@ static void	print_struc(void)
 			printf("%s\n", data()->cmds[i].arg[j]);
 		j = -1;
 		printf("in:\n");
-		while (data()->cmds[i].in[++j])
-			printf("%s\n", data()->cmds[i].in[j]);
+		while (data()->cmds[i].red[++j])
+			printf("%s\n", data()->cmds[i].red[j]);
 		j = -1;
 		printf("out:\n");
-		while (data()->cmds[i].out[++j])
-			printf("%s\n", data()->cmds[i].out[j]);
-		j = -1;
-		printf("append:\n");
-		while (data()->cmds[i].ap[++j])
-			printf("%s\n", data()->cmds[i].ap[j]);
+		while (data()->cmds[i].order[++j])
+			printf("%s\n", data()->cmds[i].order[j]);
 		j = -1;
 		printf("delimiter:\n");
 		while (data()->cmds[i].delimiters[++j])
@@ -56,16 +50,21 @@ static void	print_struc(void)
 
 int	main(void)
 {
-	char	*a;
+	char	*input;
 
 	while(1)
 	{
-		a = readline("minishell:");
-		add_history(a);
-		n_cmds(a);
-		if (lexer(a))
-			parse_input(a);
+		input = readline("minishell:");
+		add_history(input);
+		data()->std_fd[0] = dup(STDIN_FILENO);
+		data()->std_fd[1] = dup(STDOUT_FILENO);
+		n_cmds(input);
+		if (lexer(input))
+		{
+			parse_input(input);
+			data()->last_fd[0] = -1;
+		}
 		print_struc();
-		free(a);
+		free(input);
 	}
 }

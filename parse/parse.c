@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/18 22:46:59 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/20 17:29:38 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int	split_cmd(char *str, int flag)
 	{
 		data()->cmds[c].arg[a++] = ft_strdup(str);
 		if (a == 1)
+		{
 			data()->cmds[c].cmd = ft_strdup(str);
+			data()->cmds[c].index = c + 1;
+		}
 		free(str);
 		str = 0;
 	}
@@ -143,14 +146,18 @@ void	write_redir(char *r_file, int r)
 	int	i;
 
 	i = split_cmd(0, 1);
-	if (r == 60)
-		data()->cmds[i].in[get_pos(data()->cmds[i].in)] = ft_strdup(r_file);
-	else if (r == 62)
-		data()->cmds[i].out[get_pos(data()->cmds[i].out)] = ft_strdup(r_file);
-	else if (r == 120)
+	if (r == 120)
 		data()->cmds[i].delimiters[get_pos(data()->cmds[i].delimiters)] = ft_strdup(r_file);
 	else
-		data()->cmds[i].ap[get_pos(data()->cmds[i].ap)] = ft_strdup(r_file);
+	{
+		data()->cmds[i].red[get_pos(data()->cmds[i].red)] = ft_strdup(r_file);
+		if (r == 60)
+			data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("in");
+		else if (r == 62)
+			data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("out");
+		else
+			data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("ap");
+	}
 }
 
 void	add_redir(char *input, int *i)
