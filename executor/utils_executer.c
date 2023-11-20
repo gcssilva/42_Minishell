@@ -3,27 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/18 22:56:37 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/17 09:49:14 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	is_redirec(char *cmd)
+int	is_redirec(void)
 {
 	int	i;
 
 	i = 0;
-	while(cmd[i])
-	{
-		if (cmd[i] == '<' || cmd[i] == '>' || cmd[i] == '>>' || cmd[i] == '<<')
-			return (1);
-		i++;
-	}
-	return (0);
+	if (data()->cmds[i]->in[i] == NULL || data()->cmds[i]->out[i] == NULL\
+		|| data()->cmds[i]->ap[i] == NULL || data()->cmds[i]->delimiters[i] == NULL)
+		return (0);
+	return (1);
 }
 
 int	is_path(char *cmd)
@@ -40,21 +37,21 @@ int	is_path(char *cmd)
 	return (0);
 }
 
-void	just_one_cmd(char *copy_env)
+void	just_one_cmd(char *cmds, char *args, char *copy_env)
 {
 	int	i;
 	
 	i = 0;
-	while(++i < data()->n_cmd)
+	while(cmds[i++])
 	{
-		if (!ft_strncmp(data()->cmds[i].cmd, "/", 1))
+		if (!ft_strncmp(cmds[i], "/", 1))
 		{
-			find_builtins(data()->cmds[i].cmd, copy_env, 1);
+			find_builtins(cmds, 1);
 			break;
 		}
 		else
 		{
-			find_builtins(data()->cmds[i].cmd, copy_env, 0);
+			find_builtins(cmds, 0);
 			return ;
 		}
 	}
