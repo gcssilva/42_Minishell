@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/21 12:10:38 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:29:46 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ char	*find_path(char *cmd, char **env, int i)
 		i++;
 	paths = ft_split(env[i] + 5, ':');
 	i = -1;
+	//printf("cmd: %s\n", cmd);
 	while (paths[++i])
 	{
-	printf("cmd: %s\n", cmd);
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
@@ -66,16 +66,20 @@ char	*find_path(char *cmd, char **env, int i)
 
 void	func_exec(char *line)
 {
+	char	**cmd;
 	char	*path;
 
+	cmd = ft_split(line, ' ');
 	path = find_path(line, data()->copy_env, 0);
-	printf("path: %s\n", path);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 1);
 	}
-	if (execve(path, &line, data()->copy_env) == -1)
+	if (execve(path, cmd, data()->copy_env) == -1)
+	printf("line: %s\n", line);
+	{
 		ft_putstr_fd("este erro está no if do excev\n", 2);
+	}
 }

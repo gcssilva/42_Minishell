@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
+#    By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/11/18 18:10:47 by gsilva           ###   ########.fr        #
+#    Updated: 2023/11/22 12:10:06 by gmorais-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,19 @@ INC		=	inc/minishell.h
 SRC		=	main.c \
 			parse/parse.c \
 			parse/parse_utils.c \
-			#builtins/find_builtin.c	builtins/func_cd.c builtins/func_echo.c builtins/func_env.c \
-			builtins/func_exec.c builtins/func_exit.c builtins/func_export.c builtins/func_pwd.c \
-			builtins/func_unset.c \
+			redir/redirc.c \
+			executor/executer.c \
+			executor/utils_executer.c \
+			builtins/find_builtin.c \
+			builtins/func_pwd.c \
+			builtins/func_echo.c\
+			builtins/func_env.c \
+			copy_env/copy_env.c \
+			builtins/func_exec.c\
+			#builtins/func_cd.c\
+			builtins/func_exit.c builtins/func_export.c\
+			builtins/func_unset.c \#
+			
 
 OBJ		=	$(SRC:.c=.o)
 
