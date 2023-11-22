@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/20 17:50:01 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/21 15:40:07 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_data	*data(void)
 	return(&_data);
 }
 
-static void	print_struc(void)
+void	print_struc(void)
 {
 	int	i;
 	int	j;
@@ -48,23 +48,26 @@ static void	print_struc(void)
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	char	*input;
-
+	(void)ac;
+	(void)av;
 	while(1)
 	{
 		input = readline("minishell:");
 		add_history(input);
 		data()->std_fd[0] = dup(STDIN_FILENO);
 		data()->std_fd[1] = dup(STDOUT_FILENO);
+		copy_env(env);
 		n_cmds(input);
 		if (lexer(input))
 		{
 			parse_input(input);
 			data()->last_fd[0] = -1;
 		}
-		print_struc();
+		executer();
 		free(input);
 	}
+	//print_struc();
 }

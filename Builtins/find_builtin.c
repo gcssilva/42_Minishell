@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/20 14:47:29 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/21 15:52:51 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,54 @@
 builtins finalizado porem sem testes
 */
 
-static void	cmd_mode(char **cmd)
+static void	cmd_mode(char *cmd)
 {
-	if (!ft_strncmp(cmd[0], "pwd", 3))
+	if (!ft_strncmp(cmd, "pwd", 3))
 		func_pwd();
-	else if (!ft_strncmp(cmd[0], "echo", 4))
-		func_echo(cmd);
-	else if (!ft_strncmp(cmd[0], "cd", 2))
-		func_cd(cmd);
-	else if (!ft_strncmp(cmd[0], "exit", 4))
-		func_exit(cmd);
-	else if (!ft_strncmp(cmd[0], "export", 6))
-		func_export(cmd);
-	else if (!ft_strncmp(cmd[0], "env", 3))
+	else if (!ft_strncmp(cmd, "echo", 4))
+		func_echo();
+	else if (!ft_strncmp(cmd, "env", 3))
 		func_env();
-	else if (!ft_strncmp(cmd[0], "unset", 5))
-		func_unset(cmd);
+	/*else if (!ft_strncmp(cmd, "cd", 2))
+		func_cd(cmd);
+	else if (!ft_strncmp(cmd, "exit", 4))
+		func_exit(cmd);
+	else if (!ft_strncmp(cmd, "export", 6))
+		func_export(cmd);
+	else if (!ft_strncmp(cmd, "unset", 5))
+		func_unset(cmd);*/
 	else
-		func_exec(cmd[0]);
+		func_exec(cmd);
 }
 
-static int	path_mode(char **cmd)
+/*static int	path_mode(char *cmd)
 {
-	if (!ft_strnstr(cmd[0], "pwd", 3))
+	if (!ft_strnstr(cmd, "pwd", 3))
 		return (1);
-	else if (!ft_strncmp(cmd[0], "echo", 4))
+	else if (!ft_strnstr(cmd, "echo", 4))
 		return (1);
-	else if (!ft_strncmp(cmd[0], "cd", 2))
+	else if (!ft_strnstr(cmd, "cd", 2))
 		return (1);
-	else if (!ft_strncmp(cmd[0], "exit", 4))
+	else if (!ft_strnstr(cmd, "exit", 4))
 		return (1);
-	else if (!ft_strncmp(cmd[0], "export", 6))
+	else if (!ft_strnstr(cmd, "export", 6))
 		return (1);
-	else if (!ft_strncmp(cmd[0], "env", 3))
+	else if (!ft_strnstr(cmd, "env", 3))
 		return (1);
-	else if (!ft_strncmp(cmd[0], "unset", 5))
+	else if (!ft_strnstr(cmd, "unset", 5))
 		return (1);
 	else
-		func_exec(cmd[0]);
+		func_exec(cmd);
 	return (0);
-}
+}*/
 
-void	find_builtins(char cmd, int flag)
+void	find_builtins(char *cmd, int flag)
 {
-	if (flag == 1)
+	/*if (flag == 1)
 	{
 		if (path_mode(cmd) == 1)
 			ft_putstr_fd("minishell: error: path is a builtin", 2);
-	}
-	else if (flag == 0)
+	}*/
+	if (flag == 0)
 		cmd_mode(cmd);
 }

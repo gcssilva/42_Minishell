@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:51:32 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:28:08 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void add_var(char *var)
         ft_putstr_fd("export: memory allocation error\n", 2);
 }
 
-void func_export(char **line)
+void    func_export(char **line)
 {
     int i = 1;
 

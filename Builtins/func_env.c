@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:39:50 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:12:22 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	func_env(void)
 	i = 0;
 	while (data()->copy_env[i])
 	{
-		ft_putstr_fd(data()->copy_env[i], 1);
-		ft_putchar('\n');
+		ft_putendl_fd(data()->copy_env[i], 1);
 		i++;
 	}
 }

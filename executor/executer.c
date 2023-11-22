@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/20 18:01:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/21 10:44:24 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	my_child(t_cmd cmds, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 	else
 		dup2(data()->std_fd[1], STDOUT_FILENO);
-	redirct(cmds, fd);
+	//redirct(cmds);
 	if (is_path(cmds.cmd) == 1)
 		find_builtins(cmds.cmd, 1);
 	else
@@ -60,15 +60,14 @@ void	creat_pid(t_cmd cmds, int *fd)
 	}
 }
 
-void	pipe_create(int i, int flag, int *fd)
+void	pipe_create(int i, int *fd)
 {
 	while (++i < data()->n_cmd)
 	{
 		if (pipe(fd) == -1)
 		{
-			t_putstr_fd("Error: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr("\n");
+			ft_putstr_fd("Error: ", 2);
+			ft_putendl_fd(strerror(errno), 2);
 			return ;
 		}
 		creat_pid(data()->cmds[i], fd);
@@ -80,13 +79,10 @@ void	pipe_create(int i, int flag, int *fd)
 
 void	executer(void)
 {
-	t_data	*n_cmd;
 	int	i;
-	int flag;
 	int	fd[2];
 	
 	i = -1;
-	flag = 0;
-	pipe_create(i, flag, fd);
+	pipe_create(i, fd);
 	return ;
 }

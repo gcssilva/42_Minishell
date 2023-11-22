@@ -6,26 +6,55 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:35:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/10/30 12:03:14 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:24:35 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// nao funcional, preciso testar para ver se funciona desta forma
-
-static void	echo_print(char **cmd, int i,  char flag)
-{
-	if (flag == "y")
-		ft_putstr(cmd);
-	else if (flag == "n")
-		ft_putendl(cmd);
+int	last_space(int i, int j)
+{;
+	if(data()->cmds[i].arg[j + 1] == NULL)
+		return (1);
+	else
+		return (0);
 }
 
-void	func_echo(char **cmd)
+static void	echo_print(int flag)
 {
-	if(!ft_strncmp(cmd[1], "-n", 2))
-		echo_print(cmd, 2, "n");
-	else if (ft_strncmp(cmd[1], "-n", 2))
-		echo_print(cmd, 1, "y");
+	int i;
+	int j;
+
+	i = 0;
+	if (flag == 0)
+	{
+		j = 0;
+		while (data()->cmds[i].arg[++j])
+		{
+			ft_putstr_fd(data()->cmds[i].arg[j], 2);
+			if(last_space(i, j) == 0)
+				ft_putchar_fd(' ', 2);
+		}
+		ft_putstr_fd("\n", 2);
+	}
+	else if (flag == 1)
+	{
+		j = 1;
+		while (data()->cmds[i].arg[++j])
+		{
+			ft_putstr_fd(data()->cmds[i].arg[j], 2);
+			if(last_space(i, j) == 0)
+				ft_putchar_fd(' ', 2);
+		}
+	}
+}
+
+void	func_echo(void)
+{
+	int i = 0;
+	
+	if(!ft_strncmp(data()->cmds[i].arg[1], "-n", 2))
+		echo_print(1);
+	else if (ft_strncmp(data()->cmds[i].arg[1], "-n", 2))
+		echo_print(0);
 }

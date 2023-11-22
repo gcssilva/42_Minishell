@@ -6,34 +6,23 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:15:44 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/09 00:08:09 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:46:48 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	init_env(void)
-{
-	data()->env_size = 0;
-	int	i;
-
-	i = 0;
-	while (i < MAX_ENV)
-	{
-		data()->copy_env[i] = NULL;
-		i++;
-	}
-}
-
-void	copy_env(char **env)
+void	copy_env(char **input)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (env[i])
-	{
-		data()->copy_env[i] = ft_strdup(env[i]);
+	j = -1;
+	while (input[i] != NULL)
 		i++;
-	}
-	data()->env_size = i;
+	data()->copy_env = malloc(sizeof(char *) * (i + 1));
+	while (++j < i)
+		data()->copy_env[j] = ft_strdup(input[j]);
+	data()->copy_env[j] = NULL;
 }

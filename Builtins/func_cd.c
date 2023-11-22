@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 15:35:42 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:53:43 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	cd_error(char *token)
 	ft_putstr_fd("\n", 1);
 }
 
-void	func_cd(char **line)
+void	func_cd(char *cmd)
 {
 	char	*old_path;
 	char	*new_path;
@@ -85,7 +85,7 @@ void	func_cd(char **line)
 	
 	old_path = getcwd(NULL, 1025);
 	home_path = home(data()->copy_env);
-	if(!line)
+	if(!cmd)
 		chdir(home_path);
 	else if (chdir(home_path) == -1)
 	{

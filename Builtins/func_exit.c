@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/15 12:22:21 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:46:54 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	num_exit(int num)
 		return (num % 256);
 }
 
-int	type_exit(char *line)
+int	type_exit(char line)
 {
 	int	i;
 
 	i = -1;
-	while (line[++i])
+	while (line)
 	{
-		if (ft_isascii(line[i]) && !ft_isdigit(line[i]))
+		if (ft_isascii(line) && !ft_isdigit(line))
 		{
 			ft_putstr_fd("exit\n", 1);
 			ft_putstr_fd("exit: ", 2);
@@ -39,7 +39,7 @@ int	type_exit(char *line)
 		}
 	}
 	i = 0;
-	if (ft_isdigit(line[i]))
+	if (ft_isdigit(line))
 	{
 		ft_putstr_fd("exit\n", 1);
 		return (num_exit(ft_atoi(line)));
@@ -47,28 +47,20 @@ int	type_exit(char *line)
 	return (0);
 }
 
-void	func_exit(char **line)
+void	func_exit(char cmd)
 {
 	int	status;
 	int	i;
 
 	status = 0;
 	i = -1;
-	if (!line[1])
+	if (!cmd)
 	{
 		ft_putstr_fd("exit\n", 1);
 		status = 0;
 	}
-	else if (line[1] && line[2])
-	{
-		ft_putstr_fd("exit: too many arguments\n", 1);
-		while (data()->copy_env[++i])
-			free (data()->copy_env[i]);
-		free (data()->copy_env);
-		return ;
-	}
 	else
-		status = type_exit(line[1]);
+		status = type_exit(cmd);
 	while (data()->copy_env[++i])
 		free (data()->copy_env[i]);
 	free (data()->copy_env);
