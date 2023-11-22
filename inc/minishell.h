@@ -19,7 +19,6 @@ typedef struct	s_cmd
 	int		index;
 	char	*red[10];
 	char	*order[10];
-	char	*delimiters[10];
 	char	*cmd;
 	char	*arg[10];
 }	t_cmd;

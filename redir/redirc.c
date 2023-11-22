@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 15:31:33 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/22 18:59:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,32 @@ void	check_infile(char *red)
 	close(in);
 }
 
+void	check_heredoc(char *delimiter)
+{
+	int		temp_file;
+	char	*input;
+
+	temp_file = open(".temp_file.txt", O_RDWR | O_CREAT | O_APPEND, 0777);
+	while (1)
+	{
+		input = readline("> ");
+		if (!input)
+		{
+			write(0, "heredoc delimited by eof\n", 26);
+			break ;
+		}
+		if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
+			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
+			break ;
+		write(temp_file, input, ft_strlen(input));
+		free(input);
+	}
+	if (input)
+		free(input);
+	dup2(temp_file, STDIN_FILENO);
+	close(temp_file);
+}
+
 void	redirct(t_cmd cmds)
 {
 	int	i;
@@ -62,7 +88,12 @@ void	redirct(t_cmd cmds)
 			check_infile(cmds.red[i]);
 		else if (!ft_strncmp(cmds.order[i], "out", 3))
 			check_outfile(cmds.red[i], 0);
-		else
+		else if (!ft_strncmp(cmds.order[i], "ap", 2))
 			check_outfile(cmds.red[i], 1);
+		else
+		{
+			remove(".temp_file.txt");
+			check_heredoc(cmds.red[i]);
+		}
 	}
 }

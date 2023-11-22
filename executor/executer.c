@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 17:26:12 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/22 18:49:22 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	pipe_create(int i, int *fd)
 	i = -1;
 	while (++i < data()->n_cmd)
 	{
-		printf("%i\n", i);
 		if (pids[i] != -1)
 			waitpid(pids[i], &e_status, 0);
 	}
