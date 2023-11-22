@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 12:10:13 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/22 14:52:23 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 builtins finalizado porem sem testes
 */
 
-static void	cmd_mode(char *cmd)
+static void	cmd_mode(t_cmd cmds)
 {
-	if (!ft_strncmp(cmd, "pwd", 3))
+	if (!ft_strncmp(cmds.cmd, "pwd", 3) && ft_strlen(cmds.cmd) == 3)
 		func_pwd();
-	else if (!ft_strncmp(cmd, "echo", 4))
-		func_echo();
-	else if (!ft_strncmp(cmd, "env", 3))
+	else if (!ft_strncmp(cmds.cmd, "echo", 4) && ft_strlen(cmds.cmd) == 4)
+		func_echo(cmds);
+	else if (!ft_strncmp(cmds.cmd, "env", 3) && ft_strlen(cmds.cmd) == 3)
 		func_env();
 	/*else if (!ft_strncmp(cmd, "cd", 2))
 		func_cd(cmd);
@@ -34,7 +34,7 @@ static void	cmd_mode(char *cmd)
 	else if (!ft_strncmp(cmd, "unset", 5))
 		func_unset(cmd);*/
 	else
-		func_exec(cmd);
+		func_exec(cmds);
 }
 
 /*static int	path_mode(char *cmd)
@@ -58,7 +58,7 @@ static void	cmd_mode(char *cmd)
 	return (0);
 }*/
 
-void	find_builtins(char *cmd, int flag)
+void	find_builtins(t_cmd cmd, int flag)
 {
 	/*if (flag == 1)
 	{

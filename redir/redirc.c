@@ -6,15 +6,14 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/20 16:45:42 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:31:33 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	check_outfile(char *red, int *fd, int flag)
+void	check_outfile(char *red, int flag)
 {
-	int i;
 	int	out;
 
 	if (flag == 1)
@@ -34,9 +33,8 @@ void	check_outfile(char *red, int *fd, int flag)
 	close(out);
 }
 
-void	check_infile(char *red, int *fd)
+void	check_infile(char *red)
 {
-	int	i;
 	int	in;
 
 	in = open(red, O_RDONLY, 0777);
@@ -53,18 +51,18 @@ void	check_infile(char *red, int *fd)
 	close(in);
 }
 
-void	redirct(t_cmd cmds, int *fd)
+void	redirct(t_cmd cmds)
 {
 	int	i;
 
 	i = -1;
-	while (cmds.red[--i])
+	while (cmds.red[++i])
 	{
-		if (ft_strncmp(cmds.order[i], "in", 2))
-			check_infile(cmds.red[i],fd);
-		else if (ft_strncmp(cmds.order[i], "out", 3))
-			check_outfile(cmds.red[i], fd, 0);
+		if (!ft_strncmp(cmds.order[i], "in", 2))
+			check_infile(cmds.red[i]);
+		else if (!ft_strncmp(cmds.order[i], "out", 3))
+			check_outfile(cmds.red[i], 0);
 		else
-			check_outfile(cmds.red[i], fd, 1);
+			check_outfile(cmds.red[i], 1);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/21 15:40:07 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:23:35 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int ac, char **av, char **env)
 		if (lexer(input))
 		{
 			parse_input(input);
+			//printf("%s\n", data()->cmds[0].arg[1]);
 			data()->last_fd[0] = -1;
 		}
 		executer();

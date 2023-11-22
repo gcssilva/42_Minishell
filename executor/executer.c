@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/21 10:44:24 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:26:12 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,20 @@ void	my_child(t_cmd cmds, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 	else
 		dup2(data()->std_fd[1], STDOUT_FILENO);
-	//redirct(cmds);
+	redirct(cmds);
 	if (is_path(cmds.cmd) == 1)
-		find_builtins(cmds.cmd, 1);
+		find_builtins(cmds, 1);
 	else
-		find_builtins(cmds.cmd, 0);
+		find_builtins(cmds, 0);
 	return ;
 }
 
-void	creat_pid(t_cmd cmds, int *fd)
+pid_t	creat_pid(t_cmd cmds, int *fd)
 {
 	pid_t	pid;
 
-	if ((pid = fork()) < 0)
+	pid = fork();
+	if (pid < 0)
 		perror("error: fork");
 	if (pid == 0)
 		my_child(cmds, fd);
@@ -58,10 +59,14 @@ void	creat_pid(t_cmd cmds, int *fd)
 		data()->last_fd[0] = fd[0];
 		data()->last_fd[1] = fd[1];
 	}
+	return (pid);
 }
 
 void	pipe_create(int i, int *fd)
 {
+	pid_t	pids[20];
+	int		e_status;
+
 	while (++i < data()->n_cmd)
 	{
 		if (pipe(fd) == -1)
@@ -70,10 +75,14 @@ void	pipe_create(int i, int *fd)
 			ft_putendl_fd(strerror(errno), 2);
 			return ;
 		}
-		creat_pid(data()->cmds[i], fd);
-		waitpid(-1, NULL, 0);
-		close(fd[0]);
-		close(fd[1]);
+		pids[i] = creat_pid(data()->cmds[i], fd);
+	}
+	i = -1;
+	while (++i < data()->n_cmd)
+	{
+		printf("%i\n", i);
+		if (pids[i] != -1)
+			waitpid(pids[i], &e_status, 0);
 	}
 }
 

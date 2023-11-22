@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/wait.h>
 
 //A struct s_cmd guarda as informacoes de 1 comando ate o proximo pipe ou ate o fim do input
 //a variavel *delimiters[] representa um array de delimitadores de heredoc '<<'
@@ -34,21 +35,24 @@ typedef struct s_data
 
 t_data	*data(void);
 
+void	copy_env(char **input);
+
 //builtins
-void	find_builtins(char cmd, int flag);
+void	find_builtins(t_cmd cmd, int flag);
 void	func_pwd(void);
-void	func_echo(char **cmd);
+void	func_echo(t_cmd cmd);
 void	func_cd(char **line, char **env);
-void	func_env(char **env);
+void	func_env(void);
 void	func_unset(char **line, char ***env);
 void	func_export(char **line, char ***env);
 void	func_exit(char **line, char **env);
-void	func_exec(char **line, char **env);
+void	func_exec(t_cmd cmds);
 void	just_one_cmd(char **copy_env);
 
 //executor
 void	executer(void);
-void	redirct(t_cmd cmds, int *fd);
+void	redirct(t_cmd cmds);
+int		is_path(char *cmd);
 
 //parse
 void	parse_input(char *input);
@@ -58,8 +62,8 @@ int		ft_isblank(int c);
 int		ft_isredir(int c);
 int		split_cmd(char *str, int flag);
 char	*quote_join(char *cmd, char *input, int *i);
-void	copy_var(char *cmd, char *var);
-void	exp_var(char *cmd, char *input, int *i);
+char	*copy_var(char *cmd, char *var);
+char	*exp_var(char *cmd, char *input, int *i);
 int		check_pipes(char *input);
 int		lexer(char *input);
 char	*cjoin(char *str, char c);

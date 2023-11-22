@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/20 17:29:38 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/22 16:52:24 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,49 +70,42 @@ int	split_cmd(char *str, int flag)
 char	*quote_join(char *cmd, char *input, int *i)
 {
 	int	q;
-	char *new_cmd;
 
-	q = input[*i];
-	new_cmd = 0;
-	while (input[++*i] != '"')
+	q = input[(*i)++];
+	while (input[*i] && input[*i] != q)
 	{
 		if (q == '"' && input[*i] == '$')
-			exp_var(cmd, input, i);
+			cmd = exp_var(cmd, input, i);
 		else
-			new_cmd = cjoin(new_cmd, input[*i]);
+			cmd = cjoin(cmd, input[(*i)++]);
 	}
-	if (!new_cmd)
-		return (0);
-	new_cmd = add_to_str(cmd, new_cmd);
-	if (cmd)
-	{
-		free(cmd);
-		cmd = 0;
-	}
-	return (new_cmd);
+	if (!cmd)
+		return (ft_strdup(""));
+	return (cmd);
 }
 
-void	copy_var(char *cmd, char *var)
+char	*copy_var(char *cmd, char *var)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (var[i] != '=')
 		i++;
 	while (var[++i])
 		cmd = cjoin(cmd, var[i]);
+	return (cmd);
 }
 
-void	exp_var(char *cmd, char *input, int *i)
+char	*exp_var(char *cmd, char *input, int *i)
 {
 	int		j;
-	char	var[1000];
+	char	*var;
 
-	j = 0;
+	var = 0;
 	*i += 1;
 	while(ft_isalnum(input[*i]) || input[*i] == '_')
-		var[j++] = input[*i++];
-	if (j == 0)
+		var = cjoin(var, input[(*i)++]);
+	if (!var)
 		cmd = cjoin(cmd, '$');
 	else
 	{
@@ -123,12 +116,13 @@ void	exp_var(char *cmd, char *input, int *i)
 			{
 				if (data()->copy_env[j][ft_strlen(var)] == '=')
 				{
-					copy_var(cmd, data()->copy_env[j]);
+					cmd = copy_var(cmd, data()->copy_env[j]);
 					break ;
 				}
 			}
 		}
 	}
+	return (cmd);
 }
 
 int	get_pos(char **ar)
@@ -205,7 +199,7 @@ void	parse_input(char *input)
 			cmd = 0;
 		}
 		else if (input[i] == '$')
-			exp_var(cmd, input, &i);
+			cmd = exp_var(cmd, input, &i);
 		else if (input[i] == '"' || input[i] == '\'')
 			cmd = quote_join(cmd, input, &i);
 		else

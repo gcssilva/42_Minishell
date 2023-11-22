@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 12:29:46 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:10:14 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,16 @@ char	*find_path(char *cmd, char **env, int i)
 	return (0);
 }
 
-void	func_exec(char *line)
+void	func_exec(t_cmd cmds)
 {
-	char	**cmd;
 	char	*path;
 
-	cmd = ft_split(line, ' ');
-	path = find_path(line, data()->copy_env, 0);
+	path = find_path(cmds.cmd, data()->copy_env, 0);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 1);
 	}
-	if (execve(path, cmd, data()->copy_env) == -1)
-	printf("line: %s\n", line);
-	{
-		ft_putstr_fd("este erro está no if do excev\n", 2);
-	}
+	execve(path, cmds.arg, data()->copy_env);
 }
