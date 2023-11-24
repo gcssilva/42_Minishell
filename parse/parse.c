@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/22 18:18:36 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/24 16:04:51 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ int	split_cmd(char *str, int flag)
 	if (str && str[0])
 	{
 		data()->cmds[c].arg[a++] = ft_strdup(str);
+		data()->cmds[c].arg[a] = 0;
 		if (a == 1)
 		{
 			data()->cmds[c].cmd = ft_strdup(str);
 			data()->cmds[c].index = c + 1;
+			data()->cmds[c].red[0] = 0;
 		}
 		free(str);
 		str = 0;
@@ -138,17 +140,20 @@ int	get_pos(char **ar)
 void	write_redir(char *r_file, int r)
 {
 	int	i;
+	int	j;
 
 	i = split_cmd(0, 1);
-	data()->cmds[i].red[get_pos(data()->cmds[i].red)] = ft_strdup(r_file);
+	j = get_pos(data()->cmds[i].red);
+	data()->cmds[i].red[j] = ft_strdup(r_file);
+	data()->cmds[i].red[j + 1] = 0;
 	if (r == 60)
-		data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("in");
+		data()->cmds[i].order[j] = ft_strdup("in");
 	else if (r == 62)
-		data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("out");
+		data()->cmds[i].order[j] = ft_strdup("out");
 	else if (r == 120)
-		data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("del");
+		data()->cmds[i].order[j] = ft_strdup("del");
 	else
-		data()->cmds[i].order[get_pos(data()->cmds[i].order)] = ft_strdup("ap");
+		data()->cmds[i].order[j] = ft_strdup("ap");
 }
 
 void	add_redir(char *input, int *i)
@@ -201,6 +206,8 @@ void	parse_input(char *input)
 			cmd = quote_join(cmd, input, &i);
 		else
 			cmd = cjoin(cmd, input[i]);
+		if (input[i] == 0)
+			break ;
 	}
 	split_cmd(cmd, 0);
 }

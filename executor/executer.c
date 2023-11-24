@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 18:49:22 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/24 16:22:37 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ finalmente sem erros de codigo(modo burro) */
 
 void	my_child(t_cmd cmds, int *fd)
 {
+	signal(SIGINT, handle_fork_sig);
+	signal(SIGQUIT, SIG_IGN);
 	if (data()->last_fd[0] != -1)
 	{
 		dup2(data()->last_fd[0], STDIN_FILENO);

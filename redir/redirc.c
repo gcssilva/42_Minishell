@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 18:59:00 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/24 15:35:01 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,26 @@ void	check_heredoc(char *delimiter)
 	int		temp_file;
 	char	*input;
 
-	temp_file = open(".temp_file.txt", O_RDWR | O_CREAT | O_APPEND, 0777);
+	temp_file = open(".temp_file.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
 		{
-			write(0, "heredoc delimited by eof\n", 26);
+			write(1, "heredoc delimited by eof\n", 26);
 			break ;
 		}
 		if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
 			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
 			break ;
 		write(temp_file, input, ft_strlen(input));
+		write(temp_file, "\n", 1);
 		free(input);
 	}
 	if (input)
 		free(input);
-	dup2(temp_file, STDIN_FILENO);
 	close(temp_file);
+	check_infile(".temp_file.txt");
 }
 
 void	redirct(t_cmd cmds)

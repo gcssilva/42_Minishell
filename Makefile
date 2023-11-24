@@ -6,15 +6,23 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/11/22 15:26:43 by gsilva           ###   ########.fr        #
+#    Updated: 2023/11/24 16:26:48 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	cc
 FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -fdiagnostics-color=always -g
+
+VAL		=	--leak-check=full \
+			--show-leak-kinds=all \
+			--log-file=valgrind_log.txt \
+			--suppressions=readline.supp \
+			--track-fds=yes
+
 INC		=	inc/minishell.h
 SRC		=	main.c \
+			signals.c \
 			parse/parse.c \
 			parse/parse_utils.c \
 			redir/redirc.c \
@@ -35,7 +43,7 @@ OBJ		=	$(SRC:.c=.o)
 
 all:		$(NAME)
 
-$(NAME):	
+$(NAME):	$(OBJ)
 			@make -C ./libft
 			@$(CC) $(SRC) $(FLAGS) -o $(NAME)
 
@@ -43,11 +51,14 @@ $(NAME):
 			@$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-			@make fclean -C ./libft
+			@make clean -C ./libft
+			@rm -rf $(OBJ)
 
 fclean:		clean
+			@make fclean -C ./libft
 			@rm -f $(NAME)
 
 re:			fclean all
+			valgrind $(VAL) ./$(NAME)
 
 .PHONY:		all clean fclean re

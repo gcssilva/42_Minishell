@@ -8,6 +8,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 //A struct s_cmd guarda as informacoes de 1 comando ate o proximo pipe ou ate o fim do input
 //a variavel *delimiters[] representa um array de delimitadores de heredoc '<<'
@@ -66,5 +67,8 @@ char	*exp_var(char *cmd, char *input, int *i);
 int		check_pipes(char *input);
 int		lexer(char *input);
 char	*cjoin(char *str, char c);
+
+void	handle_sig(int sig);
+void	handle_fork_sig(int sig);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/22 19:23:28 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/24 16:31:31 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,15 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	(void)ac;
 	(void)av;
+	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, SIG_IGN);
 	while(1)
 	{
 		input = readline("minishell:");
+		if (!input)
+			break ;
+		if (!*input)
+			continue ;
 		add_history(input);
 		data()->std_fd[0] = dup(STDIN_FILENO);
 		data()->std_fd[1] = dup(STDOUT_FILENO);
