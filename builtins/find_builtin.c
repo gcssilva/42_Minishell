@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 14:52:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/25 14:45:40 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static void	cmd_mode(t_cmd cmds)
 		func_echo(cmds);
 	else if (!ft_strncmp(cmds.cmd, "env", 3) && ft_strlen(cmds.cmd) == 3)
 		func_env();
-	/*else if (!ft_strncmp(cmd, "cd", 2))
-		func_cd(cmd);
-	else if (!ft_strncmp(cmd, "exit", 4))
-		func_exit(cmd);
-	else if (!ft_strncmp(cmd, "export", 6))
-		func_export(cmd);
-	else if (!ft_strncmp(cmd, "unset", 5))
-		func_unset(cmd);*/
+	else if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
+		func_exit(cmds);
+	else if (!ft_strncmp(cmds.cmd, "cd", 2))
+		func_cd(cmds);
+	else if (!ft_strncmp(cmds.cmd, "export", 6))
+		func_export(cmds);
+	else if (!ft_strncmp(cmds.cmd, "unset", 5))
+		func_unset(cmds);
 	else
 		func_exec(cmds);
 }

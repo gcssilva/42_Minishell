@@ -6,38 +6,13 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/21 11:53:43 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/25 14:29:56 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-//work on progress
-
-void	update_env(char *old_path, char *new_path)
-{
-	int	i;
-
-	i = 0;
-	while ((data()->copy_env)[i])
-	{
-		if (ft_strncmp((data()->copy_env)[i], "OLDPWD=", 7) == 0)
-		{
-			if ((data()->copy_env)[i])
-				free((data()->copy_env)[i]);
-			(data()->copy_env)[i] = ft_strjoin("OLDPWD=", old_path);
-		}
-		if (ft_strncmp((data()->copy_env)[i], "PWD=", 4) == 0)
-		{
-			if ((data()->copy_env)[i])
-				free((data()->copy_env)[i]);
-			(data()->copy_env)[i] = ft_strjoin("PWD=", new_path);
-			if (new_path)
-				free(new_path);
-		}
-		i++;
-	}
-}
+// //work on progress
 
 char	*home(char **env)
 {
@@ -77,25 +52,19 @@ void	cd_error(char *token)
 	ft_putstr_fd("\n", 1);
 }
 
-void	func_cd(char *cmd)
+void	func_cd(t_cmd cmds)
 {
-	char	*old_path;
-	char	*new_path;
 	char	*home_path;
-	
-	old_path = getcwd(NULL, 1025);
+
 	home_path = home(data()->copy_env);
-	if(!cmd)
+	if(cmds.arg[1] == NULL || !ft_strncmp(cmds.arg[1], "~", 1))
 		chdir(home_path);
-	else if (chdir(home_path) == -1)
+	else if (cmds.arg[2])
 	{
-		cd_error(home_path);
-		free(home_path);
-		free(old_path);
-		return ;
+		exit_status = EXIT_FAILURE;
+		ft_putstr_fd("cd: too many arguments\n", 2);
 	}
-	new_path = getcwd(NULL, 1025);
-	update_env(old_path, new_path);
-	free(home_path);
-	free(old_path);
+	else if (chdir(cmds.arg[1]) == -1)
+		cd_error(cmds.arg[1]);
 }
+

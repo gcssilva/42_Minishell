@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/21 10:36:19 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/25 13:16:10 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,14 @@ int	is_path(char *cmd)
 		i++;
 	}
 	return (0);
+}
+void	number_cmds(t_cmd cmds)
+{
+	if (data()->n_cmd == 1)
+	{
+		if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
+		{
+			func_exit(cmds);
+		}
+	}
 }
