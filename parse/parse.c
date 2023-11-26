@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/24 16:04:51 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/26 20:19:54 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,12 @@ char	*exp_var(char *cmd, char *input, int *i)
 
 	var = 0;
 	*i += 1;
+	if (input[*i] == '?')
+	{
+		cmd = cjoin(cmd, '$');
+		cmd = cjoin(cmd, '?');
+		return (cmd);
+	}
 	while(ft_isalnum(input[*i]) || input[*i] == '_')
 		var = cjoin(var, input[(*i)++]);
 	if (!var)

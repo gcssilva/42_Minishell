@@ -6,7 +6,7 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/11/24 16:26:48 by gsilva           ###   ########.fr        #
+#    Updated: 2023/11/26 17:08:43 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,14 +29,15 @@ SRC		=	main.c \
 			executor/executer.c \
 			executor/utils_executer.c \
 			builtins/func_pwd.c \
-			builtins/func_echo.c\
+			builtins/func_echo.c \
 			builtins/func_env.c \
 			copy_env/copy_env.c \
-			builtins/func_exec.c\
+			builtins/func_exec.c \
 			builtins/find_builtin.c \
-			#builtins/func_cd.c\
-			builtins/func_exit.c builtins/func_export.c\
-			builtins/func_unset.c \#
+			builtins/func_cd.c \
+			builtins/func_exit.c \
+			builtins/func_unset.c \
+			#builtins/func_export.c \#
 			
 
 OBJ		=	$(SRC:.c=.o)

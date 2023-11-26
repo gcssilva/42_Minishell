@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/24 16:31:31 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/26 20:32:59 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	(void)ac;
 	(void)av;
-	signal(SIGINT, handle_sig);
-	signal(SIGQUIT, SIG_IGN);
 	while(1)
 	{
+		signal(SIGINT, handle_sig);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("minishell:");
 		if (!input)
 			break ;
@@ -99,4 +99,5 @@ int	main(int ac, char **av, char **env)
 		free(input);
 		remove(".temp_file.txt");
 	}
+	return (data()->exit_status);
 }

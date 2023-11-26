@@ -26,6 +26,7 @@ typedef struct	s_cmd
 
 typedef struct s_data
 {
+	int		exit_status;
 	int		n_cmd;
 	char	**copy_env;
 	int		std_fd[2];
@@ -41,11 +42,11 @@ void	copy_env(char **input);
 void	find_builtins(t_cmd cmd, int flag);
 void	func_pwd(void);
 void	func_echo(t_cmd cmd);
-void	func_cd(char **line, char **env);
+void	func_cd(t_cmd cmds);
 void	func_env(void);
-void	func_unset(char **line, char ***env);
-void	func_export(char **line, char ***env);
-void	func_exit(char **line, char **env);
+void	func_unset(t_cmd cmds);
+void    func_export(t_cmd cmds);
+void	func_exit(t_cmd cmds);
 void	func_exec(t_cmd cmds);
 void	just_one_cmd(char **copy_env);
 
@@ -70,5 +71,7 @@ char	*cjoin(char *str, char c);
 
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
+
+int		is_builtin(t_cmd cmds);
 
 #endif
