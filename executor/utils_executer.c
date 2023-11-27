@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/26 19:46:34 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/27 22:31:13 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	print_str(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str && str[++i])
+	{
+		if (str[i] == '=')
+			printf("\"");
+		else
+		{
+			printf("declare -x %s\n", str);
+		}
+	}
+}
 
 int	is_path(char *cmd)
 {
@@ -25,22 +41,13 @@ int	is_path(char *cmd)
 	}
 	return (0);
 }
-
-int	is_builtin(t_cmd cmds)
+void	number_cmds(t_cmd cmds)
 {
-	if (!ft_strncmp(cmds.cmd, "pwd", 3) && ft_strlen(cmds.cmd) == 3)
-		return (1);
-	else if (!ft_strncmp(cmds.cmd, "echo", 4) && ft_strlen(cmds.cmd) == 4)
-		return (1);
-	else if (!ft_strncmp(cmds.cmd, "env", 3) && ft_strlen(cmds.cmd) == 3)
-		return (1);
-	else if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
-		return (1);
-	else if (!ft_strncmp(cmds.cmd, "cd", 2))
-		return (1);
-	// else if (!ft_strncmp(cmds.cmd, "export", 6))
-	// 	func_export(cmds);
-	else if (!ft_strncmp(cmds.cmd, "unset", 5))
-		return (1);
-	return (0);
+	if (data()->n_cmd == 1)
+	{
+		if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
+		{
+			func_exit(cmds);
+		}
+	}
 }

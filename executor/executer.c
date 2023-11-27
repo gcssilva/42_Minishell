@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/26 20:32:06 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/25 14:03:50 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ finalmente sem erros de codigo(modo burro) */
 
 void	my_child(t_cmd cmds, int *fd)
 {
-	signal(SIGINT, handle_fork_sig);
-	signal(SIGQUIT, SIG_IGN);
 	if (data()->last_fd[0] != -1)
 	{
 		dup2(data()->last_fd[0], STDIN_FILENO);
@@ -36,21 +34,24 @@ void	my_child(t_cmd cmds, int *fd)
 		dup2(data()->std_fd[1], STDOUT_FILENO);
 	redirct(cmds);
 	if (is_path(cmds.cmd) == 1)
-		find_builtins(cmds, 0);
+		find_builtins(cmds, 1);
 	else
 		find_builtins(cmds, 0);
-	exit(data()->exit_status);
+	return ;
 }
 
 pid_t	creat_pid(t_cmd cmds, int *fd)
 {
 	pid_t	pid;
 
+	number_cmds(cmds);
 	pid = fork();
 	if (pid < 0)
 		perror("error: fork");
 	if (pid == 0)
 		my_child(cmds, fd);
+	if (exit_status != -1)
+		exit(exit_status);
 	else
 	{
 		if (data()->last_fd[0] != -1)
@@ -71,18 +72,13 @@ void	pipe_create(int i, int *fd)
 
 	while (++i < data()->n_cmd)
 	{
-		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
-			find_builtins(data()->cmds[i], 0);
-		else
+		if (pipe(fd) == -1)
 		{
-			if (pipe(fd) == -1)
-			{
-				ft_putstr_fd("Error: ", 2);
-				ft_putendl_fd(strerror(errno), 2);
-				return ;
-			}
-			pids[i] = creat_pid(data()->cmds[i], fd);
+			ft_putstr_fd("Error: ", 2);
+			ft_putendl_fd(strerror(errno), 2);
+			return ;
 		}
+		pids[i] = creat_pid(data()->cmds[i], fd);
 	}
 	i = -1;
 	while (++i < data()->n_cmd)
@@ -96,7 +92,8 @@ void	executer(void)
 {
 	int	i;
 	int	fd[2];
-
+	
+	data()->home = getenv("HOME");
 	i = -1;
 	pipe_create(i, fd);
 	return ;

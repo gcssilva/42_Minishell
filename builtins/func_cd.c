@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/26 20:32:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/25 14:29:56 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ void	func_cd(t_cmd cmds)
 		chdir(home_path);
 	else if (cmds.arg[2])
 	{
-		data()->exit_status = EXIT_FAILURE;
+		exit_status = EXIT_FAILURE;
 		ft_putstr_fd("cd: too many arguments\n", 2);
 	}
-	else if (chdir(cmds.arg[1]) != 0)
+	else if (chdir(cmds.arg[1]) == -1)
 		cd_error(cmds.arg[1]);
 }
+

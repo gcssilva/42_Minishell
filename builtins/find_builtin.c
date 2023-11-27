@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/26 20:04:10 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/27 12:02:20 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,39 @@ static void	cmd_mode(t_cmd cmds)
 	else if (!ft_strncmp(cmds.cmd, "echo", 4) && ft_strlen(cmds.cmd) == 4)
 		func_echo(cmds);
 	else if (!ft_strncmp(cmds.cmd, "env", 3) && ft_strlen(cmds.cmd) == 3)
-		func_env();
+		func_env(0);
 	else if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
 		func_exit(cmds);
 	else if (!ft_strncmp(cmds.cmd, "cd", 2))
 		func_cd(cmds);
-	// else if (!ft_strncmp(cmds.cmd, "export", 6))
-	// 	func_export(cmds);
+	else if (!ft_strncmp(cmds.cmd, "export", 6))
+		func_export(cmds);
 	else if (!ft_strncmp(cmds.cmd, "unset", 5))
 		func_unset(cmds);
 	else
 		func_exec(cmds);
 }
+
+/*static int	path_mode(char *cmd)
+{
+	if (!ft_strnstr(cmd, "pwd", 3))
+		return (1);
+	else if (!ft_strnstr(cmd, "echo", 4))
+		return (1);
+	else if (!ft_strnstr(cmd, "cd", 2))
+		return (1);
+	else if (!ft_strnstr(cmd, "exit", 4))
+		return (1);
+	else if (!ft_strnstr(cmd, "export", 6))
+		return (1);
+	else if (!ft_strnstr(cmd, "env", 3))
+		return (1);
+	else if (!ft_strnstr(cmd, "unset", 5))
+		return (1);
+	else
+		func_exec(cmd);
+	return (0);
+}*/
 
 void	find_builtins(t_cmd cmd, int flag)
 {

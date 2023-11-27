@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/26 20:31:44 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/25 13:27:40 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,31 @@ int	treat_exit_arg(char *str)
 	return (nb);
 }
 
+void	func_exit(t_cmd cmds)
+{
+	ft_putstr_fd("exit\n", 1);
+	if (cmds.arg[2])
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
+		exit_status = EXIT_FAILURE;
+	}
+	else if (cmds.arg[1] && !is_numeric(cmds.arg[1]))
+	{
+		ft_putendl_fd("exit: numeric argument required", 2);
+		exit_status = 255;
+		exit (exit_status);
+	}
+	else if (cmds.arg[1] && is_numeric(cmds.arg[1]))
+	{
+		exit_status = treat_exit_arg(cmds.arg[0]);
+		if (exit_status < 0)
+			exit_status = (exit_status + 256);
+		exit_status = exit_status % 256;
+		exit(exit_status);
+	}
+	exit(exit_status);
+}
+
 int	is_numeric(char *arg)
 {
 	int	i;
@@ -96,32 +121,6 @@ int	is_numeric(char *arg)
 	}
 	return (1);
 }
-
-void	func_exit(t_cmd cmds)
-{
-	ft_putstr_fd("exit\n", 1);
-	if (cmds.arg[1] && cmds.arg[2])
-	{
-		ft_putendl_fd("exit: too many arguments", 2);
-		data()->exit_status = EXIT_FAILURE;
-	}
-	else if (cmds.arg[1] && !is_numeric(cmds.arg[1]))
-	{
-		ft_putendl_fd("exit: numeric argument required", 2);
-		data()->exit_status = 255;
-		exit (data()->exit_status);
-	}
-	else if (cmds.arg[1] && is_numeric(cmds.arg[1]))
-	{
-		data()->exit_status = treat_exit_arg(cmds.arg[0]);
-		if (data()->exit_status < 0)
-			data()->exit_status = (data()->exit_status + 256);
-		data()->exit_status = data()->exit_status % 256;
-		exit(data()->exit_status);
-	}
-	exit(data()->exit_status);
-}
-
 // void	func_exit(t_cmd cmds)
 // {
 // 	int	status;

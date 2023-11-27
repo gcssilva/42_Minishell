@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/25 15:30:26 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/27 22:30:58 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	valid_var(char *var)
 	return (1);
 }
 
-void	delete_arg(char *var)
+void	delete_arg(t_cmd cmds)
 {
 	int		i;
 	int		j;
@@ -43,7 +43,7 @@ void	delete_arg(char *var)
 	i = -1;
 	while (data()->copy_env[++i])
 	{
-		if (ft_strncmp(data()->copy_env[i], var, var_len(data()->copy_env[i])) != 0)
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(data()->copy_env[i])) != 0)
 		{
 			copy_env[j] = data()->copy_env[i];
 			j++;
@@ -58,36 +58,42 @@ void	delete_arg(char *var)
 
 void	add_var(t_cmd cmds)
 {
+	int		x;
 	int		i;
+	int		j;
 	char	**copy_env;
 
 	i = 0;
+	j = -1;
 	if (exist_var(cmds))
-		delete_arg(cmds.arg[1]);
+		delete_arg(cmds);
 	while (data()->copy_env[i])
 		i++;
+	x = i;
 	copy_env = malloc(sizeof(char *) * (i + 2));
-	i = 0;
-	while (data()->copy_env[i])
+	i = -1;
+	while (++i < x)
 	{
-		copy_env[i] = data()->copy_env[i];
-		i++;
+		copy_env[++j] = ft_strdup(data()->copy_env[i]);
 	}
 	copy_env[i] = ft_strdup(cmds.arg[1]);
-	copy_env[i + 1] = NULL;
+	i = -1;
+	while(data()->copy_env[++i] != NULL)
+		free(data()->copy_env[i]);
 	free(data()->copy_env);
 	data()->copy_env = copy_env;
 }
 
-
 void    func_export(t_cmd cmds)
 {
     if (!cmds.arg[1])
-        func_env();
+		func_env(1);
     else
     {
         if (valid_var(cmds.arg[1]))
+		{
             add_var(cmds);
+		}
         else
         {
             ft_putstr_fd("export: \'", 2);

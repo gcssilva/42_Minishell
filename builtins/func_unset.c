@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/25 15:28:44 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:18:49 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,25 @@ int	var_len(char *var)
 	return (len);
 }
 
-void	delete_var(t_cmd cmds)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (data()->copy_env[i])
-	{
-		if (ft_strncmp(data()->copy_env[i], cmds.cmd, ft_strlen(cmds.cmd)) == 0)
-		{
-			free(data()->copy_env[i]);
-			while (data()->copy_env[i + j])
-			{
-				data()->copy_env[i + j] = data()->copy_env[i + j + 1];
-				j++;
-			}
-		}
-		i++;
-	} 
-}
-
 int	exist_var(t_cmd cmds)
 {
 	int	i;
 
-	i = 0;
-	while (data()->copy_env[i])
+	i = -1;
+	while (data()->copy_env[++i])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.cmd, ft_strlen(cmds.cmd)) == 0)
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], ft_strlen(cmds.cmd)) == 0)
 			return (1);
-		i++;
 	}
 	return (0);
 }
 
 void	func_unset(t_cmd cmds)
 {
-	if(cmds.cmd[1] && !cmds.arg[2])
+	if(cmds.arg[1] && !cmds.arg[2])
 	{
-		if(exist_var(cmds))
-			delete_var(cmds);
+		if(exist_var(cmds) == 1)
+			delete_arg(cmds);
 		else
 		{
 			ft_putstr_fd("unset: ", 2);
