@@ -6,26 +6,35 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/27 22:31:13 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/28 12:08:48 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+
 void	print_str(char *str)
 {
 	int	i;
+	int	flag;
 
+	flag = 0;
 	i = -1;
-	while (str && str[++i])
+	printf("declare -x ");
+	while (str[++i])
 	{
+		printf("%c", str[i]);
 		if (str[i] == '=')
-			printf("\"");
-		else
 		{
-			printf("declare -x %s\n", str);
+			printf("\"");
+			printf("%c", str[i + 1]);
+			flag = 1;
+			i++;
 		}
 	}
+	if (flag == 1)
+		printf("\"");
+	printf("\n");
 }
 
 int	is_path(char *cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:35:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 15:11:08 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/28 12:09:36 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static void	echo_print(t_cmd cmd, int flag)
 		write(1, "\e[38;5;0;48;5;255m%\e[0m\n", 24);
 }
 
-void	func_echo(t_cmd cmd)
+void	func_echo(t_cmd cmds)
 {
-	if(!ft_strncmp(cmd.arg[1], "-n", 2) && ft_strlen(cmd.arg[1]) == 2)
-		echo_print(cmd, 1);
+	if(ft_strncmp(cmds.arg[1], "-n", 2) == 0)
+		echo_print(cmds, 1);
 	else
-		echo_print(cmd, 0);
+		echo_print(cmds, 0);
 }

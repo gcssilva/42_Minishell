@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/27 22:32:24 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:19:58 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	func_env(int flag)
 	if(flag == 1)
 	{
 		while (data()->copy_env[++i])
-			printf("declare -x %s\n", data()->copy_env[i]);
+			print_str(data()->copy_env[i]);
 	}
 	if (!data()->copy_env)
 	{

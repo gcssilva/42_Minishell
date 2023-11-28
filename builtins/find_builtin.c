@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/27 12:02:20 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/28 12:07:43 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	cmd_mode(t_cmd cmds)
 		func_env(0);
 	else if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
 		func_exit(cmds);
-	else if (!ft_strncmp(cmds.cmd, "cd", 2))
+	else if (!ft_strncmp(cmds.cmd, "cd", 2) && ft_strlen(cmds.cmd) == 2)
 		func_cd(cmds);
-	else if (!ft_strncmp(cmds.cmd, "export", 6))
+	else if (!ft_strncmp(cmds.cmd, "export", 6) && ft_strlen(cmds.cmd) == 6)
 		func_export(cmds);
-	else if (!ft_strncmp(cmds.cmd, "unset", 5))
+	else if (!ft_strncmp(cmds.cmd, "unset", 5) && ft_strlen(cmds.cmd) == 5)
 		func_unset(cmds);
 	else
 		func_exec(cmds);
