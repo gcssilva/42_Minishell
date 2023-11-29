@@ -10,6 +10,8 @@
 # include <sys/wait.h>
 # include <signal.h>
 
+extern int	sig_n;
+
 //A struct s_cmd guarda as informacoes de 1 comando ate o proximo pipe ou ate o fim do input
 //a variavel *delimiters[] representa um array de delimitadores de heredoc '<<'
 //a variavel *cmd contem apenas o nome do comando
@@ -77,6 +79,7 @@ char	*cjoin(char *str, char c);
 void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
+void	end_loop(int sig);
 
 int		is_builtin(t_cmd cmds);
 

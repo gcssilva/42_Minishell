@@ -10,11 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* em obras
-nao sei oq fazer mais aqui
-a principio a ideia esta posta
-finalmente sem erros de codigo(modo burro) */
-
 #include "../inc/minishell.h"
 
 void	my_child(t_cmd cmds, int *fd)

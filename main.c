@@ -6,13 +6,13 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/29 14:20:47 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 18:08:46 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-int exit_status = -1;
+int sig_n = 0;
 
 t_data	*data(void)
 {

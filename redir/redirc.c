@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 14:22:35 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:26:05 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	check_heredoc(char *delimiter)
 	int		temp_file;
 	char	*input;
 
-	sig(2);
 	temp_file = open(".temp_file.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
+	sig(2);
 	while (1)
 	{
 		input = readline("> ");
@@ -72,6 +72,7 @@ void	check_heredoc(char *delimiter)
 		write(temp_file, input, ft_strlen(input));
 		write(temp_file, "\n", 1);
 		free(input);
+		input = 0;
 	}
 	if (input)
 		free(input);
