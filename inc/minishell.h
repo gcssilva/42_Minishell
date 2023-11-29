@@ -57,7 +57,7 @@ int		is_path(char *cmd);
 void	print_str(char *str);
 int		is_numeric(char *arg);
 void	delete_arg(t_cmd cmds);
-int		exist_var(t_cmd cmds);
+int		exist_var(t_cmd cmds, int flag);
 int		var_len(char *var);
 
 //parse
@@ -74,6 +74,7 @@ int		check_pipes(char *input);
 int		lexer(char *input);
 char	*cjoin(char *str, char c);
 
+void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
 

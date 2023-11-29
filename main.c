@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/28 23:26:45 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 14:20:47 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	(void)ac;
 	(void)av;
+	copy_env(env);
 	while(1)
 	{
-		signal(SIGINT, handle_sig);
-		signal(SIGQUIT, SIG_IGN);
-		input = readline("minishell:");
+		sig(0);
+		input = readline("minishell~> ");
 		if (!input)
 			break ;
 		if (!*input)
@@ -60,7 +60,6 @@ int	main(int ac, char **av, char **env)
 		add_history(input);
 		data()->std_fd[0] = dup(STDIN_FILENO);
 		data()->std_fd[1] = dup(STDOUT_FILENO);
-		copy_env(env);
 		n_cmds(input);
 		if (lexer(input))
 		{

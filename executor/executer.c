@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 23:29:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 16:31:444 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ finalmente sem erros de codigo(modo burro) */
 
 void	my_child(t_cmd cmds, int *fd)
 {
-	signal(SIGINT, handle_fork_sig);
-	signal(SIGQUIT, SIG_IGN);
+	sig(1);
 	if (data()->last_fd[0] != -1)
 	{
 		dup2(data()->last_fd[0], STDIN_FILENO);
@@ -69,7 +68,11 @@ void	pipe_create(int i, int *fd)
 	while (++i < data()->n_cmd)
 	{
 		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
+		{
+			redirct(data()->cmds[i]);
 			find_builtins(data()->cmds[i]);
+			dup2(data()->std_fd[1], STDOUT_FILENO);
+		}
 		else
 		{
 			if (pipe(fd) == -1)
@@ -97,4 +100,5 @@ void	executer(void)
 	i = -1;
 	pipe_create(i, fd);
 	// clean_struct();
+	return ;
 }

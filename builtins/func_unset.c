@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/27 16:18:49 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:27:45 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,34 @@ int	var_len(char *var)
 	int	len;
 
 	len = 0;
-	while (var[len] != '=' && var[len] != '\0')
+	while (var && var[len] && var[len] != '=')
 		len++;
 	return (len);
 }
 
-int	exist_var(t_cmd cmds)
+int    exist_var(t_cmd cmds, int flag)
 {
-	int	i;
+    int    i;
 
-	i = -1;
-	while (data()->copy_env[++i])
-	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], ft_strlen(cmds.cmd)) == 0)
-			return (1);
-	}
-	return (0);
+    i = -1;
+    while (data()->copy_env[++i])
+    {
+        if (flag)
+            {
+                if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(cmds.arg[1])) == 0)
+                    return (1);
+            }
+        if (ft_strncmp(data()->copy_env[i], cmds.arg[1], ft_strlen(cmds.arg[1])) == 0)
+            return (1);
+    }
+    return (0);
 }
 
 void	func_unset(t_cmd cmds)
 {
 	if(cmds.arg[1] && !cmds.arg[2])
 	{
-		if(exist_var(cmds) == 1)
+		if(exist_var(cmds, 0))
 			delete_arg(cmds);
 		else
 		{

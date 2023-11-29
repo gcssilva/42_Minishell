@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 23:09:45 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 17:09:22 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,22 @@
 void	print_str(char *str)
 {
 	int	i;
-	int	flag;
 
-	flag = 0;
 	i = -1;
-	printf("declare -x ");
+	ft_putstr_fd("declare -x ", dup(STDOUT_FILENO));
 	while (str[++i])
 	{
-		printf("%c", str[i]);
+		ft_putchar_fd(str[i], dup(STDOUT_FILENO));
 		if (str[i] == '=')
 		{
-			printf("\"");
-			printf("%c", str[i + 1]);
-			flag = 1;
-			i++;
+			ft_putchar_fd('"', dup(STDOUT_FILENO));
+			while (str[++i])
+				ft_putchar_fd(str[i], dup(STDOUT_FILENO));
+			ft_putchar_fd('"', dup(STDOUT_FILENO));
+			break ;
 		}
 	}
-	if (flag == 1)
-		printf("\"");
-	printf("\n");
+	ft_putchar_fd('\n', dup(STDOUT_FILENO));
 }
 
 int	is_path(char *cmd)

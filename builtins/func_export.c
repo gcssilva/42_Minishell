@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 22:29:36 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:27:40 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	add_var(t_cmd cmds)
 
 	i = 0;
 	j = -1;
-	if (exist_var(cmds))
+	if (exist_var(cmds, 1))
 		delete_arg(cmds);
 	while (data()->copy_env[i])
 		i++;

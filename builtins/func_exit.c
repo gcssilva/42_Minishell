@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 22:37:05 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 12:58:19 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	treat_exit_arg(char *str)
 void	func_exit(t_cmd cmds)
 {
 	ft_putstr_fd("exit\n", 1);
-	if (cmds.arg[2])
+	if (cmds.arg[1] && cmds.arg[2])
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		data()->exit_status = EXIT_FAILURE;
