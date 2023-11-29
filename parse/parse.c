@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/26 20:19:54 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:06:11 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	split_cmd(char *str, int flag)
 	static int	c = 0;
 	static int	a = 0;
 
-	if (str && str[0])
+	if (str)
 	{
 		data()->cmds[c].arg[a++] = ft_strdup(str);
 		data()->cmds[c].arg[a] = 0;
@@ -54,16 +54,12 @@ int	split_cmd(char *str, int flag)
 			data()->cmds[c].red[0] = 0;
 		}
 		free(str);
-		str = 0;
 	}
-	if (flag == 0)
-	{
-		c = 0;
-		a = 0;
-	}
-	else if (flag == 124)
+	if (flag == 0 || flag == 124)
 	{
 		c++;
+		if (flag == 0)
+			c = 0;
 		a = 0;
 	}
 	return (c);
@@ -98,9 +94,27 @@ char	*copy_var(char *cmd, char *var)
 	return (cmd);
 }
 
+char	*get_var(char *cmd, char *var)
+{
+	int	i;
+
+	i = -1;
+	while(data()->copy_env[++i])
+	{
+		if (!ft_strncmp(var, data()->copy_env[i], ft_strlen(var)))
+		{
+			if (data()->copy_env[i][ft_strlen(var)] == '=')
+			{
+				cmd = copy_var(cmd, data()->copy_env[i]);
+				break ;
+			}
+		}
+	}
+	return (cmd);
+}
+
 char	*exp_var(char *cmd, char *input, int *i)
 {
-	int		j;
 	char	*var;
 
 	var = 0;
@@ -113,24 +127,14 @@ char	*exp_var(char *cmd, char *input, int *i)
 	}
 	while(ft_isalnum(input[*i]) || input[*i] == '_')
 		var = cjoin(var, input[(*i)++]);
+	*i -= 1;
 	if (!var)
 		cmd = cjoin(cmd, '$');
 	else
-	{
-		j = -1;
-		while(data()->copy_env[++j])
-		{
-			if (!ft_strncmp(var, data()->copy_env[j], ft_strlen(var)))
-			{
-				if (data()->copy_env[j][ft_strlen(var)] == '=')
-				{
-					cmd = copy_var(cmd, data()->copy_env[j]);
-					break ;
-				}
-			}
-		}
-	}
-	return (cmd);
+		cmd = get_var(cmd, var);
+	if (cmd)
+		return (cmd);
+	return(ft_strdup(""));
 }
 
 int	get_pos(char **ar)

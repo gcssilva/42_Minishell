@@ -39,11 +39,11 @@ t_data	*data(void);
 void	copy_env(char **input);
 
 //builtins
-void	find_builtins(t_cmd cmd, int flag);
+void	find_builtins(t_cmd cmd);
 void	func_pwd(void);
 void	func_echo(t_cmd cmd);
 void	func_cd(t_cmd cmds);
-void	func_env(void);
+void	func_env(int flag);
 void	func_unset(t_cmd cmds);
 void    func_export(t_cmd cmds);
 void	func_exit(t_cmd cmds);
@@ -54,6 +54,11 @@ void	just_one_cmd(char **copy_env);
 void	executer(void);
 void	redirct(t_cmd cmds);
 int		is_path(char *cmd);
+void	print_str(char *str);
+int		is_numeric(char *arg);
+void	delete_arg(t_cmd cmds);
+int		exist_var(t_cmd cmds);
+int		var_len(char *var);
 
 //parse
 void	parse_input(char *input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:35:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 12:09:36 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/28 23:19:02 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	echo_print(t_cmd cmd, int flag)
 
 void	func_echo(t_cmd cmds)
 {
-	if(ft_strncmp(cmds.arg[1], "-n", 2) == 0)
+	if(!ft_strncmp(cmds.arg[1], "-n", 2) && ft_strlen(cmds.arg[1]) == 2)
 		echo_print(cmds, 1);
 	else
 		echo_print(cmds, 0);

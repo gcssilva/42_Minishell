@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/25 13:27:40 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/28 22:37:05 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,23 @@ void	func_exit(t_cmd cmds)
 	if (cmds.arg[2])
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		exit_status = EXIT_FAILURE;
+		data()->exit_status = EXIT_FAILURE;
 	}
 	else if (cmds.arg[1] && !is_numeric(cmds.arg[1]))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		exit_status = 255;
-		exit (exit_status);
+		data()->exit_status = 255;
+		exit (data()->exit_status);
 	}
 	else if (cmds.arg[1] && is_numeric(cmds.arg[1]))
 	{
-		exit_status = treat_exit_arg(cmds.arg[0]);
-		if (exit_status < 0)
-			exit_status = (exit_status + 256);
-		exit_status = exit_status % 256;
-		exit(exit_status);
+		data()->exit_status = treat_exit_arg(cmds.arg[0]);
+		if (data()->exit_status < 0)
+			data()->exit_status = (data()->exit_status + 256);
+		data()->exit_status = data()->exit_status % 256;
+		exit(data()->exit_status);
 	}
-	exit(exit_status);
+	exit(data()->exit_status);
 }
 
 int	is_numeric(char *arg)

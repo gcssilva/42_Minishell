@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 00:20:31 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/24 15:36:25 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/11/28 23:34:49 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,13 @@ int	check_quotes(char *input)
 	int	i;
 	int	q;
 
-	i = -1;
+	i = 0;
 	q = 0;
+	while (ft_isblank(input[i]))
+		i++;
+	if (!input[i])
+		return (0);
+	i = -1;
 	while(input[++i])
 	{
 		if ((input[i] == '\'' || input[i] == '"') && q == 0)

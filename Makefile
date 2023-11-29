@@ -6,7 +6,7 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/11/26 17:08:43 by gsilva           ###   ########.fr        #
+#    Updated: 2023/11/28 22:40:41 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC		=	main.c \
 			builtins/func_cd.c \
 			builtins/func_exit.c \
 			builtins/func_unset.c \
-			#builtins/func_export.c \#
+			builtins/func_export.c \
 			
 
 OBJ		=	$(SRC:.c=.o)

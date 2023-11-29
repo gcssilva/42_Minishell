@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 12:08:48 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/11/28 23:09:45 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,22 @@ int	is_path(char *cmd)
 	}
 	return (0);
 }
-void	number_cmds(t_cmd cmds)
+
+int	is_builtin(t_cmd cmds)
 {
-	if (data()->n_cmd == 1)
-	{
-		if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
-		{
-			func_exit(cmds);
-		}
-	}
+	if (!ft_strncmp(cmds.cmd, "pwd", 3) && ft_strlen(cmds.cmd) == 3)
+		return (1);
+	else if (!ft_strncmp(cmds.cmd, "echo", 4) && ft_strlen(cmds.cmd) == 4)
+		return (1);
+	else if (!ft_strncmp(cmds.cmd, "env", 3) && ft_strlen(cmds.cmd) == 3)
+		return (1);
+	else if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
+		return (1);
+	else if (!ft_strncmp(cmds.cmd, "cd", 2))
+		return (1);
+	else if (!ft_strncmp(cmds.cmd, "export", 6))
+		return(1);
+	else if (!ft_strncmp(cmds.cmd, "unset", 5))
+		return (1);
+	return (0);
 }
