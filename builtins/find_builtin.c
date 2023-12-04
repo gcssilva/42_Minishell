@@ -6,16 +6,11 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 22:32:56 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:24:47 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-/*falta argumentos para linkar isto com o resto do projeto
-  mas fora isso esta pronto
-builtins finalizado porem sem testes
-*/
 
 void	find_builtins(t_cmd cmds)
 {

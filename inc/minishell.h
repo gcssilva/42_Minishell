@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
+/*   Updated: 2023/12/04 19:45:55 by gsilva           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../libft/libft.h"
@@ -10,14 +22,9 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-extern int	sig_n;
+extern int	g_sig;
 
-//A struct s_cmd guarda as informacoes de 1 comando ate o proximo pipe ou ate o fim do input
-//a variavel *delimiters[] representa um array de delimitadores de heredoc '<<'
-//a variavel *cmd contem apenas o nome do comando
-//a variavel **arg representa um array de argumentos passados ao comando (arg[0] sempre contem o nome do comando)
-
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	int		index;
 	char	*red[10];
@@ -28,59 +35,111 @@ typedef struct	s_cmd
 
 typedef struct s_data
 {
+	int		temp_file;
 	int		exit_status;
 	int		n_cmd;
-	char	**copy_env;
 	int		std_fd[2];
 	int		last_fd[2];
+	char	**copy_env;
 	t_cmd	*cmds;
 }	t_data;
 
-t_data	*data(void);
+//find_builtin
+void	find_builtins(t_cmd cmds);
 
+//func_cd
+char	*home(char **env);
+void	cd_error(char *token);
+void	func_cd(t_cmd cmds);
+
+//func_echo
+int		last_space(char **arg, int i);
+void	echo_print(t_cmd cmd, int flag);
+void	func_echo(t_cmd cmds);
+
+//func_env
+void	func_env(int flag);
+
+//func_exec
+int		check(char *cmd);
+char	*find_path(char *cmd, char **env, int i);
+void	func_exec(t_cmd cmds);
+
+//func_exit
+int		treat_exit_arg(char *str);
+void	func_exit(t_cmd cmds);
+int		is_numeric(char *arg);
+
+//func_export
+int		valid_var(char *var);
+void	delete_arg(t_cmd cmds);
+void	add_var(t_cmd cmds);
+void	func_export(t_cmd cmds);
+
+//func_pwd
+void	func_pwd(void);
+
+//func_unset
+int		var_len(char *var);
+int		exist_var(t_cmd cmds, int flag);
+void	func_unset(t_cmd cmds);
+
+//copy_env
 void	copy_env(char **input);
 
-//builtins
-void	find_builtins(t_cmd cmd);
-void	func_pwd(void);
-void	func_echo(t_cmd cmd);
-void	func_cd(t_cmd cmds);
-void	func_env(int flag);
-void	func_unset(t_cmd cmds);
-void    func_export(t_cmd cmds);
-void	func_exit(t_cmd cmds);
-void	func_exec(t_cmd cmds);
-void	just_one_cmd(char **copy_env);
+//executor_utils
+void	print_str(char *str);
+int		is_path(char *cmd);
+int		is_builtin(t_cmd cmds);
 
 //executor
-void	executer(void);
-void	redirct(t_cmd cmds);
-int		is_path(char *cmd);
-void	print_str(char *str);
-int		is_numeric(char *arg);
-void	delete_arg(t_cmd cmds);
-int		exist_var(t_cmd cmds, int flag);
-int		var_len(char *var);
+void	my_child(t_cmd cmds, int *fd);
+pid_t	creat_pid(t_cmd cmds, int *fd);
+void	pipe_create(int i, int *fd);
+void	last_cmd(int i);
+void	executor(void);
 
-//parse
-void	parse_input(char *input);
-void	n_cmds(char	*input);
+//lexer
+int		check_pipes(char *input, int flag);
 int		check_quotes(char *input);
+int		lexer(char *input);
+
+//parse_red
+void	write_redir(char *r_file, int r);
+void	add_redir(char *input, int *i);
+
+//parse_utils
+void	n_cmds(char	*input);
 int		ft_isblank(int c);
 int		ft_isredir(int c);
+
+//parse_var
+char	*copy_var(char *cmd, char *var);
+char	*get_var(char *cmd, char *var);
+char	*exp_var(char *cmd, char *input, int *i);
+
+//parse
+char	*cjoin(char *str, char c);
 int		split_cmd(char *str, int flag);
 char	*quote_join(char *cmd, char *input, int *i);
-char	*copy_var(char *cmd, char *var);
-char	*exp_var(char *cmd, char *input, int *i);
-int		check_pipes(char *input);
-int		lexer(char *input);
-char	*cjoin(char *str, char c);
+int		get_pos(char **ar);
+void	parse_input(char *input);
 
+//redir
+void	check_outfile(char *red, int flag);
+void	check_infile(char *red);
+void	w_heredoc(char *delimiter);
+void	check_heredoc(char *delimiter);
+void	redirct(t_cmd cmds);
+
+//minishell
+t_data	*data(void);
+void	clean_struct(void);
+
+//signals
 void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
 void	end_loop(int sig);
-
-int		is_builtin(t_cmd cmds);
 
 #endif

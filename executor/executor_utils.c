@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_executer.c                                   :+:      :+:    :+:   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 18:15:42 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 19:10:23 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+void	print_str(char *str);
+int		is_path(char *cmd);
+int		is_builtin(t_cmd cmds);
 
 void	print_str(char *str)
 {
@@ -39,7 +42,7 @@ int	is_path(char *cmd)
 	int	i;
 
 	i = 0;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (cmd[i] == '/' || cmd[i] == '.')
 			return (1);
@@ -61,7 +64,7 @@ int	is_builtin(t_cmd cmds)
 	else if (!ft_strncmp(cmds.cmd, "cd", 2))
 		return (1);
 	else if (!ft_strncmp(cmds.cmd, "export", 6))
-		return(1);
+		return (1);
 	else if (!ft_strncmp(cmds.cmd, "unset", 5))
 		return (1);
 	return (0);

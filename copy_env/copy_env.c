@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:15:44 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 15:11:48 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:07:19 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ void	copy_env(char **input)
 
 	i = 0;
 	j = -1;
-	// if (!input)
-	// {
-	// 	data()->copy_env = (char **)malloc(sizeof(char *));
-	// 	data()->copy_env[0] = 0;
-	// 	return ;
-	// }
 	while (input[i] != NULL)
 		i++;
 	data()->copy_env = (char **)malloc(sizeof(char *) * (i + 1));

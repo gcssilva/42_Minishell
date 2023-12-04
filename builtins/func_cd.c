@@ -6,13 +6,15 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/28 22:36:01 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:25:45 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// //work on progress
+char	*home(char **env);
+void	cd_error(char *token);
+void	func_cd(t_cmd cmds);
 
 char	*home(char **env)
 {

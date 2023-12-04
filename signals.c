@@ -6,11 +6,16 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:10:19 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/29 19:26:59 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 20:07:22 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
+
+void	sig(int flag);
+void	handle_sig(int sig);
+void	handle_fork_sig(int sig);
+void	end_loop(int sig);
 
 void	sig(int flag)
 {
@@ -47,5 +52,5 @@ void	handle_fork_sig(int sig)
 void	end_loop(int sig)
 {
 	if (sig == SIGINT)
-		sig_n = SIGINT;
+		exit(data()->exit_status);
 }

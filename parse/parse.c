@@ -6,11 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/11/29 00:06:11 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 17:50:03 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+char	*cjoin(char *str, char c);
+int		split_cmd(char *str, int flag);
+char	*quote_join(char *cmd, char *input, int *i);
+int		get_pos(char **ar);
+void	parse_input(char *input);
 
 char	*cjoin(char *str, char c)
 {
@@ -35,7 +41,7 @@ char	*cjoin(char *str, char c)
 		new_str[i + 1] = 0;
 		free(str);
 	}
-	return(new_str);
+	return (new_str);
 }
 
 int	split_cmd(char *str, int flag)
@@ -82,61 +88,6 @@ char	*quote_join(char *cmd, char *input, int *i)
 	return (cmd);
 }
 
-char	*copy_var(char *cmd, char *var)
-{
-	int		i;
-
-	i = 0;
-	while (var[i] != '=')
-		i++;
-	while (var[++i])
-		cmd = cjoin(cmd, var[i]);
-	return (cmd);
-}
-
-char	*get_var(char *cmd, char *var)
-{
-	int	i;
-
-	i = -1;
-	while(data()->copy_env[++i])
-	{
-		if (!ft_strncmp(var, data()->copy_env[i], ft_strlen(var)))
-		{
-			if (data()->copy_env[i][ft_strlen(var)] == '=')
-			{
-				cmd = copy_var(cmd, data()->copy_env[i]);
-				break ;
-			}
-		}
-	}
-	return (cmd);
-}
-
-char	*exp_var(char *cmd, char *input, int *i)
-{
-	char	*var;
-
-	var = 0;
-	*i += 1;
-	if (input[*i] == '?')
-	{
-		cmd = cjoin(cmd, '$');
-		cmd = cjoin(cmd, '?');
-		return (cmd);
-	}
-	while(ft_isalnum(input[*i]) || input[*i] == '_')
-		var = cjoin(var, input[(*i)++]);
-	*i -= 1;
-	if (!var)
-		cmd = cjoin(cmd, '$');
-	else
-		cmd = get_var(cmd, var);
-	if (cmd)
-		return (cmd);
-	return(ft_strdup(""));
-}
-
 int	get_pos(char **ar)
 {
 	int	i;
@@ -147,53 +98,6 @@ int	get_pos(char **ar)
 	return (i);
 }
 
-void	write_redir(char *r_file, int r)
-{
-	int	i;
-	int	j;
-
-	i = split_cmd(0, 1);
-	j = get_pos(data()->cmds[i].red);
-	data()->cmds[i].red[j] = ft_strdup(r_file);
-	data()->cmds[i].red[j + 1] = 0;
-	if (r == 60)
-		data()->cmds[i].order[j] = ft_strdup("in");
-	else if (r == 62)
-		data()->cmds[i].order[j] = ft_strdup("out");
-	else if (r == 120)
-		data()->cmds[i].order[j] = ft_strdup("del");
-	else
-		data()->cmds[i].order[j] = ft_strdup("ap");
-}
-
-void	add_redir(char *input, int *i)
-{
-	int		r;
-	char	*r_file;
-
-	r = input[*i];
-	r_file = 0;
-	if (input[++*i] == r)
-	{
-		r += r;
-		*i += 1;
-	}
-	while (ft_isblank(input[*i]))
-		*i += 1;
-	while (input[*i] && input[*i] != '|' && !ft_isblank(input[*i]) && !ft_isredir(input[*i]))
-	{
-		if (input[*i] == '"' || input[*i] == '\'')
-			r_file = quote_join(r_file, input, i);
-		else if (input[*i] == '$')
-			exp_var(r_file, input, i);
-		else
-			r_file = cjoin(r_file, input[*i]);
-		*i += 1;
-	}
-	write_redir(r_file, r);
-	free (r_file);
-}
-
 void	parse_input(char *input)
 {
 	int		i;
@@ -201,7 +105,7 @@ void	parse_input(char *input)
 
 	i = -1;
 	cmd = 0;
-	while(input[++i])
+	while (input[++i])
 	{
 		if (input[i] == '|' || ft_isblank(input[i]) || ft_isredir(input[i]))
 		{

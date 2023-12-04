@@ -6,13 +6,12 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 18:05:43 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:27:43 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*falta teste*/
 void	func_env(int flag)
 {
 	int	i;

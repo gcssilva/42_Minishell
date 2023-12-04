@@ -6,7 +6,7 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/11/28 22:40:41 by gsilva           ###   ########.fr        #
+#    Updated: 2023/12/04 18:36:52 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,16 @@ VAL		=	--leak-check=full \
 			--track-fds=yes
 
 INC		=	inc/minishell.h
-SRC		=	main.c \
+SRC		=	minishell.c \
 			signals.c \
-			parse/parse.c \
+			parse/lexer.c \
+			parse/parse_red.c \
 			parse/parse_utils.c \
-			redir/redirc.c \
-			executor/executer.c \
-			executor/utils_executer.c \
+			parse/parse_var.c \
+			parse/parse.c \
+			redir/redir.c \
+			executor/executor.c \
+			executor/executor_utils.c \
 			builtins/func_pwd.c \
 			builtins/func_echo.c \
 			builtins/func_env.c \

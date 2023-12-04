@@ -6,11 +6,15 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 18:05:43 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:32:58 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int		var_len(char *var);
+int    exist_var(t_cmd cmds, int flag);
+void	func_unset(t_cmd cmds);
 
 int	var_len(char *var)
 {

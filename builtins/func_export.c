@@ -6,12 +6,18 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 15:27:40 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:31:44 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*falta teste*/
 #include "../inc/minishell.h"
+
+int		valid_var(char *var);
+void	delete_arg(t_cmd cmds);
+void	add_var(t_cmd cmds);
+void    func_export(t_cmd cmds);
+
 
 int	valid_var(char *var)
 {

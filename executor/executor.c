@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 16:31:444 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 19:17:33 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	my_child(t_cmd cmds, int *fd);
+pid_t	creat_pid(t_cmd cmds, int *fd);
+void	pipe_create(int i, int *fd);
+void	last_cmd(int i);
+void	executor(void);
 
 void	my_child(t_cmd cmds, int *fd)
 {
@@ -63,11 +69,7 @@ void	pipe_create(int i, int *fd)
 	while (++i < data()->n_cmd)
 	{
 		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
-		{
-			redirct(data()->cmds[i]);
-			find_builtins(data()->cmds[i]);
-			dup2(data()->std_fd[1], STDOUT_FILENO);
-		}
+			last_cmd(i);
 		else
 		{
 			if (pipe(fd) == -1)
@@ -87,13 +89,19 @@ void	pipe_create(int i, int *fd)
 	}
 }
 
-void	executer(void)
+void	last_cmd(int i)
+{
+	redirct(data()->cmds[i]);
+	find_builtins(data()->cmds[i]);
+	dup2(data()->std_fd[1], STDOUT_FILENO);
+}
+
+void	executor(void)
 {
 	int	i;
 	int	fd[2];
 
 	i = -1;
 	pipe_create(i, fd);
-	// clean_struct();
 	return ;
 }

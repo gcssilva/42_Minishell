@@ -6,13 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 12:58:19 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:53:40 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*falta teste*/
 
 #include "../inc/minishell.h"
+
+int		treat_exit_arg(char *str);
+void	func_exit(t_cmd cmds);
+int		is_numeric(char *arg);
 
 // int	num_exit(int num)
 // {
@@ -84,7 +88,7 @@ void	func_exit(t_cmd cmds)
 	}
 	else if (cmds.arg[1] && is_numeric(cmds.arg[1]))
 	{
-		data()->exit_status = treat_exit_arg(cmds.arg[0]);
+		data()->exit_status = treat_exit_arg(cmds.arg[1]);
 		if (data()->exit_status < 0)
 			data()->exit_status = (data()->exit_status + 256);
 		data()->exit_status = data()->exit_status % 256;

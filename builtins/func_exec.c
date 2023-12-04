@@ -6,13 +6,17 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/22 15:10:14 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 18:29:04 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	check(char *cmd)
+int		check(char *cmd);
+char	*find_path(char *cmd, char **env, int i);
+void	func_exec(t_cmd cmds);
+
+int	check(char *cmd)
 {
 	int	flag;
 	int	i;

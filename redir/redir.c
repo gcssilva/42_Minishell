@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirc.c                                           :+:      :+:    :+:   */
+/*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/29 19:26:05 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/04 19:55:27 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	check_outfile(char *red, int flag);
+void	check_infile(char *red);
+void	w_heredoc(char *delimiter);
+void	check_heredoc(char *delimiter);
+void	redirct(t_cmd cmds);
 
 void	check_outfile(char *red, int flag)
 {
 	int	out;
 
 	if (flag == 1)
-		out= open(red, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		out = open(red, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else
-		out= open(red, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		out = open(red, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (out == -1)
 	{
 		perror("error: open outfile");
@@ -51,34 +57,51 @@ void	check_infile(char *red)
 	close(in);
 }
 
-void	check_heredoc(char *delimiter)
+void	w_heredoc(char *delimiter)
 {
-	int		temp_file;
 	char	*input;
 
-	temp_file = open(".temp_file.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
 	sig(2);
+	data()->temp_file = open(".temp_file.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
 		{
 			write(1, "heredoc delimited by eof\n", 26);
-			break ;
+			close(data()->temp_file);
+			exit(data()->exit_status);
 		}
 		if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
 			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
-			break ;
-		write(temp_file, input, ft_strlen(input));
-		write(temp_file, "\n", 1);
+		{
+			close(data()->temp_file);
+			exit(data()->exit_status);
+		}
+		write(data()->temp_file, input, ft_strlen(input));
+		write(data()->temp_file, "\n", 1);
 		free(input);
-		input = 0;
 	}
-	if (input)
-		free(input);
-	close(temp_file);
-	check_infile(".temp_file.txt");
-	sig(1);
+	close(data()->temp_file);
+	exit(data()->exit_status);
+}
+
+void	check_heredoc(char *delimiter)
+{
+	pid_t	pid;
+	int		e_status;
+
+	pid = fork();
+	if (pid < 0)
+		perror("error: fork");
+	if (pid == 0)
+		w_heredoc(delimiter);
+	else
+	{
+		waitpid(pid, &e_status, 0);
+		check_infile(".temp_file.txt");
+		sig(1);	
+	}
 }
 
 void	redirct(t_cmd cmds)
