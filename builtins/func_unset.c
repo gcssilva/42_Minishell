@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   func_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 18:32:58 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:05:39 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int		var_len(char *var);
-int    exist_var(t_cmd cmds, int flag);
-void	func_unset(t_cmd cmds);
 
 int	var_len(char *var)
 {
@@ -26,29 +22,53 @@ int	var_len(char *var)
 	return (len);
 }
 
-int    exist_var(t_cmd cmds, int flag)
+void	delete_arg(t_cmd cmds)
 {
-    int    i;
+	int		i;
+	int		j;
+	char	**copy_env;
 
-    i = -1;
-    while (data()->copy_env[++i])
-    {
-        if (flag)
-            {
-                if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(cmds.arg[1])) == 0)
-                    return (1);
-            }
-        if (ft_strncmp(data()->copy_env[i], cmds.arg[1], ft_strlen(cmds.arg[1])) == 0)
-            return (1);
-    }
-    return (0);
+	i = 0;
+	while (data()->copy_env[i++])
+		;
+	copy_env = malloc(sizeof(char *) * (i));
+	j = 0;
+	i = -1;
+	while (data()->copy_env[++i])
+	{
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(data()->copy_env[i])) != 0)
+		{
+			copy_env[j] = data()->copy_env[i];
+			j++;
+		}
+		else
+			free(data()->copy_env[i]);
+	}
+	copy_env[j] = NULL;
+	free(data()->copy_env);
+	data()->copy_env = copy_env;
+}
+
+int    exist_var(t_cmd cmds)
+{
+	int	i;
+
+	i = 0;
+	while (data()->copy_env[i])
+	{
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(cmds.arg[1])) != 0)
+			i++;
+		else
+			return (-1);
+	}
+	return (0);
 }
 
 void	func_unset(t_cmd cmds)
 {
 	if(cmds.arg[1] && !cmds.arg[2])
 	{
-		if(exist_var(cmds, 0))
+		if(exist_var(cmds))
 			delete_arg(cmds);
 		else
 		{

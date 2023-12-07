@@ -1,40 +1,65 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 19:10:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/07 15:59:14 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	print_str(char *str);
-int		is_path(char *cmd);
-int		is_builtin(t_cmd cmds);
-
-void	print_str(char *str)
+int	print_aspas(char *str)
 {
 	int	i;
+	int flag;
 
+	flag = 0;
 	i = -1;
-	ft_putstr_fd("declare -x ", dup(STDOUT_FILENO));
-	while (str[++i])
+	while (*str && str[++i])
 	{
-		ft_putchar_fd(str[i], dup(STDOUT_FILENO));
+		printf("%c", str[i]);
 		if (str[i] == '=')
 		{
-			ft_putchar_fd('"', dup(STDOUT_FILENO));
-			while (str[++i])
-				ft_putchar_fd(str[i], dup(STDOUT_FILENO));
-			ft_putchar_fd('"', dup(STDOUT_FILENO));
-			break ;
+			printf("\"");
+			flag = 1;
 		}
 	}
-	ft_putchar_fd('\n', dup(STDOUT_FILENO));
+	return (flag);
+}
+
+int	strrlen(char *str, char c)
+{
+	int	len;
+
+	len = -1;
+	if (!str)
+		return (0);
+	while (str[++len] && str[len] != c)
+		;
+	return (len + (str[len] == c));
+}
+
+void	print_export(char **env)
+{
+	int	i;
+	int len;
+	int	flag;
+	
+	i = 0;
+	while (env && env[i] != NULL)
+	{
+		printf("declare -x ");
+		len = strrlen(env[i], '=');
+		flag = print_aspas(env[i]);
+		if (flag == 1)
+			printf("\"");
+		printf("\n");
+		i++;
+	}
 }
 
 int	is_path(char *cmd)
@@ -42,7 +67,7 @@ int	is_path(char *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd[i])
+	while(cmd[i])
 	{
 		if (cmd[i] == '/' || cmd[i] == '.')
 			return (1);
@@ -64,7 +89,7 @@ int	is_builtin(t_cmd cmds)
 	else if (!ft_strncmp(cmds.cmd, "cd", 2))
 		return (1);
 	else if (!ft_strncmp(cmds.cmd, "export", 6))
-		return (1);
+		return(1);
 	else if (!ft_strncmp(cmds.cmd, "unset", 5))
 		return (1);
 	return (0);
