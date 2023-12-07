@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 19:45:55 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:42:38 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	echo_print(t_cmd cmd, int flag);
 void	func_echo(t_cmd cmds);
 
 //func_env
-void	func_env(int flag);
+void	func_env(void);
 
 //func_exec
 int		check(char *cmd);
@@ -81,7 +81,7 @@ void	func_pwd(void);
 
 //func_unset
 int		var_len(char *var);
-int		exist_var(t_cmd cmds, int flag);
+int		exist_var(t_cmd cmds);
 void	func_unset(t_cmd cmds);
 
 //copy_env
@@ -91,6 +91,10 @@ void	copy_env(char **input);
 void	print_str(char *str);
 int		is_path(char *cmd);
 int		is_builtin(t_cmd cmds);
+
+//executor_utils 2
+int	check_unset(char *str);
+int	exist_export(t_cmd cmds);
 
 //executor
 void	my_child(t_cmd cmds, int *fd);

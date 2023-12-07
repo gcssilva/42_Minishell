@@ -6,7 +6,7 @@
 /*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 15:59:14 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:47:24 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	is_path(char *cmd)
 	return (0);
 }
 
-int	is_builtin(t_cmd cmds)
+int		is_builtin(t_cmd cmds)
 {
 	if (!ft_strncmp(cmds.cmd, "pwd", 3) && ft_strlen(cmds.cmd) == 3)
 		return (1);

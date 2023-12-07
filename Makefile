@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
+#    By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/04 18:36:52 by gsilva           ###   ########.fr        #
+#    Updated: 2023/12/07 16:50:09 by gmorais-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC		=	minishell.c \
 			parse/parse.c \
 			redir/redir.c \
 			executor/executor.c \
-			executor/executor_utils.c \
+			executor/utils_executer.c\
+			executor/utils_executer_2.c\
 			builtins/func_pwd.c \
 			builtins/func_echo.c \
 			builtins/func_env.c \
@@ -52,7 +53,7 @@ $(NAME):	$(OBJ)
 			@$(CC) $(SRC) $(FLAGS) -o $(NAME)
 
 .c.o:
-			@$(CC) $(FLAGS) -c $< -o $@
+			@$(CC) -c $< -o $@
 
 clean:
 			@make clean -C ./libft

@@ -6,7 +6,7 @@
 /*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 16:02:51 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:43:40 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	add_var(t_cmd cmds)
 void    func_export(t_cmd cmds)
 {
     if (!cmds.arg[1])
-		print_export(data()->copy_env);
+		exist_export(cmds);
     else
     {
         if (valid_var(cmds.arg[1]))
