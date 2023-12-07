@@ -6,7 +6,7 @@
 /*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/07 16:42:38 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:27:04 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ void	func_unset(t_cmd cmds);
 void	copy_env(char **input);
 
 //executor_utils
-void	print_str(char *str);
+void	print_export(char **env);
 int		is_path(char *cmd);
 int		is_builtin(t_cmd cmds);
 
 //executor_utils 2
 int	check_unset(char *str);
-int	exist_export(t_cmd cmds);
+int	check_export(t_cmd cmds);
 
 //executor
 void	my_child(t_cmd cmds, int *fd);

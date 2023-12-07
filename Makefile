@@ -6,13 +6,13 @@
 #    By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/07 16:50:09 by gmorais-         ###   ########.fr        #
+#    Updated: 2023/12/07 17:14:36 by gmorais-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	cc
-FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -fdiagnostics-color=always -g
+FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft  -g -fsanitize=address
 
 VAL		=	--leak-check=full \
 			--show-leak-kinds=all \

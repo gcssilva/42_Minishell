@@ -6,7 +6,7 @@
 /*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 16:43:40 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:26:47 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	add_var(t_cmd cmds)
 	i = 0;
 	j = -1;
 	if (exist_var(cmds) == -1)
-		delete_arg(cmds);
+		check_export(cmds);
 	while (data()->copy_env[i])
 		i++;
 	x = i;
@@ -62,7 +62,7 @@ void	add_var(t_cmd cmds)
 void    func_export(t_cmd cmds)
 {
     if (!cmds.arg[1])
-		exist_export(cmds);
+		print_export(data()->copy_env);
     else
     {
         if (valid_var(cmds.arg[1]))
