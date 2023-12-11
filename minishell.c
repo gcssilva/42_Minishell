@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 19:56:44 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/11 17:01:04 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	copy_env(env);
 	data()->std_fd[0] = dup(STDIN_FILENO);
 	data()->std_fd[1] = dup(STDOUT_FILENO);
 	while (1)
 	{
+		copy_env(env);;
 		sig(0);
 		input = readline("minishell~> ");
 		if (!input)

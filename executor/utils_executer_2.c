@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:32:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:29:20 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:16:17 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,12 @@
 int	check_unset(char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (str[i])
 	{
 		if (str[i] == '=' && str[i + 1])
-		{
-			printf("merda\n");
 			return (-1);
-		}
 		i++;
 	}
 	return (0);

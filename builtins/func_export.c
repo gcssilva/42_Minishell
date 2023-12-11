@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:33:55 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:02:53 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	add_var(t_cmd cmds)
 void	func_export(t_cmd cmds)
 {
 	if (!cmds.arg[1])
-		print_export(data()->copy_env);
+		print_export(data()->ord_env);
 	else
 	{
 		if (valid_var(cmds.arg[1]))

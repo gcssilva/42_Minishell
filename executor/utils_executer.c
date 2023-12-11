@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:30:36 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:08:22 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ int	strrlen(char *str, char c)
 void	print_export(char **env)
 {
 	int	i;
-	int	len;
 	int	flag;
 
 	i = 0;
 	while (env && env[i] != NULL)
 	{
 		printf("declare -x ");
-		len = strrlen(env[i], '=');
 		flag = print_aspas(env[i]);
 		if (flag == 1)
 			printf("\"");

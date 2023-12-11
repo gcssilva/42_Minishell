@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 19:55:27 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:00:59 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	check_outfile(char *red, int flag);
 void	check_infile(char *red);
-void	w_heredoc(char *delimiter);
 void	check_heredoc(char *delimiter);
 void	redirct(t_cmd cmds);
 
@@ -57,51 +56,38 @@ void	check_infile(char *red)
 	close(in);
 }
 
-void	w_heredoc(char *delimiter)
+void	check_heredoc(char *delimiter)
 {
+	int		i;
 	char	*input;
 
+	i = 1;
 	sig(2);
 	data()->temp_file = open(".temp_file.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
-	while (1)
+	while (i)
 	{
 		input = readline("> ");
+		printf("%s\n", input);
 		if (!input)
 		{
 			write(1, "heredoc delimited by eof\n", 26);
-			close(data()->temp_file);
-			exit(data()->exit_status);
+			i = 0;
 		}
-		if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
+		else if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
 			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
+			i = 0;
+		else
 		{
-			close(data()->temp_file);
-			exit(data()->exit_status);
+			write(data()->temp_file, input, ft_strlen(input));
+			write(data()->temp_file, "\n", 1);
+			free(input);
+			input = 0;
 		}
-		write(data()->temp_file, input, ft_strlen(input));
-		write(data()->temp_file, "\n", 1);
-		free(input);
 	}
+	free(input);
 	close(data()->temp_file);
-	exit(data()->exit_status);
-}
-
-void	check_heredoc(char *delimiter)
-{
-	pid_t	pid;
-	int		e_status;
-
-	pid = fork();
-	if (pid < 0)
-		perror("error: fork");
-	if (pid == 0)
-		w_heredoc(delimiter);
-	else
-	{
-		waitpid(pid, &e_status, 0);
-		check_infile(".temp_file.txt");
-		sig(1);	
-	}
+	check_infile(".temp_file.txt");
+	sig(1);
 }
 
 void	redirct(t_cmd cmds)

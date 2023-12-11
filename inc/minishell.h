@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/07 17:27:04 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:22:11 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_data
 	int		std_fd[2];
 	int		last_fd[2];
 	char	**copy_env;
+	char	**ord_env;
 	t_cmd	*cmds;
 }	t_data;
 
@@ -86,6 +87,7 @@ void	func_unset(t_cmd cmds);
 
 //copy_env
 void	copy_env(char **input);
+void	ord_env(char **input);
 
 //executor_utils
 void	print_export(char **env);
@@ -132,7 +134,6 @@ void	parse_input(char *input);
 //redir
 void	check_outfile(char *red, int flag);
 void	check_infile(char *red);
-void	w_heredoc(char *delimiter);
 void	check_heredoc(char *delimiter);
 void	redirct(t_cmd cmds);
 
