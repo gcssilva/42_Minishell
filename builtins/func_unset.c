@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 16:05:39 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:28:58 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	delete_arg(t_cmd cmds)
 	i = -1;
 	while (data()->copy_env[++i])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(data()->copy_env[i])) != 0)
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1],
+				var_len(data()->copy_env[i])) != 0)
 		{
 			copy_env[j] = data()->copy_env[i];
 			j++;
@@ -49,14 +50,15 @@ void	delete_arg(t_cmd cmds)
 	data()->copy_env = copy_env;
 }
 
-int    exist_var(t_cmd cmds)
+int	exist_var(t_cmd cmds)
 {
 	int	i;
 
 	i = 0;
 	while (data()->copy_env[i])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(cmds.arg[1])) != 0)
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1],
+				var_len(cmds.arg[1])) != 0)
 			i++;
 		else
 			return (-1);
@@ -66,9 +68,9 @@ int    exist_var(t_cmd cmds)
 
 void	func_unset(t_cmd cmds)
 {
-	if(cmds.arg[1] && !cmds.arg[2])
+	if (cmds.arg[1] && !cmds.arg[2])
 	{
-		if(exist_var(cmds))
+		if (exist_var(cmds))
 			delete_arg(cmds);
 		else
 		{

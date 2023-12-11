@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 17:26:21 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:30:36 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	print_aspas(char *str)
 {
 	int	i;
-	int flag;
+	int	flag;
 
 	flag = 0;
 	i = -1;
@@ -46,9 +46,9 @@ int	strrlen(char *str, char c)
 void	print_export(char **env)
 {
 	int	i;
-	int len;
+	int	len;
 	int	flag;
-	
+
 	i = 0;
 	while (env && env[i] != NULL)
 	{
@@ -67,7 +67,7 @@ int	is_path(char *cmd)
 	int	i;
 
 	i = 0;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (cmd[i] == '/' || cmd[i] == '.')
 			return (1);
@@ -76,7 +76,7 @@ int	is_path(char *cmd)
 	return (0);
 }
 
-int		is_builtin(t_cmd cmds)
+int	is_builtin(t_cmd cmds)
 {
 	if (!ft_strncmp(cmds.cmd, "pwd", 3) && ft_strlen(cmds.cmd) == 3)
 		return (1);
@@ -89,7 +89,7 @@ int		is_builtin(t_cmd cmds)
 	else if (!ft_strncmp(cmds.cmd, "cd", 2))
 		return (1);
 	else if (!ft_strncmp(cmds.cmd, "export", 6))
-		return(1);
+		return (1);
 	else if (!ft_strncmp(cmds.cmd, "unset", 5))
 		return (1);
 	return (0);

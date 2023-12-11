@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+         #
+#    By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/07 17:14:36 by gmorais-         ###   ########.fr        #
+#    Updated: 2023/12/11 11:49:30 by gmorais-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	cc
-FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft  -g -fsanitize=address
+FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+LIBS	=	-lreadline -L ./libft -lft
 
 VAL		=	--leak-check=full \
 			--show-leak-kinds=all \
@@ -48,9 +49,11 @@ OBJ		=	$(SRC:.c=.o)
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ)
-			@make -C ./libft
-			@$(CC) $(SRC) $(FLAGS) -o $(NAME)
+$(NAME): $(OBJ)
+	@make -C ./libft
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBS)
+
+
 
 .c.o:
 			@$(CC) -c $< -o $@

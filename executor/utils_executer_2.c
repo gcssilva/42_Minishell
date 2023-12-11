@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executer_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:32:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 17:28:37 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:29:20 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_unset(char *str)
 	return (0);
 }
 
-int    check_export(t_cmd cmds)
+int	check_export(t_cmd cmds)
 {
 	int	i;
 	int	j;
@@ -40,7 +40,8 @@ int    check_export(t_cmd cmds)
 	i = 0;
 	while (data()->copy_env[i][j])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1], var_len(cmds.arg[1])) != 0)
+		if (ft_strncmp(data()->copy_env[i], cmds.arg[1],
+				var_len(cmds.arg[1])) != 0)
 			i++;
 		else
 			return (-1);

@@ -6,7 +6,7 @@
 /*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:21:34 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/11/21 15:24:51 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:23:05 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	func_pwd(void)
 {
 	char	*path;
-	
+
 	path = getcwd(NULL, 1025);
 	if (path == NULL)
 	{

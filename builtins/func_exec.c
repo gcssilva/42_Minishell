@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 18:29:04 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:24:34 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*find_path(char *cmd, char **env, int i)
 		i++;
 	paths = ft_split(env[i] + 5, ':');
 	i = -1;
-	//printf("cmd: %s\n", cmd);
 	while (paths[++i])
 	{
 		part_path = ft_strjoin(paths[i], "/");

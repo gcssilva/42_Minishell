@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:35:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 18:26:51 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:25:18 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	func_echo(t_cmd cmds);
 
 int	last_space(char **arg, int i)
 {
-	if(arg[i + 1] == NULL)
+	if (arg[i + 1] == NULL)
 		return (1);
 	else
 		return (0);
@@ -32,7 +32,7 @@ void	echo_print(t_cmd cmd, int flag)
 	while (cmd.arg[++i])
 	{
 		ft_putstr_fd(cmd.arg[i], dup(STDOUT_FILENO));
-		if(last_space(cmd.arg, i) == 0)
+		if (last_space(cmd.arg, i) == 0)
 			ft_putchar_fd(' ', dup(STDOUT_FILENO));
 	}
 	if (!flag)
@@ -45,7 +45,7 @@ void	func_echo(t_cmd cmds)
 {
 	if (!cmds.arg[1])
 		ft_putchar_fd('\n', dup(STDOUT_FILENO));
-	else if(!ft_strncmp(cmds.arg[1], "-n", 2) && ft_strlen(cmds.arg[1]) == 2)
+	else if (!ft_strncmp(cmds.arg[1], "-n", 2) && ft_strlen(cmds.arg[1]) == 2)
 		echo_print(cmds, 1);
 	else
 		echo_print(cmds, 0);

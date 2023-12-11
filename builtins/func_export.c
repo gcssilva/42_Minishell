@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 17:26:47 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:33:55 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,25 @@ void	add_var(t_cmd cmds)
 	copy[i] = ft_strdup(cmds.arg[1]);
 	copy[i + 1] = NULL;
 	i = -1;
-	while(data()->copy_env[++i] != NULL)
+	while (data()->copy_env[++i] != NULL)
 		free(data()->copy_env[i]);
 	free(data()->copy_env);
 	data()->copy_env = copy;
-	
 }
 
-void    func_export(t_cmd cmds)
+void	func_export(t_cmd cmds)
 {
-    if (!cmds.arg[1])
+	if (!cmds.arg[1])
 		print_export(data()->copy_env);
-    else
-    {
-        if (valid_var(cmds.arg[1]))
+	else
+	{
+		if (valid_var(cmds.arg[1]))
+			add_var(cmds);
+		else
 		{
-            add_var(cmds);
-		}
-        else
-        {
-            ft_putstr_fd("export: \'", 2);
+			ft_putstr_fd("export: \'", 2);
 			ft_putstr_fd(cmds.arg[1], 2);
 			ft_putstr_fd("\': not a valid identifier\n", 2);
-        }
-    }
+		}
+	}
 }

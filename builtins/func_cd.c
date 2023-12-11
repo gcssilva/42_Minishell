@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 18:25:45 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:24:04 by gmorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*home(char **env)
 {
 	int		i;
 	int		j;
-	int 	n;
+	int		n;
 	char	*home;
-	
+
 	i = 0;
 	n = 0;
 	home = NULL;
@@ -59,7 +59,7 @@ void	func_cd(t_cmd cmds)
 	char	*home_path;
 
 	home_path = home(data()->copy_env);
-	if(cmds.arg[1] == NULL || !ft_strncmp(cmds.arg[1], "~", 1))
+	if (cmds.arg[1] == NULL || !ft_strncmp(cmds.arg[1], "~", 1))
 		chdir(home_path);
 	else if (cmds.arg[2])
 	{
@@ -69,4 +69,3 @@ void	func_cd(t_cmd cmds)
 	else if (chdir(cmds.arg[1]) == -1)
 		cd_error(cmds.arg[1]);
 }
-
