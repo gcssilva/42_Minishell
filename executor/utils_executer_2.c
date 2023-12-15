@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:32:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 15:16:17 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/14 19:28:54 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	check_export(t_cmd cmds)
 
 	j = 0;
 	i = 0;
-	while (data()->copy_env[i][j])
+	while (data()->ord_env[i][j])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1],
+		if (ft_strncmp(data()->ord_env[i], cmds.arg[1],
 				var_len(cmds.arg[1])) != 0)
 			i++;
 		else

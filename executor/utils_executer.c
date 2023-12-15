@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 17:08:22 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/14 19:55:47 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ int	print_aspas(char *str)
 		printf("%c", str[i]);
 		if (str[i] == '=')
 		{
-			printf("\"");
-			flag = 1;
+			if (flag == 0)
+			{
+				printf("\"");
+				flag = 1;		
+			}
 		}
 	}
 	return (flag);

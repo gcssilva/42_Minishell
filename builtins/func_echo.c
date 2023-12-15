@@ -3,37 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   func_echo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:35:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:25:18 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/14 20:56:12 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int		last_space(char **arg, int i);
+void	last_space(char **arg, int i);
 void	echo_print(t_cmd cmd, int flag);
 void	func_echo(t_cmd cmds);
 
-int	last_space(char **arg, int i)
+void	last_space(char **arg, int i)
 {
 	if (arg[i + 1] == NULL)
-		return (1);
+		return ;
 	else
-		return (0);
+		ft_putchar_fd(' ', dup(STDOUT_FILENO));
 }
 
 void	echo_print(t_cmd cmd, int flag)
 {
 	int	i;
+	int	j;
 
 	i = flag;
 	while (cmd.arg[++i])
 	{
-		ft_putstr_fd(cmd.arg[i], dup(STDOUT_FILENO));
-		if (last_space(cmd.arg, i) == 0)
-			ft_putchar_fd(' ', dup(STDOUT_FILENO));
+		j = 0;
+		while (cmd.arg[i][j])
+		{
+			if (cmd.arg[i][j] == '$' && cmd.arg[i][j + 1] == '?')
+			{
+				ft_putstr_fd(ft_itoa(data()->exit_status), dup(STDOUT_FILENO));
+				j++;
+			}
+			else
+				ft_putchar_fd(cmd.arg[i][j], dup(STDOUT_FILENO));
+			j++;
+		}
+		ft_putchar_fd(' ', dup(STDOUT_FILENO));
 	}
 	if (!flag)
 		ft_putstr_fd("\n", dup(STDOUT_FILENO));

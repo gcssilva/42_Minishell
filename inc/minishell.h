@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/11 16:22:11 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:35:59 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	cd_error(char *token);
 void	func_cd(t_cmd cmds);
 
 //func_echo
-int		last_space(char **arg, int i);
+void	last_space(char **arg, int i);
 void	echo_print(t_cmd cmd, int flag);
 void	func_echo(t_cmd cmds);
 
@@ -73,8 +73,8 @@ int		is_numeric(char *arg);
 
 //func_export
 int		valid_var(char *var);
-void	delete_arg(t_cmd cmds);
-void	add_var(t_cmd cmds);
+void	delete_arg(t_cmd cmds, int a);
+void	add_var(t_cmd cmds, int a);
 void	func_export(t_cmd cmds);
 
 //func_pwd
@@ -82,7 +82,7 @@ void	func_pwd(void);
 
 //func_unset
 int		var_len(char *var);
-int		exist_var(t_cmd cmds);
+int		exist_var(t_cmd cmds, int a);
 void	func_unset(t_cmd cmds);
 
 //copy_env

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:03:05 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 17:50:58 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/14 21:00:43 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,8 @@ void	add_redir(char *input, int *i)
 
 	r = input[*i];
 	r_file = 0;
-	if (input[++*i] == r)
-	{
+	if (input[++*i] == r && (*i)++)
 		r += r;
-		*i += 1;
-	}
 	while (ft_isblank(input[*i]))
 		*i += 1;
 	while (input[*i] && input[*i] != '|'
@@ -61,4 +58,5 @@ void	add_redir(char *input, int *i)
 	}
 	write_redir(r_file, r);
 	free (r_file);
+	*i -= 1;
 }

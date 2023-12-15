@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 19:17:33 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/14 20:02:45 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ pid_t	creat_pid(t_cmd cmds, int *fd)
 
 void	pipe_create(int i, int *fd)
 {
-	pid_t	pids[20];
+	pid_t	pids;
 	int		e_status;
 
 	while (++i < data()->n_cmd)
@@ -78,14 +78,10 @@ void	pipe_create(int i, int *fd)
 				ft_putendl_fd(strerror(errno), 2);
 				return ;
 			}
-			pids[i] = creat_pid(data()->cmds[i], fd);
+			pids = creat_pid(data()->cmds[i], fd);
+			waitpid(pids, &e_status, 0);
+			data()->exit_status = e_status;
 		}
-	}
-	i = -1;
-	while (++i < data()->n_cmd)
-	{
-		if (pids[i] != -1)
-			waitpid(pids[i], &e_status, 0);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:28:58 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:42:29 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,42 @@ int	var_len(char *var)
 	return (len);
 }
 
-void	delete_arg(t_cmd cmds)
+void	delete_arg(t_cmd cmds, int a)
 {
 	int		i;
 	int		j;
 	char	**copy_env;
 
 	i = 0;
-	while (data()->copy_env[i++])
+	while (data()->ord_env[i++])
 		;
 	copy_env = malloc(sizeof(char *) * (i));
 	j = 0;
 	i = -1;
-	while (data()->copy_env[++i])
+	while (data()->ord_env[++i])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1],
-				var_len(data()->copy_env[i])) != 0)
+		if (ft_strncmp(data()->ord_env[i], cmds.arg[a],
+				var_len(data()->ord_env[i])) != 0)
 		{
-			copy_env[j] = data()->copy_env[i];
+			copy_env[j] = data()->ord_env[i];
 			j++;
 		}
 		else
-			free(data()->copy_env[i]);
+			free(data()->ord_env[i]);
 	}
 	copy_env[j] = NULL;
-	free(data()->copy_env);
-	data()->copy_env = copy_env;
+	free(data()->ord_env);
+	data()->ord_env = copy_env;
 }
 
-int	exist_var(t_cmd cmds)
+int	exist_var(t_cmd cmds, int a)
 {
 	int	i;
 
 	i = 0;
-	while (data()->copy_env[i])
+	while (data()->ord_env[i])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[1],
+		if (ft_strncmp(data()->ord_env[i], cmds.arg[a],
 				var_len(cmds.arg[1])) != 0)
 			i++;
 		else
@@ -68,10 +68,13 @@ int	exist_var(t_cmd cmds)
 
 void	func_unset(t_cmd cmds)
 {
-	if (cmds.arg[1] && !cmds.arg[2])
+	int	i;
+
+	i = 0;
+	while (cmds.arg[++i])
 	{
-		if (exist_var(cmds))
-			delete_arg(cmds);
+		if (exist_var(cmds, i))
+			delete_arg(cmds, i);
 		else
 		{
 			ft_putstr_fd("unset: ", 2);

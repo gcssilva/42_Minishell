@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 17:02:53 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/14 19:43:07 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	valid_var(char *var)
 	return (1);
 }
 
-void	add_var(t_cmd cmds)
+void	add_var(t_cmd cmds, int a)
 {
 	int		x;
 	int		i;
@@ -38,39 +38,45 @@ void	add_var(t_cmd cmds)
 
 	i = 0;
 	j = -1;
-	if (exist_var(cmds) == -1)
+	if (exist_var(cmds, a) == -1)
 		check_export(cmds);
-	while (data()->copy_env[i])
+	while (data()->ord_env[i])
 		i++;
 	x = i;
 	copy = malloc(sizeof(char *) * (i + 2));
 	i = -1;
 	while (++i < x)
 	{
-		copy[++j] = ft_strdup(data()->copy_env[i]);
+		copy[++j] = ft_strdup(data()->ord_env[i]);
 	}
-	copy[i] = ft_strdup(cmds.arg[1]);
+	copy[i] = ft_strdup(cmds.arg[a]);
 	copy[i + 1] = NULL;
 	i = -1;
-	while (data()->copy_env[++i] != NULL)
-		free(data()->copy_env[i]);
-	free(data()->copy_env);
-	data()->copy_env = copy;
+	while (data()->ord_env[++i] != NULL)
+		free(data()->ord_env[i]);
+	free(data()->ord_env);
+	data()->ord_env = copy;
 }
 
 void	func_export(t_cmd cmds)
 {
+	int	i;
+
+	i = 0;
 	if (!cmds.arg[1])
 		print_export(data()->ord_env);
 	else
 	{
-		if (valid_var(cmds.arg[1]))
-			add_var(cmds);
-		else
+		while (cmds.arg[++i])
 		{
-			ft_putstr_fd("export: \'", 2);
-			ft_putstr_fd(cmds.arg[1], 2);
-			ft_putstr_fd("\': not a valid identifier\n", 2);
+			if (valid_var(cmds.arg[i]))
+				add_var(cmds, i);
+			else
+			{
+				ft_putstr_fd("export: \'", 2);
+				ft_putstr_fd(cmds.arg[i], 2);
+				ft_putstr_fd("\': not a valid identifier\n", 2);
+			}
 		}
 	}
 }
