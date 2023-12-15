@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:24:34 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:43:13 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	func_exec(t_cmd cmds)
 		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 1);
+		exit (127);
 	}
 	execve(path, cmds.arg, data()->copy_env);
 }

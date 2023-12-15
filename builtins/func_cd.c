@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 13:33:49 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/14 20:27:40 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/15 17:22:43 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,8 @@ void	func_cd(t_cmd cmds)
 		ft_putstr_fd("cd: too many arguments\n", 2);
 	}
 	else if (chdir(cmds.arg[1]) == -1)
+	{
 		cd_error(cmds.arg[1]);
+		data()->exit_status = EXIT_FAILURE;
+	}
 }

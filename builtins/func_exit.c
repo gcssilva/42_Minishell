@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/04 18:53:40 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/15 18:31:03 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,6 @@
 int		treat_exit_arg(char *str);
 void	func_exit(t_cmd cmds);
 int		is_numeric(char *arg);
-
-// int	num_exit(int num)
-// {
-// 	if (num >= 0 && num <= 255)
-// 		return (num);
-// 	else
-// 		return (num % 256);
-// }
-
-// int	type_exit(t_cmd cmds)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if (cmds.arg[1][i])
-// 	{
-// 		if (cmds.arg[1][i] < '0' && cmds.arg[1][i] > '9')
-// 		{
-// 			ft_putstr_fd("exit: ", 2);
-// 			ft_putstr_fd("exit: ", 2);
-// 			ft_putstr_fd(cmds.arg[1], 2);
-// 			ft_putendl_fd(": numeric argument required", 2);
-// 			return (255);
-// 		}
-// 	}
-// 	i = -1;
-// 	if (ft_isdigit(ft_atoi(cmds.arg[++i])))
-// 	{
-// 		ft_putstr_fd("exit\n", 1);
-// 		return (num_exit(ft_atoi(cmds.cmd)));
-// 	}
-// 	return (0);
-// }
 
 int	treat_exit_arg(char *str)
 {
@@ -75,26 +42,13 @@ int	treat_exit_arg(char *str)
 void	func_exit(t_cmd cmds)
 {
 	ft_putstr_fd("exit\n", 1);
-	if (cmds.arg[1] && cmds.arg[2])
+	if (cmds.arg[1])
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		data()->exit_status = EXIT_FAILURE;
+		data()->exit_status = 1;
 	}
-	else if (cmds.arg[1] && !is_numeric(cmds.arg[1]))
-	{
-		ft_putendl_fd("exit: numeric argument required", 2);
-		data()->exit_status = 255;
-		exit (data()->exit_status);
-	}
-	else if (cmds.arg[1] && is_numeric(cmds.arg[1]))
-	{
-		data()->exit_status = treat_exit_arg(cmds.arg[1]);
-		if (data()->exit_status < 0)
-			data()->exit_status = (data()->exit_status + 256);
-		data()->exit_status = data()->exit_status % 256;
-		exit(data()->exit_status);
-	}
-	exit(data()->exit_status);
+	else
+		exit (0);
 }
 
 int	is_numeric(char *arg)
@@ -125,29 +79,3 @@ int	is_numeric(char *arg)
 	}
 	return (1);
 }
-// void	func_exit(t_cmd cmds)
-// {
-// 	int	status;
-// 	int	i;
-
-// 	status = 0;
-// 	i = -1;
-// 	if (!cmds.arg[1])
-// 	{
-// 		ft_putstr_fd("exit\n", 1);
-// 		exit_status = 0;
-// 		return ;
-// 	}
-// 	else
-// 	{
-// 		status = type_exit(cmds);
-// 		//printf("cheguei aqui %i\n", cmds.saida);
-// 		exit_status = status;
-// 		return ;
-// 	}
-// 	printf("cheguei aqui %s\n", cmds.arg[1]);
-// 	while (data()->copy_env[++i])
-// 		free (data()->copy_env[i]);
-// 	free (data()->copy_env);
-// 	return ;	
-// }

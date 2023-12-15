@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/14 20:02:45 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/15 18:02:49 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	pipe_create(int i, int *fd)
 			}
 			pids = creat_pid(data()->cmds[i], fd);
 			waitpid(pids, &e_status, 0);
-			data()->exit_status = e_status;
+			if (WIFEXITED(e_status))
+				data()->exit_status = WEXITSTATUS(e_status);
 		}
 	}
 }

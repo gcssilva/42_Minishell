@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/14 20:35:59 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/15 18:18:12 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	echo_print(t_cmd cmd, int flag);
 void	func_echo(t_cmd cmds);
 
 //func_env
-void	func_env(void);
+void	func_env(t_cmd	cmds);
 
 //func_exec
 int		check(char *cmd);

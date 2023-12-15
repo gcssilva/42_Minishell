@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   func_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/05 16:14:52 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:36:34 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /*falta teste*/
-void	func_env(void)
+void	func_env(t_cmd	cmds)
 {
 	int	i;
 
 	i = -1;
-	if (!data()->copy_env)
+	if (cmds.arg[1])
 	{
-		ft_putstr_fd("Error: env not found\n", 2);
+		ft_putstr_fd("Error: too many arguments\n", 2);
+		data()->exit_status = 1;
 		return ;
 	}
 	else

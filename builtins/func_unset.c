@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/14 19:42:29 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/15 18:09:01 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,5 @@ void	func_unset(t_cmd cmds)
 	{
 		if (exist_var(cmds, i))
 			delete_arg(cmds, i);
-		else
-		{
-			ft_putstr_fd("unset: ", 2);
-			ft_putstr_fd(cmds.arg[1], 2);
-			ft_putendl_fd(": not a valid identifier", 2);
-		}
 	}
 }

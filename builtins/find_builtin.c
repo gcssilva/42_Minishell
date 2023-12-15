@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- <gmorais-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:08:15 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/07 16:40:29 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:18:20 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	find_builtins(t_cmd cmds)
 	else if (!ft_strncmp(cmds.cmd, "echo", 4) && ft_strlen(cmds.cmd) == 4)
 		func_echo(cmds);
 	else if (!ft_strncmp(cmds.cmd, "env", 3) && ft_strlen(cmds.cmd) == 3)
-		func_env();
+		func_env(cmds);
 	else if (!ft_strncmp(cmds.cmd, "exit", 4) && ft_strlen(cmds.cmd) == 4)
 		func_exit(cmds);
 	else if (!ft_strncmp(cmds.cmd, "cd", 2) && ft_strlen(cmds.cmd) == 2)

@@ -6,13 +6,13 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/11 16:48:55 by gsilva           ###   ########.fr        #
+#    Updated: 2023/12/15 17:23:32 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	cc
-FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g -fsanitize=address
+FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g #-fsanitize=address
 
 VAL		=	--leak-check=full \
 			--show-leak-kinds=all \
