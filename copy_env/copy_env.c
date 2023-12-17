@@ -6,11 +6,26 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:15:44 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 17:07:14 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 15:37:33 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+
+void	clean_env(void)
+{
+	int	i;
+
+	i = -1;
+	while (data()->copy_env[++i] != NULL)
+		free(data()->copy_env[i]);
+	i = -1;
+	while (data()->ord_env[++i] != NULL)
+		free(data()->ord_env[i]);
+	free(data()->copy_env);
+	free(data()->ord_env);
+}
 
 void	asci_ord(char **input,  int len)
 {

@@ -6,13 +6,25 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/15 18:36:34 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 16:09:15 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*falta teste*/
+int	eq_sign(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '=')
+			return (1);
+	}
+	return (0);
+}
+
 void	func_env(t_cmd	cmds)
 {
 	int	i;
@@ -29,7 +41,8 @@ void	func_env(t_cmd	cmds)
 		i = 0;
 		while (data()->copy_env[i])
 		{
-			ft_putendl_fd(data()->copy_env[i], dup(STDOUT_FILENO));
+			if (eq_sign(data()->copy_env[i]))
+				ft_putendl_fd(data()->copy_env[i], dup(STDOUT_FILENO));
 			i++;
 		}
 	}

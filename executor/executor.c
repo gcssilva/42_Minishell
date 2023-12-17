@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/15 18:02:49 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 15:02:39 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ pid_t	creat_pid(t_cmd cmds, int *fd)
 		}
 		data()->last_fd[0] = fd[0];
 		data()->last_fd[1] = fd[1];
+		close(fd[0]);
+		close(fd[1]);
 	}
 	return (pid);
 }
@@ -100,5 +102,5 @@ void	executor(void)
 
 	i = -1;
 	pipe_create(i, fd);
-	return ;
+	clean_struct();
 }

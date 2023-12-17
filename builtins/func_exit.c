@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/15 18:31:03 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 15:14:06 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	func_exit(t_cmd cmds)
 		data()->exit_status = 1;
 	}
 	else
+	{
+		clean_struct();
 		exit (0);
+	}
 }
 
 int	is_numeric(char *arg)

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:40:01 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/15 18:09:01 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 15:57:09 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	exist_var(t_cmd cmds, int a)
 	while (data()->ord_env[i])
 	{
 		if (ft_strncmp(data()->ord_env[i], cmds.arg[a],
-				var_len(cmds.arg[1])) != 0)
+				var_len(cmds.arg[a])) != 0)
 			i++;
 		else
-			return (-1);
+			return (i);
 	}
 	return (0);
 }

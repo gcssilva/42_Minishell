@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/15 18:21:31 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 15:17:46 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ void	clean_struct(void)
 		while (data()->cmds[i].arg[++j])
 			free(data()->cmds[i].arg[j]);
 		j = -1;
-		while (data()->cmds[i].red[++j])
+		while (data()->cmds[i].red[0] && data()->cmds[i].red[++j])
 			free(data()->cmds[i].red[j]);
 		j = -1;
-		while (data()->cmds[i].order[++j])
+		while (data()->cmds[i].order[0] && data()->cmds[i].order[++j])
 			free(data()->cmds[i].order[j]);
 		free(data()->cmds[i].cmd);
 	}
 	free(data()->cmds);
+	clean_env();
 }
 
 int	main(int ac, char **av, char **env)

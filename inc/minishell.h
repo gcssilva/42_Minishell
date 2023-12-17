@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/15 18:18:12 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 16:14:23 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		is_numeric(char *arg);
 //func_export
 int		valid_var(char *var);
 void	delete_arg(t_cmd cmds, int a);
-void	add_var(t_cmd cmds, int a);
+void	add_var(t_cmd cmds, int a, int i, int j);
 void	func_export(t_cmd cmds);
 
 //func_pwd
@@ -86,6 +86,7 @@ int		exist_var(t_cmd cmds, int a);
 void	func_unset(t_cmd cmds);
 
 //copy_env
+void	clean_env(void);
 void	copy_env(char **input);
 void	ord_env(char **input);
 
@@ -95,8 +96,8 @@ int		is_path(char *cmd);
 int		is_builtin(t_cmd cmds);
 
 //executor_utils 2
-int	check_unset(char *str);
-int	check_export(t_cmd cmds);
+int		check_unset(char *str);
+void	check_export(t_cmd cmds, int a);
 
 //executor
 void	my_child(t_cmd cmds, int *fd);
@@ -118,6 +119,7 @@ void	add_redir(char *input, int *i);
 void	n_cmds(char	*input);
 int		ft_isblank(int c);
 int		ft_isredir(int c);
+void	inicialize_stuct(void);
 
 //parse_var
 char	*copy_var(char *cmd, char *var);

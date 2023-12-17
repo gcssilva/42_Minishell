@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 00:20:31 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 17:53:05 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/17 15:10:30 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 void	n_cmds(char	*input);
 int		ft_isblank(int c);
 int		ft_isredir(int c);
+void	inicialize_stuct(void);
+
+void	inicialize_stuct(void)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data()->n_cmd)
+	{
+		data()->cmds[i].arg[0] = 0;
+		data()->cmds[i].red[0] = 0;
+		data()->cmds[i].order[0] = 0;
+	}
+}
 
 void	n_cmds(char	*input)
 {
@@ -40,6 +54,7 @@ void	n_cmds(char	*input)
 	}
 	data()->n_cmd = cmds;
 	data()->cmds = (t_cmd *)malloc(sizeof(t_cmd) * (cmds + 1));
+	inicialize_stuct();
 }
 
 int	ft_isblank(int c)
