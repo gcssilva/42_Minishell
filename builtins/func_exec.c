@@ -47,7 +47,7 @@ char	*find_path(char *cmd, char **env, int i)
 
 	if (check(cmd))
 		return (cmd);
-	while (ft_strnstr(env[i], "PATH", 4) == 0)
+	while (env[i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(env[i] + 5, ':');
 	i = -1;

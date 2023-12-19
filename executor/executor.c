@@ -92,7 +92,6 @@ void	last_cmd(int i)
 {
 	redirct(data()->cmds[i]);
 	find_builtins(data()->cmds[i]);
-	dup2(data()->std_fd[1], STDOUT_FILENO);
 }
 
 void	executor(void)

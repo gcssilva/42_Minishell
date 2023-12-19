@@ -21,7 +21,7 @@ void	last_space(char **arg, int i)
 	if (arg[i + 1] == NULL)
 		return ;
 	else
-		ft_putchar_fd(' ', dup(STDOUT_FILENO));
+		ft_putchar_fd(' ', STDOUT_FILENO);
 }
 
 void	echo_print(t_cmd cmd, int flag)
@@ -37,25 +37,25 @@ void	echo_print(t_cmd cmd, int flag)
 		{
 			if (cmd.arg[i][j] == '$' && cmd.arg[i][j + 1] == '?')
 			{
-				ft_putstr_fd(ft_itoa(data()->exit_status), dup(STDOUT_FILENO));
+				ft_putstr_fd(ft_itoa(data()->exit_status), STDOUT_FILENO);
 				j++;
 			}
 			else
-				ft_putchar_fd(cmd.arg[i][j], dup(STDOUT_FILENO));
+				ft_putchar_fd(cmd.arg[i][j], STDOUT_FILENO);
 			j++;
 		}
-		ft_putchar_fd(' ', dup(STDOUT_FILENO));
+		ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (!flag)
-		ft_putstr_fd("\n", dup(STDOUT_FILENO));
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	else
-		write(dup(STDOUT_FILENO), "\e[38;5;0;48;5;255m%\e[0m\n", 24);
+		write(STDOUT_FILENO, "\e[38;5;0;48;5;255m%\e[0m\n", 24);
 }
 
 void	func_echo(t_cmd cmds)
 {
 	if (!cmds.arg[1])
-		ft_putchar_fd('\n', dup(STDOUT_FILENO));
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	else if (!ft_strncmp(cmds.arg[1], "-n", 2) && ft_strlen(cmds.arg[1]) == 2)
 		echo_print(cmds, 1);
 	else

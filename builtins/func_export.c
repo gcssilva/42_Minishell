@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*falta teste*/
 #include "../inc/minishell.h"
 
 int	valid_var(char *var)
@@ -53,11 +52,7 @@ void	add_var(t_cmd cmds, int a, int i, int j)
 		free(data()->ord_env[i]);
 	free(data()->ord_env);
 	i = -1;
-	while (data()->copy_env[++i] != NULL)
-		free(data()->copy_env[i]);
-	free(data()->copy_env);
 	data()->ord_env = copy;
-	data()->copy_env = copy;
 }
 
 void	func_export(t_cmd cmds)

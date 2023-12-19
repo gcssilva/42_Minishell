@@ -49,7 +49,10 @@ void	func_exit(t_cmd cmds)
 	}
 	else
 	{
+		close(data()->std_fd[0]);
+		close(data()->std_fd[1]);
 		clean_struct();
+		clean_env();
 		exit (0);
 	}
 }

@@ -28,6 +28,7 @@ int	eq_sign(char *str)
 void	func_env(t_cmd	cmds)
 {
 	int	i;
+	int	fd;
 
 	i = -1;
 	if (cmds.arg[1])
@@ -39,11 +40,13 @@ void	func_env(t_cmd	cmds)
 	else
 	{
 		i = 0;
+		fd = dup(STDOUT_FILENO);
 		while (data()->copy_env[i])
 		{
 			if (eq_sign(data()->copy_env[i]))
-				ft_putendl_fd(data()->copy_env[i], dup(STDOUT_FILENO));
+				ft_putendl_fd(data()->copy_env[i], fd);
 			i++;
 		}
+		close(fd);
 	}
 }

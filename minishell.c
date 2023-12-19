@@ -44,7 +44,6 @@ void	clean_struct(void)
 		free(data()->cmds[i].cmd);
 	}
 	free(data()->cmds);
-	clean_env();
 }
 
 int	main(int ac, char **av, char **env)
@@ -79,5 +78,8 @@ int	main(int ac, char **av, char **env)
 		free(input);
 		remove(".temp_file.txt");
 	}
+	close(data()->std_fd[0]);
+	close(data()->std_fd[1]);
+	clean_env();
 	return (data()->exit_status);
 }

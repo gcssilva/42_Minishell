@@ -26,7 +26,7 @@ void	clean_env(void)
 	free(data()->copy_env);
 	free(data()->ord_env);
 }
-
+	
 void	asci_ord(char **input,  int len)
 {
 	int	i;
