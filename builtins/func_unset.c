@@ -63,7 +63,7 @@ int	exist_var(t_cmd cmds, int a)
 		else
 			return (i);
 	}
-	return (0);
+	return (-1);
 }
 
 void	func_unset(t_cmd cmds)
@@ -73,7 +73,7 @@ void	func_unset(t_cmd cmds)
 	i = 0;
 	while (cmds.arg[++i])
 	{
-		if (exist_var(cmds, i))
+		if (exist_var(cmds, i) != -1)
 			delete_arg(cmds, i);
 	}
 }

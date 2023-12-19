@@ -26,13 +26,17 @@ void	clean_env(void)
 	free(data()->copy_env);
 	free(data()->ord_env);
 }
-	
-void	asci_ord(char **input,  int len)
+
+void	asci_ord(char **input)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		len;
 	char	*temp;
-	
+
+	len = 0;
+	while (input[len])
+		len++;
 	i = 0;
 	while (++i < len)
 	{
@@ -65,5 +69,5 @@ void	copy_env(char **input)
 	}
 	data()->copy_env[j] = NULL;
 	data()->ord_env[j] = NULL;
-	asci_ord(data()->ord_env, i);
+	asci_ord(data()->ord_env);
 }

@@ -79,5 +79,6 @@ void	func_exec(t_cmd cmds)
 		ft_putstr_fd("\n", 1);
 		exit (127);
 	}
+	printf("%s %s\n", path, cmds.cmd);
 	execve(path, cmds.arg, data()->copy_env);
 }

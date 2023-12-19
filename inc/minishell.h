@@ -73,9 +73,9 @@ int		is_numeric(char *arg);
 
 //func_export
 int		valid_var(char *var);
-void	delete_arg(t_cmd cmds, int a);
-void	add_var(t_cmd cmds, int a, int i, int j);
+void	add_var(t_cmd cmds, int a);
 void	func_export(t_cmd cmds);
+char	**add_new_var(char **env, char *var);
 
 //func_pwd
 void	func_pwd(void);
@@ -84,11 +84,13 @@ void	func_pwd(void);
 int		var_len(char *var);
 int		exist_var(t_cmd cmds, int a);
 void	func_unset(t_cmd cmds);
+void	delete_arg(t_cmd cmds, int a);
 
 //copy_env
 void	clean_env(void);
 void	copy_env(char **input);
 void	ord_env(char **input);
+void	asci_ord(char **input);
 
 //executor_utils
 void	print_export(char **env);

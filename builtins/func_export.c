@@ -28,31 +28,41 @@ int	valid_var(char *var)
 	return (1);
 }
 
-void	add_var(t_cmd cmds, int a, int i, int j)
+char	**add_new_var(char **env, char *var)
 {
+	int		i;
+	int		j;
 	int		x;
-	char	**copy;
+	char	**new_env;
 
-	if (exist_var(cmds, a) != 0)
+	i = 0;
+	j = -1;
+	while (env[i])
+		i++;
+	x = i;
+	new_env = malloc(sizeof(char *) * (i + 2));
+	i = -1;
+	while (++i < x)
+		new_env[++j] = ft_strdup(env[i]);
+	new_env[i] = ft_strdup(var);
+	new_env[i + 1] = NULL;
+	i = -1;
+	while (env[++i] != NULL)
+		free(env[i]);
+	free(env);
+	return(new_env);
+}
+
+void	add_var(t_cmd cmds, int a)
+{
+	if (exist_var(cmds, a) != -1)
 	{
 		check_export(cmds, a);
 		return ;
 	}
-	while (data()->ord_env[i])
-		i++;
-	x = i;
-	copy = malloc(sizeof(char *) * (i + 2));
-	i = -1;
-	while (++i < x)
-		copy[++j] = ft_strdup(data()->ord_env[i]);
-	copy[i] = ft_strdup(cmds.arg[a]);
-	copy[i + 1] = NULL;
-	i = -1;
-	while (data()->ord_env[++i] != NULL)
-		free(data()->ord_env[i]);
-	free(data()->ord_env);
-	i = -1;
-	data()->ord_env = copy;
+	data()->copy_env = add_new_var(data()->copy_env, cmds.arg[a]);
+	data()->ord_env = add_new_var(data()->ord_env, cmds.arg[a]);
+	asci_ord(data()->ord_env);
 }
 
 void	func_export(t_cmd cmds)
@@ -67,7 +77,7 @@ void	func_export(t_cmd cmds)
 		while (cmds.arg[++i])
 		{
 			if (valid_var(cmds.arg[i]))
-				add_var(cmds, i, 0, -1);
+				add_var(cmds, i);
 			else
 			{
 				ft_putstr_fd("export: \'", 2);

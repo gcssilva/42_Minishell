@@ -49,6 +49,8 @@ void	func_exit(t_cmd cmds)
 	}
 	else
 	{
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
 		close(data()->std_fd[0]);
 		close(data()->std_fd[1]);
 		clean_struct();

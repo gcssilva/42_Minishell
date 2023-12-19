@@ -28,8 +28,11 @@ void	my_child(t_cmd cmds, int *fd)
 		close(data()->last_fd[1]);
 	}
 	else
+	{
 		dup2(data()->std_fd[0], STDIN_FILENO);
+	}
 	close(fd[0]);
+	printf("aaaaaaaaaaaaaaaaaaaa\n");
 	if (cmds.index < data()->n_cmd)
 		dup2(fd[1], STDOUT_FILENO);
 	else
@@ -57,8 +60,6 @@ pid_t	creat_pid(t_cmd cmds, int *fd)
 		}
 		data()->last_fd[0] = fd[0];
 		data()->last_fd[1] = fd[1];
-		close(fd[0]);
-		close(fd[1]);
 	}
 	return (pid);
 }
@@ -86,6 +87,8 @@ void	pipe_create(int i, int *fd)
 				data()->exit_status = WEXITSTATUS(e_status);
 		}
 	}
+	close(fd[0]);
+	close(fd[1]);
 }
 
 void	last_cmd(int i)
