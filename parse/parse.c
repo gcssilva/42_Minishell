@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 17:50:03 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 17:22:46 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ int	split_cmd(char *str, int flag)
 
 	if (str)
 	{
-		data()->cmds[c].arg[a++] = ft_strdup(str);
-		data()->cmds[c].arg[a] = 0;
+		data()->cmds[c]->arg[a++] = ft_strdup(str);
+		data()->cmds[c]->arg[a] = 0;
 		if (a == 1)
 		{
-			data()->cmds[c].cmd = ft_strdup(str);
-			data()->cmds[c].index = c + 1;
-			data()->cmds[c].red[0] = 0;
+			data()->cmds[c]->cmd = ft_strdup(str);
+			data()->cmds[c]->index = c + 1;
 		}
 		free(str);
 	}
@@ -75,13 +74,13 @@ char	*quote_join(char *cmd, char *input, int *i)
 {
 	int	q;
 
-	q = input[(*i)++];
-	while (input[*i] && input[*i] != q)
+	q = input[*i];
+	while (input[++*i] && input[*i] != q)
 	{
 		if (q == '"' && input[*i] == '$')
 			cmd = exp_var(cmd, input, i);
 		else
-			cmd = cjoin(cmd, input[(*i)++]);
+			cmd = cjoin(cmd, input[*i]);
 	}
 	if (!cmd)
 		return (ft_strdup(""));

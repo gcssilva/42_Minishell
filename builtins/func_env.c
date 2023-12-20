@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:37:13 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/17 16:09:15 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:36:33 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ int	eq_sign(char *str)
 	return (0);
 }
 
-void	func_env(t_cmd	cmds)
+void	func_env(t_cmd	*cmds)
 {
 	int	i;
-	int	fd;
 
 	i = -1;
-	if (cmds.arg[1])
+	if (cmds->arg[1])
 	{
 		ft_putstr_fd("Error: too many arguments\n", 2);
 		data()->exit_status = 1;
@@ -40,13 +39,11 @@ void	func_env(t_cmd	cmds)
 	else
 	{
 		i = 0;
-		fd = dup(STDOUT_FILENO);
 		while (data()->copy_env[i])
 		{
 			if (eq_sign(data()->copy_env[i]))
-				ft_putendl_fd(data()->copy_env[i], fd);
+				ft_putendl_fd(data()->copy_env[i], STDOUT_FILENO);
 			i++;
 		}
-		close(fd);
 	}
 }

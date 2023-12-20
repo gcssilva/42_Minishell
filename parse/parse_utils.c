@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 00:20:31 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/17 15:10:30 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:16:59 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@ void	inicialize_stuct(void);
 void	inicialize_stuct(void)
 {
 	int	i;
+	int	j;
 
 	i = -1;
 	while (++i < data()->n_cmd)
 	{
-		data()->cmds[i].arg[0] = 0;
-		data()->cmds[i].red[0] = 0;
-		data()->cmds[i].order[0] = 0;
+		data()->cmds[i] = (t_cmd *)malloc(sizeof(t_cmd));
+		j = -1;
+		while(++j < 10)
+		{
+			data()->cmds[i]->arg[j] = 0;
+			data()->cmds[i]->red[j] = 0;
+			data()->cmds[i]->order[j] = 0;
+		}
 	}
 }
 
@@ -53,7 +59,7 @@ void	n_cmds(char	*input)
 		}
 	}
 	data()->n_cmd = cmds;
-	data()->cmds = (t_cmd *)malloc(sizeof(t_cmd) * (cmds + 1));
+	data()->cmds = (t_cmd **)malloc(sizeof(t_cmd *) * cmds);
 	inicialize_stuct();
 }
 

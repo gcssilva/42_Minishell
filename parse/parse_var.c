@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:01:00 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 17:50:35 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 15:25:37 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*copy_var(char *cmd, char *var);
 char	*get_var(char *cmd, char *var);
 char	*exp_var(char *cmd, char *input, int *i);
+char	*exp_exs(char *cmd);
 
 char	*copy_var(char *cmd, char *var)
 {
@@ -54,11 +55,7 @@ char	*exp_var(char *cmd, char *input, int *i)
 	var = 0;
 	*i += 1;
 	if (input[*i] == '?')
-	{
-		cmd = cjoin(cmd, '$');
-		cmd = cjoin(cmd, '?');
-		return (cmd);
-	}
+		return (exp_exs(cmd));
 	while (ft_isalnum(input[*i]) || input[*i] == '_')
 		var = cjoin(var, input[(*i)++]);
 	*i -= 1;
@@ -69,4 +66,17 @@ char	*exp_var(char *cmd, char *input, int *i)
 	if (cmd)
 		return (cmd);
 	return (ft_strdup(""));
+}
+
+char	*exp_exs(char *cmd)
+{
+	int		i;
+	char	*e_s;
+
+	i = -1;
+	e_s = ft_itoa(data()->exit_status);
+	while (e_s[++i])
+		cmd = cjoin(cmd, e_s[i]);
+	free(e_s);
+	return(cmd);
 }

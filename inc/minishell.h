@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/17 16:14:23 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 19:17:47 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <limits.h>
 
-extern int	g_sig;
+# define BIG_INT 922337203685477580
 
 typedef struct s_cmd
 {
@@ -42,39 +43,41 @@ typedef struct s_data
 	int		last_fd[2];
 	char	**copy_env;
 	char	**ord_env;
-	t_cmd	*cmds;
+	t_cmd	**cmds;
 }	t_data;
 
 //find_builtin
-void	find_builtins(t_cmd cmds);
+void	find_builtins(t_cmd *cmds);
 
 //func_cd
 char	*home(char **env);
 void	cd_error(char *token);
-void	func_cd(t_cmd cmds);
+void	func_cd(t_cmd *cmds);
 
 //func_echo
 void	last_space(char **arg, int i);
-void	echo_print(t_cmd cmd, int flag);
-void	func_echo(t_cmd cmds);
+void	echo_print(t_cmd *cmd, int flag);
+void	func_echo(t_cmd *cmds);
 
 //func_env
-void	func_env(t_cmd	cmds);
+void	func_env(t_cmd	*cmds);
 
 //func_exec
 int		check(char *cmd);
 char	*find_path(char *cmd, char **env, int i);
-void	func_exec(t_cmd cmds);
+void	func_exec(t_cmd *cmds);
 
 //func_exit
-int		treat_exit_arg(char *str);
-void	func_exit(t_cmd cmds);
+void	treat_exit_arg(char *str);
+void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
+void	close_fd(int flag);
+void	clean_struct(void);
 
 //func_export
 int		valid_var(char *var);
-void	add_var(t_cmd cmds, int a);
-void	func_export(t_cmd cmds);
+void	add_var(t_cmd *cmds, int a);
+void	func_export(t_cmd *cmds);
 char	**add_new_var(char **env, char *var);
 
 //func_pwd
@@ -82,9 +85,9 @@ void	func_pwd(void);
 
 //func_unset
 int		var_len(char *var);
-int		exist_var(t_cmd cmds, int a);
-void	func_unset(t_cmd cmds);
-void	delete_arg(t_cmd cmds, int a);
+int		exist_var(t_cmd *cmds, int a);
+void	func_unset(t_cmd *cmds);
+void	delete_arg(t_cmd *cmds, int a);
 
 //copy_env
 void	clean_env(void);
@@ -95,15 +98,15 @@ void	asci_ord(char **input);
 //executor_utils
 void	print_export(char **env);
 int		is_path(char *cmd);
-int		is_builtin(t_cmd cmds);
+int		is_builtin(t_cmd *cmds);
 
 //executor_utils 2
 int		check_unset(char *str);
-void	check_export(t_cmd cmds, int a);
+void	check_export(t_cmd *cmds, int a);
 
 //executor
-void	my_child(t_cmd cmds, int *fd);
-pid_t	creat_pid(t_cmd cmds, int *fd);
+void	my_child(t_cmd *cmds, int *fd);
+pid_t	creat_pid(t_cmd *cmds, int *fd);
 void	pipe_create(int i, int *fd);
 void	last_cmd(int i);
 void	executor(void);
@@ -127,6 +130,7 @@ void	inicialize_stuct(void);
 char	*copy_var(char *cmd, char *var);
 char	*get_var(char *cmd, char *var);
 char	*exp_var(char *cmd, char *input, int *i);
+char	*exp_exs(char *cmd);
 
 //parse
 char	*cjoin(char *str, char c);
@@ -139,16 +143,15 @@ void	parse_input(char *input);
 void	check_outfile(char *red, int flag);
 void	check_infile(char *red);
 void	check_heredoc(char *delimiter);
-void	redirct(t_cmd cmds);
+void	redirct(t_cmd *cmds);
 
 //minishell
 t_data	*data(void);
-void	clean_struct(void);
+void	start_minishell(int ac, char **av, char **env);
 
 //signals
 void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
-void	end_loop(int sig);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:10:19 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/04 20:07:22 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 14:35:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
-void	end_loop(int sig);
 
 void	sig(int flag)
 {
@@ -23,8 +22,6 @@ void	sig(int flag)
 		signal(SIGINT, handle_sig);
 	else if (flag == 1)
 		signal(SIGINT, handle_fork_sig);
-	else if (flag == 2)
-		signal(SIGINT, end_loop);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -47,10 +44,4 @@ void	handle_fork_sig(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
-}
-
-void	end_loop(int sig)
-{
-	if (sig == SIGINT)
-		exit(data()->exit_status);
 }

@@ -6,19 +6,19 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/17 15:02:39 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 19:18:46 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	my_child(t_cmd cmds, int *fd);
-pid_t	creat_pid(t_cmd cmds, int *fd);
+void	my_child(t_cmd *cmds, int *fd);
+pid_t	creat_pid(t_cmd *cmds, int *fd);
 void	pipe_create(int i, int *fd);
 void	last_cmd(int i);
 void	executor(void);
 
-void	my_child(t_cmd cmds, int *fd)
+void	my_child(t_cmd *cmds, int *fd)
 {
 	sig(1);
 	if (data()->last_fd[0] != -1)
@@ -32,8 +32,7 @@ void	my_child(t_cmd cmds, int *fd)
 		dup2(data()->std_fd[0], STDIN_FILENO);
 	}
 	close(fd[0]);
-	printf("aaaaaaaaaaaaaaaaaaaa\n");
-	if (cmds.index < data()->n_cmd)
+	if (cmds->index < data()->n_cmd)
 		dup2(fd[1], STDOUT_FILENO);
 	else
 		dup2(data()->std_fd[1], STDOUT_FILENO);
@@ -42,7 +41,7 @@ void	my_child(t_cmd cmds, int *fd)
 	exit(data()->exit_status);
 }
 
-pid_t	creat_pid(t_cmd cmds, int *fd)
+pid_t	creat_pid(t_cmd *cmds, int *fd)
 {
 	pid_t	pid;
 
@@ -87,8 +86,6 @@ void	pipe_create(int i, int *fd)
 				data()->exit_status = WEXITSTATUS(e_status);
 		}
 	}
-	close(fd[0]);
-	close(fd[1]);
 }
 
 void	last_cmd(int i)
@@ -99,10 +96,10 @@ void	last_cmd(int i)
 
 void	executor(void)
 {
-	int	i;
 	int	fd[2];
 
-	i = -1;
-	pipe_create(i, fd);
+	pipe_create(-1, fd);
+	close_fd(1);
 	clean_struct();
+	remove(".temp_file.txt");
 }

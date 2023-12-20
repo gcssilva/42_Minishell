@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/17 15:14:06 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:25:45 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,65 @@
 
 #include "../inc/minishell.h"
 
-int		treat_exit_arg(char *str);
-void	func_exit(t_cmd cmds);
+void	treat_exit_arg(char *str);
+void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
+void	close_fd(int flag);
+void	clean_struct(void);
 
-int	treat_exit_arg(char *str)
+void	treat_exit_arg(char *str)
 {
-	int	i;
-	int	nb;
-	int	flag;
+	int			i;
+	int 		s;
+	int			len;
+	long int	n;
 
-	i = 0;
-	nb = 0;
-	flag = 0;
-	while (str[i] == '"' || str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			flag = 1;
+	s = 0;
+	n = 0;
+	len = ft_strlen(str);
+	if (str[0] == '-' || str[0] == '+')
+		s = str[0];
+	if ((s && len > 20) || len > 19)
+		return ;
+	i = -1;
+	if (s != 0)
 		i++;
+	while(str[++i])
+	{
+		if (n >= BIG_INT && (str[i] - 48) > 7)
+			return ;
+		n = (n * 10) + (str[i] - 48);
 	}
-	nb = ft_atoi(&str[i]);
-	if (flag)
-		nb *= -1;
-	return (nb);
+	if (s == '-')
+		n = -n;
+	close_fd(0);
+	clean_env();
+	exit (n % 256);
 }
 
-void	func_exit(t_cmd cmds)
+void	func_exit(t_cmd *cmds)
 {
-	ft_putstr_fd("exit\n", 1);
-	if (cmds.arg[1])
+	ft_putendl_fd("exit", 1);
+	if (cmds->arg[1] && cmds->arg[2])
 	{
-		ft_putendl_fd("exit: too many arguments", 2);
+		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		data()->exit_status = 1;
+	}
+	else if (cmds->arg[1])
+	{
+		
+		if (is_numeric(cmds->arg[1]))
+			treat_exit_arg(cmds->arg[1]);
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(cmds->arg[1], STDERR_FILENO);
+		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+		close_fd(0);
+		clean_env();
+		exit (2);
 	}
 	else
 	{
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		close(data()->std_fd[0]);
-		close(data()->std_fd[1]);
-		clean_struct();
+		close_fd(0);
 		clean_env();
 		exit (0);
 	}
@@ -62,28 +81,53 @@ void	func_exit(t_cmd cmds)
 int	is_numeric(char *arg)
 {
 	int	i;
-	int	f_plus;
-	int	f_minus;
 
-	f_plus = 0;
-	f_minus = 0;
 	i = -1;
+	if (arg[0] == '-' || arg[0] == '+')
+		i++;
 	while (arg[++i])
 	{
-		if (arg[i] == '-')
-		{
-			if (f_minus)
-				return (0);
-			f_minus = 1;
-		}
-		if (arg[i] == '+')
-		{
-			if (f_plus)
-				return (0);
-			f_plus = 1;
-		}
-		if (ft_isalpha(arg[i]))
+		if (!ft_isdigit(arg[i]))
 			return (0);
 	}
 	return (1);
+}
+
+void	close_fd(int flag)
+{
+	if (data()->last_fd[0] != -1)
+	{
+		close(data()->last_fd[0]);
+		close(data()->last_fd[1]);
+	}
+	if (flag)
+		data()->last_fd[0] = -1;
+	else
+	{
+		close(data()->std_fd[0]);
+		close(data()->std_fd[1]);
+	}
+}
+
+void	clean_struct(void)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < data()->n_cmd)
+	{
+		j = -1;
+		while (data()->cmds[i]->arg[++j] != NULL)
+			free(data()->cmds[i]->arg[j]);
+		j = -1;
+		while (data()->cmds[i]->red[++j] != NULL)
+			free(data()->cmds[i]->red[j]);
+		j = -1;
+		while (data()->cmds[i]->order[++j] != NULL)
+			free(data()->cmds[i]->order[j]);
+		free(data()->cmds[i]->cmd);
+		free(data()->cmds[i]);
+	}
+	free(data()->cmds);
 }

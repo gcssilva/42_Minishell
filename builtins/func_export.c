@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/17 16:15:10 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 15:31:10 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	valid_var(char *var)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(var[i]))
+	if (ft_isdigit(var[i]) || var[i] == '=')
 		return (0);
 	while (var[i] && var[i] != '=')
 	{
@@ -53,35 +53,35 @@ char	**add_new_var(char **env, char *var)
 	return(new_env);
 }
 
-void	add_var(t_cmd cmds, int a)
+void	add_var(t_cmd *cmds, int a)
 {
 	if (exist_var(cmds, a) != -1)
 	{
 		check_export(cmds, a);
 		return ;
 	}
-	data()->copy_env = add_new_var(data()->copy_env, cmds.arg[a]);
-	data()->ord_env = add_new_var(data()->ord_env, cmds.arg[a]);
+	data()->copy_env = add_new_var(data()->copy_env, cmds->arg[a]);
+	data()->ord_env = add_new_var(data()->ord_env, cmds->arg[a]);
 	asci_ord(data()->ord_env);
 }
 
-void	func_export(t_cmd cmds)
+void	func_export(t_cmd *cmds)
 {
 	int	i;
 
 	i = 0;
-	if (!cmds.arg[1])
+	if (!cmds->arg[1])
 		print_export(data()->ord_env);
 	else
 	{
-		while (cmds.arg[++i])
+		while (cmds->arg[++i])
 		{
-			if (valid_var(cmds.arg[i]))
+			if (valid_var(cmds->arg[i]))
 				add_var(cmds, i);
 			else
 			{
 				ft_putstr_fd("export: \'", 2);
-				ft_putstr_fd(cmds.arg[i], 2);
+				ft_putstr_fd(cmds->arg[i], 2);
 				ft_putstr_fd("\': not a valid identifier\n", 2);
 				data()->exit_status = 1;
 			}

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 16:00:59 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 14:36:26 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_outfile(char *red, int flag);
 void	check_infile(char *red);
 void	check_heredoc(char *delimiter);
-void	redirct(t_cmd cmds);
+void	redirct(t_cmd *cmds);
 
 void	check_outfile(char *red, int flag)
 {
@@ -90,23 +90,23 @@ void	check_heredoc(char *delimiter)
 	sig(1);
 }
 
-void	redirct(t_cmd cmds)
+void	redirct(t_cmd *cmds)
 {
 	int	i;
 
 	i = -1;
-	while (cmds.red[++i])
+	while (cmds->red[++i])
 	{
-		if (!ft_strncmp(cmds.order[i], "in", 2))
-			check_infile(cmds.red[i]);
-		else if (!ft_strncmp(cmds.order[i], "out", 3))
-			check_outfile(cmds.red[i], 0);
-		else if (!ft_strncmp(cmds.order[i], "ap", 2))
-			check_outfile(cmds.red[i], 1);
+		if (!ft_strncmp(cmds->order[i], "in", 2))
+			check_infile(cmds->red[i]);
+		else if (!ft_strncmp(cmds->order[i], "out", 3))
+			check_outfile(cmds->red[i], 0);
+		else if (!ft_strncmp(cmds->order[i], "ap", 2))
+			check_outfile(cmds->red[i], 1);
 		else
 		{
 			remove(".temp_file.txt");
-			check_heredoc(cmds.red[i]);
+			check_heredoc(cmds->red[i]);
 		}
 	}
 }

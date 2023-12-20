@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/15 18:43:13 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 14:27:27 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check(char *cmd);
 char	*find_path(char *cmd, char **env, int i);
-void	func_exec(t_cmd cmds);
+void	func_exec(t_cmd *cmds);
 
 int	check(char *cmd)
 {
@@ -67,11 +67,11 @@ char	*find_path(char *cmd, char **env, int i)
 	return (0);
 }
 
-void	func_exec(t_cmd cmds)
+void	func_exec(t_cmd *cmds)
 {
 	char	*path;
 
-	path = find_path(cmds.cmd, data()->copy_env, 0);
+	path = find_path(cmds->cmd, data()->copy_env, 0);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
@@ -79,6 +79,5 @@ void	func_exec(t_cmd cmds)
 		ft_putstr_fd("\n", 1);
 		exit (127);
 	}
-	printf("%s %s\n", path, cmds.cmd);
-	execve(path, cmds.arg, data()->copy_env);
+	execve(path, cmds->arg, data()->copy_env);
 }

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/17 15:17:46 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 14:07:45 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,62 +24,36 @@ t_data	*data(void)
 	return (&_data);
 }
 
-void	clean_struct(void)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < data()->n_cmd)
-	{
-		j = -1;
-		while (data()->cmds[i].arg[++j])
-			free(data()->cmds[i].arg[j]);
-		j = -1;
-		while (data()->cmds[i].red[0] && data()->cmds[i].red[++j])
-			free(data()->cmds[i].red[j]);
-		j = -1;
-		while (data()->cmds[i].order[0] && data()->cmds[i].order[++j])
-			free(data()->cmds[i].order[j]);
-		free(data()->cmds[i].cmd);
-	}
-	free(data()->cmds);
-}
-
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
 
-	(void)ac;
-	(void)av;
-	data()->std_fd[0] = dup(STDIN_FILENO);
-	data()->std_fd[1] = dup(STDOUT_FILENO);
-	copy_env(env);
-	data()->exit_status = 0;
+	start_minishell(ac, av, env);
 	while (1)
 	{
 		sig(0);
 		input = readline("minishell~> ");
 		if (!input)
-		{
-			printf("exit\n");
-			return (0);
-		}
+			break ;
 		if (!*input)
 			continue ;
 		add_history(input);
-		n_cmds(input);
 		if (lexer(input))
-		{
-			parse_input(input);
-			data()->last_fd[0] = -1;
 			executor();
-		}
-		free(input);
-		remove(".temp_file.txt");
 	}
-	close(data()->std_fd[0]);
-	close(data()->std_fd[1]);
 	clean_env();
-	return (data()->exit_status);
+	close_fd(0);
+	printf("exit\n");
+	return (0);
+}
+
+void	start_minishell(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
+	copy_env(env);
+	data()->exit_status = 0;
+	data()->std_fd[0] = dup(STDIN_FILENO);
+	data()->std_fd[1] = dup(STDOUT_FILENO);
+	data()->last_fd[0] = -1;
 }

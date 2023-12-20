@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:15:44 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/17 15:37:33 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 18:18:53 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	clean_env(void)
 		free(data()->ord_env[i]);
 	free(data()->copy_env);
 	free(data()->ord_env);
+	clean_struct();
 }
 
 void	asci_ord(char **input)

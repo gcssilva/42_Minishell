@@ -6,19 +6,20 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/15 17:23:32 by gsilva           ###   ########.fr        #
+#    Updated: 2023/12/20 19:19:49 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	cc
-FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g #-fsanitize=address
+FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g -fsanitize=address
 
 VAL		=	--leak-check=full \
 			--show-leak-kinds=all \
 			--log-file=valgrind_log.txt \
 			--suppressions=readline.supp \
-			--track-fds=yes
+			--track-fds=yes \
+			--track-origins=yes
 
 INC		=	inc/minishell.h
 SRC		=	minishell.c \

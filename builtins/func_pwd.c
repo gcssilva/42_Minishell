@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   func_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmorais- < gmorais-@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:21:34 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/11 12:23:05 by gmorais-         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:29:51 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*getcwd apanha o diretorio/arquivo que estamos a utilizar
-	(algo parecido com isso)*/
 void	func_pwd(void)
 {
 	char	*path;

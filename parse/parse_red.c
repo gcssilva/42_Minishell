@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:03:05 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/14 21:00:43 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 14:43:35 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ void	write_redir(char *r_file, int r)
 	int	j;
 
 	i = split_cmd(0, 1);
-	j = get_pos(data()->cmds[i].red);
-	data()->cmds[i].red[j] = ft_strdup(r_file);
-	data()->cmds[i].red[j + 1] = 0;
+	j = get_pos(data()->cmds[i]->red);
+	data()->cmds[i]->red[j] = ft_strdup(r_file);
+	data()->cmds[i]->red[j + 1] = 0;
 	if (r == 60)
-		data()->cmds[i].order[j] = ft_strdup("in");
+		data()->cmds[i]->order[j] = ft_strdup("in");
 	else if (r == 62)
-		data()->cmds[i].order[j] = ft_strdup("out");
+		data()->cmds[i]->order[j] = ft_strdup("out");
 	else if (r == 120)
-		data()->cmds[i].order[j] = ft_strdup("del");
+		data()->cmds[i]->order[j] = ft_strdup("del");
 	else
-		data()->cmds[i].order[j] = ft_strdup("ap");
+		data()->cmds[i]->order[j] = ft_strdup("ap");
+	data()->cmds[i]->order[j + 1] = 0;
 }
 
 void	add_redir(char *input, int *i)

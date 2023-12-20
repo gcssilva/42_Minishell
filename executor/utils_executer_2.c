@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:32:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/17 16:20:22 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/20 14:32:07 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	check_unset(char *str)
 	}
 	return (0);
 }
-int	eq_env(t_cmd cmds, int a)
+int	eq_env(t_cmd *cmds, int a)
 {
 	int	i;
 
 	i = 0;
 	while (data()->copy_env[i])
 	{
-		if (ft_strncmp(data()->copy_env[i], cmds.arg[a],
-				var_len(cmds.arg[a])) != 0)
+		if (ft_strncmp(data()->copy_env[i], cmds->arg[a],
+				var_len(cmds->arg[a])) != 0)
 			i++;
 		else
 			return (i);
@@ -41,7 +41,7 @@ int	eq_env(t_cmd cmds, int a)
 	return (0);
 }
 
-void	check_export(t_cmd cmds, int a)
+void	check_export(t_cmd *cmds, int a)
 {
 	int	i;
 	int	ord;
@@ -50,14 +50,14 @@ void	check_export(t_cmd cmds, int a)
 	i = -1;
 	copy = eq_env(cmds, a);
 	ord = exist_var(cmds, a);
-	while (cmds.arg[a][++i])
+	while (cmds->arg[a][++i])
 	{
-		if (cmds.arg[a][++i] == '=')
+		if (cmds->arg[a][++i] == '=')
 		{
 			free(data()->ord_env[ord]);
-			data()->ord_env[ord] = ft_strdup(cmds.arg[a]);
+			data()->ord_env[ord] = ft_strdup(cmds->arg[a]);
 			free(data()->copy_env[copy]);
-			data()->copy_env[copy] = ft_strdup(cmds.arg[a]);
+			data()->copy_env[copy] = ft_strdup(cmds->arg[a]);
 			return ;
 		}
 	}
