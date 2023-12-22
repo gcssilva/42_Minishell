@@ -6,12 +6,15 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/22 13:08:06 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:47:37 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define BIG_INT 922337203685477580
+# define MAX_RED 30
+# define MAX_ARG 30
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -23,20 +26,18 @@
 # include <signal.h>
 # include <limits.h>
 
-# define BIG_INT 922337203685477580
-
 typedef struct s_cmd
 {
 	int		index;
-	char	*red[10];
-	char	*order[10];
+	char	*red[MAX_RED];
+	char	*order[MAX_RED];
 	char	*cmd;
-	char	*arg[10];
+	char	*arg[MAX_ARG];
 }	t_cmd;
 
 typedef struct s_data
 {
-	int		temp_file;
+	int		tmp_f;
 	int		exit_status;
 	int		n_cmd;
 	int		std_fd[2];
@@ -68,7 +69,7 @@ char	*find_path(char *cmd, char **env, int i);
 void	func_exec(t_cmd *cmds);
 
 //func_exit
-void	treat_exit_arg(char *str);
+void	treat_exit_arg(char *str, int i);
 void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
 void	close_fd(void);

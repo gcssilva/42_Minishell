@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:01:00 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/20 15:25:37 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:44:10 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,5 @@ char	*exp_exs(char *cmd)
 	while (e_s[++i])
 		cmd = cjoin(cmd, e_s[i]);
 	free(e_s);
-	return(cmd);
+	return (cmd);
 }

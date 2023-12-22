@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:32:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 14:32:07 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:35:27 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	check_unset(char *str)
 	}
 	return (0);
 }
+
 int	eq_env(t_cmd *cmds, int a)
 {
 	int	i;
@@ -45,7 +46,7 @@ void	check_export(t_cmd *cmds, int a)
 {
 	int	i;
 	int	ord;
-	int copy;
+	int	copy;
 
 	i = -1;
 	copy = eq_env(cmds, a);

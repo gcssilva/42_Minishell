@@ -6,24 +6,21 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/22 15:06:14 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 18:17:14 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*falta teste*/
-
 #include "../inc/minishell.h"
 
-void	treat_exit_arg(char *str);
+void	treat_exit_arg(char *str, int i);
 void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
 void	close_fd(void);
 void	clean_struct(void);
 
-void	treat_exit_arg(char *str)
+void	treat_exit_arg(char *str, int i)
 {
-	int			i;
-	int 		s;
+	int			s;
 	int			len;
 	long int	n;
 
@@ -37,7 +34,7 @@ void	treat_exit_arg(char *str)
 	i = -1;
 	if (s != 0)
 		i++;
-	while(str[++i])
+	while (str[++i])
 	{
 		if (n >= BIG_INT && (str[i] - 48) > 7)
 			return ;
@@ -60,19 +57,20 @@ void	func_exit(t_cmd *cmds)
 	}
 	else if (cmds->arg[1])
 	{
-		
 		if (is_numeric(cmds->arg[1]))
-			treat_exit_arg(cmds->arg[1]);
+			treat_exit_arg(cmds->arg[1], -1);
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(cmds->arg[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		close_fd();
+		clean_struct();
 		clean_env();
 		exit (2);
 	}
 	else
 	{
 		close_fd();
+		clean_struct();
 		clean_env();
 		exit (0);
 	}

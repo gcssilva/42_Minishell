@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/22 15:25:26 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 18:03:36 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	pipe_create(int i, int *fd)
 	pid_t	pids[10];
 	int		e_status;
 
-	while (++i < data()->n_cmd)
+	while (++i < data()->n_cmd && data()->cmds[i]->cmd)
 	{
 		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
 			last_cmd(i);
@@ -93,7 +93,6 @@ void	pipe_create(int i, int *fd)
 		if (WIFEXITED(e_status))
 			data()->exit_status = WEXITSTATUS(e_status);
 	}
-	
 }
 
 void	last_cmd(int i)
@@ -112,5 +111,5 @@ void	executor(void)
 	pipe_create(-1, fd);
 	close_fd();
 	clean_struct();
-	remove(".temp_file.txt");
+	remove(".tmp_f.txt");
 }

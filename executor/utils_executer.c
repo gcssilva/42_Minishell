@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:05 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 14:18:46 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:35:03 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	print_aspas(char *str)
 			if (flag == 0)
 			{
 				printf("\"");
-				flag = 1;		
+				flag = 1;
 			}
 		}
 	}
@@ -79,11 +79,7 @@ int	is_path(char *cmd)
 
 int	is_builtin(t_cmd *cmds)
 {
-	if (!ft_strncmp(cmds->cmd, "pwd", 3) && ft_strlen(cmds->cmd) == 3)
-		return (1);
-	else if (!ft_strncmp(cmds->cmd, "echo", 4) && ft_strlen(cmds->cmd) == 4)
-		return (1);
-	else if (!ft_strncmp(cmds->cmd, "env", 3) && ft_strlen(cmds->cmd) == 3)
+	if (!ft_strncmp(cmds->cmd, "env", 3) && ft_strlen(cmds->cmd) == 3)
 		return (1);
 	else if (!ft_strncmp(cmds->cmd, "exit", 4) && ft_strlen(cmds->cmd) == 4)
 		return (1);

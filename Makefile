@@ -6,7 +6,7 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/22 14:57:39 by gsilva           ###   ########.fr        #
+#    Updated: 2023/12/22 16:15:17 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,9 @@ FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g #-fsanitize=address
 
 VAL		=	--leak-check=full \
 			--show-leak-kinds=all \
+			--track-origins=yes \
 			--log-file=valgrindlog.txt \
 			--suppressions=readline.supp \
-			--track-fds=yes \
-			--verbose \
 
 INC		=	inc/minishell.h
 SRC		=	minishell.c \

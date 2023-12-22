@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/22 14:36:56 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:43:12 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 t_data	*data(void);
 void	clean_struct(void);
-
-int	g_sig = 0;
 
 t_data	*data(void)
 {

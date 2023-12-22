@@ -2,3 +2,4 @@
 *.a
 valgrind_log.txt
 minishell
+minishell_tester/

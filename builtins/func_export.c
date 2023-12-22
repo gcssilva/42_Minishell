@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:45:43 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 15:31:10 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:33:40 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**add_new_var(char **env, char *var)
 	while (env[++i] != NULL)
 		free(env[i]);
 	free(env);
-	return(new_env);
+	return (new_env);
 }
 
 void	add_var(t_cmd *cmds, int a)
@@ -60,9 +60,9 @@ void	add_var(t_cmd *cmds, int a)
 		check_export(cmds, a);
 		return ;
 	}
-	data()->copy_env = add_new_var(data()->copy_env, cmds->arg[a]);
-	data()->ord_env = add_new_var(data()->ord_env, cmds->arg[a]);
-	asci_ord(data()->ord_env);
+	(data()->copy_env) = add_new_var(data()->copy_env, cmds->arg[a]);
+	(data()->ord_env) = add_new_var(data()->ord_env, cmds->arg[a]);
+	asci_ord (data()->ord_env);
 }
 
 void	func_export(t_cmd *cmds)

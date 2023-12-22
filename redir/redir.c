@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 14:36:26 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 17:41:40 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,35 +58,30 @@ void	check_infile(char *red)
 
 void	check_heredoc(char *delimiter)
 {
-	int		i;
 	char	*input;
 
-	i = 1;
-	sig(2);
-	data()->temp_file = open(".temp_file.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
-	while (i)
+	sig(0);
+	(data()->tmp_f) = open(".tmp_f.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
+	while (1)
 	{
 		input = readline("> ");
-		printf("%s\n", input);
 		if (!input)
 		{
 			write(1, "heredoc delimited by eof\n", 26);
-			i = 0;
+			break ;
 		}
 		else if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
 			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
-			i = 0;
+			break ;
 		else
 		{
-			write(data()->temp_file, input, ft_strlen(input));
-			write(data()->temp_file, "\n", 1);
-			free(input);
+			write(data()->tmp_f, input, ft_strlen(input));
+			write(data()->tmp_f, "\n", 1);
 			input = 0;
 		}
 	}
-	free(input);
-	close(data()->temp_file);
-	check_infile(".temp_file.txt");
+	close(data()->tmp_f);
+	check_infile(".tmp_f.txt");
 	sig(1);
 }
 
@@ -105,7 +100,7 @@ void	redirct(t_cmd *cmds)
 			check_outfile(cmds->red[i], 1);
 		else
 		{
-			remove(".temp_file.txt");
+			remove(".tmp_f.txt");
 			check_heredoc(cmds->red[i]);
 		}
 	}

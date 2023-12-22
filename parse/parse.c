@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/20 17:22:46 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 18:10:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	split_cmd(char *str, int flag)
 	static int	c = 0;
 	static int	a = 0;
 
-	if (str)
+	if (str && *str)
 	{
 		data()->cmds[c]->arg[a++] = ft_strdup(str);
 		data()->cmds[c]->arg[a] = 0;
@@ -123,4 +123,6 @@ void	parse_input(char *input)
 			break ;
 	}
 	split_cmd(cmd, 0);
+	if (!data()->cmds[0]->arg[0])
+		data()->n_cmd = 0;
 }
