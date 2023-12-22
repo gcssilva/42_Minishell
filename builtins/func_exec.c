@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:55:27 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 14:27:27 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 14:13:39 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	func_exec(t_cmd *cmds)
 		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 1);
+		close_fd();
+		clean_env();
 		exit (127);
 	}
 	execve(path, cmds->arg, data()->copy_env);

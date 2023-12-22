@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/20 14:07:45 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 14:36:56 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(int ac, char **av, char **env)
 			executor();
 	}
 	clean_env();
-	close_fd(0);
 	printf("exit\n");
 	return (0);
 }
@@ -53,7 +52,4 @@ void	start_minishell(int ac, char **av, char **env)
 	(void)av;
 	copy_env(env);
 	data()->exit_status = 0;
-	data()->std_fd[0] = dup(STDIN_FILENO);
-	data()->std_fd[1] = dup(STDOUT_FILENO);
-	data()->last_fd[0] = -1;
 }

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/20 19:17:47 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 13:08:06 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	func_exec(t_cmd *cmds);
 void	treat_exit_arg(char *str);
 void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
-void	close_fd(int flag);
+void	close_fd(void);
 void	clean_struct(void);
 
 //func_export

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 18:25:45 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 15:06:14 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	treat_exit_arg(char *str);
 void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
-void	close_fd(int flag);
+void	close_fd(void);
 void	clean_struct(void);
 
 void	treat_exit_arg(char *str)
@@ -45,7 +45,7 @@ void	treat_exit_arg(char *str)
 	}
 	if (s == '-')
 		n = -n;
-	close_fd(0);
+	close_fd();
 	clean_env();
 	exit (n % 256);
 }
@@ -66,13 +66,13 @@ void	func_exit(t_cmd *cmds)
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(cmds->arg[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		close_fd(0);
+		close_fd();
 		clean_env();
 		exit (2);
 	}
 	else
 	{
-		close_fd(0);
+		close_fd();
 		clean_env();
 		exit (0);
 	}
@@ -93,20 +93,25 @@ int	is_numeric(char *arg)
 	return (1);
 }
 
-void	close_fd(int flag)
+void	close_fd(void)
 {
 	if (data()->last_fd[0] != -1)
 	{
 		close(data()->last_fd[0]);
 		close(data()->last_fd[1]);
 	}
-	if (flag)
-		data()->last_fd[0] = -1;
-	else
+	if (dup2(data()->std_fd[0], STDIN_FILENO) == -1)
 	{
-		close(data()->std_fd[0]);
-		close(data()->std_fd[1]);
+		perror("dup2");
+		exit(1);
 	}
+	close(data()->std_fd[0]);
+	if (dup2(data()->std_fd[1], STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		exit(1);
+	}
+	close(data()->std_fd[1]);
 }
 
 void	clean_struct(void)

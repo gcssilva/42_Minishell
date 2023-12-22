@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/20 19:18:46 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/22 15:25:26 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	my_child(t_cmd *cmds, int *fd)
 		dup2(data()->std_fd[1], STDOUT_FILENO);
 	redirct(cmds);
 	find_builtins(cmds);
-	exit(data()->exit_status);
+	close_fd();
+	clean_env();
+	close(fd[1]);
+	exit(0);
 }
 
 pid_t	creat_pid(t_cmd *cmds, int *fd)
@@ -65,7 +68,7 @@ pid_t	creat_pid(t_cmd *cmds, int *fd)
 
 void	pipe_create(int i, int *fd)
 {
-	pid_t	pids;
+	pid_t	pids[10];
 	int		e_status;
 
 	while (++i < data()->n_cmd)
@@ -80,12 +83,17 @@ void	pipe_create(int i, int *fd)
 				ft_putendl_fd(strerror(errno), 2);
 				return ;
 			}
-			pids = creat_pid(data()->cmds[i], fd);
-			waitpid(pids, &e_status, 0);
-			if (WIFEXITED(e_status))
-				data()->exit_status = WEXITSTATUS(e_status);
+			pids[i] = creat_pid(data()->cmds[i], fd);
 		}
 	}
+	i = -1;
+	while (++i < data()->n_cmd)
+	{
+		waitpid(pids[i], &e_status, 0);
+		if (WIFEXITED(e_status))
+			data()->exit_status = WEXITSTATUS(e_status);
+	}
+	
 }
 
 void	last_cmd(int i)
@@ -98,8 +106,11 @@ void	executor(void)
 {
 	int	fd[2];
 
+	data()->std_fd[0] = dup(STDIN_FILENO);
+	data()->std_fd[1] = dup(STDOUT_FILENO);
+	data()->last_fd[0] = -1;
 	pipe_create(-1, fd);
-	close_fd(1);
+	close_fd();
 	clean_struct();
 	remove(".temp_file.txt");
 }
