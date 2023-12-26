@@ -38,12 +38,11 @@ void	func_env(t_cmd	*cmds)
 	}
 	else
 	{
-		i = 0;
-		while (data()->copy_env[i])
+		i = -1;
+		while (data()->copy_env[++i])
 		{
 			if (eq_sign(data()->copy_env[i]))
 				ft_putendl_fd(data()->copy_env[i], STDOUT_FILENO);
-			i++;
 		}
 	}
 }

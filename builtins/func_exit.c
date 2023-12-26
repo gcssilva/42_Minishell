@@ -12,19 +12,17 @@
 
 #include "../inc/minishell.h"
 
-void	treat_exit_arg(char *str, int i);
+void	treat_exit_arg(char *str, int i, int s);
 void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
 void	close_fd(void);
 void	clean_struct(void);
 
-void	treat_exit_arg(char *str, int i)
+void	treat_exit_arg(char *str, int i, int s)
 {
-	int			s;
 	int			len;
 	long int	n;
 
-	s = 0;
 	n = 0;
 	len = ft_strlen(str);
 	if (str[0] == '-' || str[0] == '+')
@@ -43,6 +41,7 @@ void	treat_exit_arg(char *str, int i)
 	if (s == '-')
 		n = -n;
 	close_fd();
+	clean_struct();
 	clean_env();
 	exit (n % 256);
 }
@@ -50,30 +49,28 @@ void	treat_exit_arg(char *str, int i)
 void	func_exit(t_cmd *cmds)
 {
 	ft_putendl_fd("exit", 1);
-	if (cmds->arg[1] && cmds->arg[2])
+	if (cmds->arg[1])
 	{
-		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
-		data()->exit_status = 1;
-	}
-	else if (cmds->arg[1])
-	{
-		if (is_numeric(cmds->arg[1]))
-			treat_exit_arg(cmds->arg[1], -1);
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(cmds->arg[1], STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		close_fd();
-		clean_struct();
-		clean_env();
-		exit (2);
+		if (!is_numeric(cmds->arg[1]))
+		{
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(cmds->arg[1], STDERR_FILENO);
+			ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+			close_fd();
+			clean_struct();
+			clean_env();
+			exit (2);
+		}
+		else if (cmds->arg[1] && cmds->arg[2])
+		{
+			ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
+			data()->exit_status = 1;
+		}
+		else
+			treat_exit_arg(cmds->arg[1], -1, 0);
 	}
 	else
-	{
-		close_fd();
-		clean_struct();
-		clean_env();
-		exit (0);
-	}
+		clean_exit();
 }
 
 int	is_numeric(char *arg)

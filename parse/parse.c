@@ -58,7 +58,6 @@ int	split_cmd(char *str, int flag)
 			data()->cmds[c]->cmd = ft_strdup(str);
 			data()->cmds[c]->index = c + 1;
 		}
-
 	}
 	if (flag == 0 || flag == 124)
 	{

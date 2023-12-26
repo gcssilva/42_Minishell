@@ -20,7 +20,6 @@ void	executor(void);
 
 void	my_child(t_cmd *cmds, int *fd)
 {
-	sig(1);
 	if (data()->last_fd[0] != -1)
 	{
 		dup2(data()->last_fd[0], STDIN_FILENO);
@@ -42,13 +41,14 @@ void	my_child(t_cmd *cmds, int *fd)
 	clean_env();
 	clean_struct();
 	close(fd[1]);
-	exit(0);
+	exit(data()->exit_status);
 }
 
 pid_t	creat_pid(t_cmd *cmds, int *fd)
 {
 	pid_t	pid;
 
+	sig(1);
 	pid = fork();
 	if (pid < 0)
 		perror("error: fork");
@@ -70,12 +70,14 @@ pid_t	creat_pid(t_cmd *cmds, int *fd)
 void	pipe_create(int i, int *fd)
 {
 	pid_t	pids[10];
-	int		e_status;
 
 	while (++i < data()->n_cmd && data()->cmds[i]->cmd)
 	{
 		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
+		{
 			last_cmd(i);
+			return ;
+		}
 		else
 		{
 			if (pipe(fd) == -1)
@@ -87,17 +89,12 @@ void	pipe_create(int i, int *fd)
 			pids[i] = creat_pid(data()->cmds[i], fd);
 		}
 	}
-	i = -1;
-	while (++i < data()->n_cmd)
-	{
-		waitpid(pids[i], &e_status, 0);
-		if (WIFEXITED(e_status))
-			data()->exit_status = WEXITSTATUS(e_status);
-	}
+	ft_wait(pids);
 }
 
 void	last_cmd(int i)
 {
+	sig(0);
 	redirct(data()->cmds[i]);
 	find_builtins(data()->cmds[i]);
 }

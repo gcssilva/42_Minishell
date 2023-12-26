@@ -39,6 +39,16 @@ int	check(char *cmd)
 	return (0);
 }
 
+void	free_path(char **path)
+{
+	int	i;
+
+	i = -1;
+	while (path[++i])
+		free(path[i]);
+	free(path);
+}
+
 char	*find_path(char *cmd, char **env, int i)
 {
 	char	**paths;
@@ -49,6 +59,8 @@ char	*find_path(char *cmd, char **env, int i)
 		return (cmd);
 	while (env[i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		i++;
+	if (!env[i])
+		return (0);
 	paths = ft_split(env[i] + 5, ':');
 	i = -1;
 	while (paths[++i])
@@ -60,26 +72,35 @@ char	*find_path(char *cmd, char **env, int i)
 			return (path);
 		free(path);
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_path(paths);
 	return (0);
 }
 
 void	func_exec(t_cmd *cmds)
 {
 	char	*path;
+	DIR		*dir;
 
 	path = find_path(cmds->cmd, data()->copy_env, 0);
 	if (!path)
 	{
-		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 1);
+		if (cmds->cmd[0] == '.' || cmds->cmd[0] == '/')
+			ft_putendl_fd("minishell: No such file or directory", 2);
+		else
+			ft_putendl_fd("minishell: command not found", 2);
 		data()->exit_status = 127;
 		return ;
 	}
-	execve(path, cmds->arg, data()->copy_env);
-	printf("%i\n", errno);
+	if (execve(path, cmds->arg, data()->copy_env) == -1)
+	{
+		dir = opendir(path);
+		if (!dir)
+			ft_putendl_fd(" Permission denied", 2);
+		else
+		{
+			ft_putendl_fd(" Is a directory", 2);
+			closedir(dir);
+		}
+		data()->exit_status = 126;
+	}
 }

@@ -70,12 +70,9 @@ int	check_quotes(char *input)
 
 int	lexer(char *input)
 {
-	n_cmds(input);
 	if (!check_quotes(input) || !check_pipes(input, 0))
-	{
-		clean_struct();
 		return (0);
-	}
+	n_cmds(input);
 	parse_input(input);
 	return (1);
 }

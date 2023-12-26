@@ -13,14 +13,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define BIG_INT 922337203685477580
-# define MAX_RED 30
-# define MAX_ARG 30
+# define MAX_RED 100
+# define MAX_ARG 100
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include <errno.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -37,6 +38,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
+	int		path;
 	int		tmp_f;
 	int		exit_status;
 	int		n_cmd;
@@ -49,6 +51,7 @@ typedef struct s_data
 
 //find_builtin
 void	find_builtins(t_cmd *cmds);
+void	clean_exit(void);
 
 //func_cd
 char	*home(char **env);
@@ -69,7 +72,7 @@ char	*find_path(char *cmd, char **env, int i);
 void	func_exec(t_cmd *cmds);
 
 //func_exit
-void	treat_exit_arg(char *str, int i);
+void	treat_exit_arg(char *str, int i, int s);
 void	func_exit(t_cmd *cmds);
 int		is_numeric(char *arg);
 void	close_fd(void);
@@ -88,7 +91,7 @@ void	func_pwd(void);
 int		var_len(char *var);
 int		exist_var(t_cmd *cmds, int a);
 void	func_unset(t_cmd *cmds);
-void	delete_arg(t_cmd *cmds, int a);
+char	**delete_arg(t_cmd *cmds, char **env, int a);
 
 //copy_env
 void	clean_env(void);
@@ -104,6 +107,7 @@ int		is_builtin(t_cmd *cmds);
 //executor_utils 2
 int		check_unset(char *str);
 void	check_export(t_cmd *cmds, int a);
+void	ft_wait(pid_t *pids);
 
 //executor
 void	my_child(t_cmd *cmds, int *fd);

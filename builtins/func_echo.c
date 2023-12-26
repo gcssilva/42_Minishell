@@ -43,10 +43,23 @@ void	echo_print(t_cmd *cmd, int flag)
 
 void	func_echo(t_cmd *cmds)
 {
+	int	i;
+
+	i = 0;
 	if (!cmds->arg[1])
 		ft_putchar_fd('\n', 1);
-	else if (!ft_strncmp(cmds->arg[1], "-n", 2) && ft_strlen(cmds->arg[1]) == 2)
-		echo_print(cmds, 1);
-	else
+	else if (cmds->arg[1][0] != '-')
 		echo_print(cmds, 0);
+	else
+	{
+		while (cmds->arg[1][++i])
+		{
+			if (cmds->arg[1][i] != 'n')
+			{
+				echo_print(cmds, 0);
+				return ;
+			}
+		}
+		echo_print(cmds, 1);
+	}
 }

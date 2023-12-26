@@ -12,14 +12,7 @@
 
 NAME	=	minishell
 CC		=	cc
-FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g #-fsanitize=address
-
-VAL		=	--leak-check=full \
-			--show-leak-kinds=all \
-			--track-origins=yes \
-			--log-file=valgrindlog.txt \
-			--suppressions=readline.supp \
-
+FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g
 INC		=	inc/minishell.h
 SRC		=	minishell.c \
 			signals.c \
@@ -30,8 +23,8 @@ SRC		=	minishell.c \
 			parse/parse.c \
 			redir/redir.c \
 			executor/executor.c \
-			executor/utils_executer.c\
-			executor/utils_executer_2.c\
+			executor/utils_executor.c\
+			executor/utils_executor_2.c\
 			builtins/func_pwd.c \
 			builtins/func_echo.c \
 			builtins/func_env.c \
@@ -64,6 +57,5 @@ fclean:		clean
 			@rm -f $(NAME)
 
 re:			fclean all
-			valgrind $(VAL) ./$(NAME)
 
 .PHONY:		all clean fclean re

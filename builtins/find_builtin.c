@@ -31,3 +31,11 @@ void	find_builtins(t_cmd *cmds)
 	else
 		func_exec(cmds);
 }
+
+void	clean_exit(void)
+{
+	close_fd();
+	clean_struct();
+	clean_env();
+	exit (0);
+}

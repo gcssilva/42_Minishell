@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **env)
 			executor();
 	}
 	clean_env();
-	printf("exit\n");
+	ft_putendl_fd("exit", 1);
 	return (0);
 }
 

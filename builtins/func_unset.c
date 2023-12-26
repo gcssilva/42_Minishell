@@ -22,32 +22,28 @@ int	var_len(char *var)
 	return (len);
 }
 
-void	delete_arg(t_cmd *cmds, int a)
+char	**delete_arg(t_cmd *cmds, char **env, int a)
 {
 	int		i;
 	int		j;
 	char	**copy_env;
 
 	i = 0;
-	while (data()->ord_env[i++])
+	while (env[i++])
 		;
 	copy_env = malloc(sizeof(char *) * (i));
 	j = 0;
 	i = -1;
-	while (data()->ord_env[++i])
+	while (env[++i])
 	{
-		if (ft_strncmp(data()->ord_env[i], cmds->arg[a],
-				var_len(data()->ord_env[i])) != 0)
-		{
-			copy_env[j] = data()->ord_env[i];
-			j++;
-		}
-		else
-			free(data()->ord_env[i]);
+		if (ft_strncmp(env[i], cmds->arg[a],
+				var_len(env[i])) != 0)
+			copy_env[j++] = ft_strdup(env[i]);
+		free(env[i]);
 	}
 	copy_env[j] = NULL;
-	free(data()->ord_env);
-	data()->ord_env = copy_env;
+	free(env);
+	return (copy_env);
 }
 
 int	exist_var(t_cmd *cmds, int a)
@@ -74,6 +70,9 @@ void	func_unset(t_cmd *cmds)
 	while (cmds->arg[++i])
 	{
 		if (exist_var(cmds, i) != -1)
-			delete_arg(cmds, i);
+		{
+			(data()->ord_env) = delete_arg(cmds, data()->ord_env, i);
+			(data()->copy_env) = delete_arg(cmds, data()->copy_env, i);
+		}
 	}
 }

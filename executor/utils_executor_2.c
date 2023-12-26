@@ -63,3 +63,17 @@ void	check_export(t_cmd *cmds, int a)
 		}
 	}
 }
+
+void	ft_wait(pid_t *pids)
+{
+	int	e_status;
+	int	i;
+
+	i = -1;
+	while (++i < data()->n_cmd)
+	{
+		waitpid(pids[i], &e_status, 0);
+		if (WIFEXITED(e_status))
+			data()->exit_status = WEXITSTATUS(e_status);
+	}
+}

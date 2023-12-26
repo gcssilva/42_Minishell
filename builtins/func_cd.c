@@ -50,8 +50,7 @@ void	cd_error(char *token)
 	ft_putstr_fd("cd: ", 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("\n", 1);
+	ft_putendl_fd(strerror(errno), 2);
 }
 
 void	func_cd(t_cmd *cmds)

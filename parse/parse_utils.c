@@ -29,6 +29,7 @@ void	inicialize_stuct(void)
 		j = -1;
 		while (++j < 10)
 		{
+			data()->cmds[i]->cmd = 0;
 			data()->cmds[i]->arg[j] = 0;
 			data()->cmds[i]->red[j] = 0;
 			data()->cmds[i]->order[j] = 0;
