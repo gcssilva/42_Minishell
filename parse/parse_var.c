@@ -62,7 +62,10 @@ char	*exp_var(char *cmd, char *input, int *i)
 	if (!var)
 		cmd = cjoin(cmd, '$');
 	else
+	{
 		cmd = get_var(cmd, var);
+		free(var);
+	}
 	if (cmd)
 		return (cmd);
 	return (ft_strdup(""));

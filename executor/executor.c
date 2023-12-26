@@ -40,6 +40,7 @@ void	my_child(t_cmd *cmds, int *fd)
 	find_builtins(cmds);
 	close_fd();
 	clean_env();
+	clean_struct();
 	close(fd[1]);
 	exit(0);
 }
