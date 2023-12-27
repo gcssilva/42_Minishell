@@ -61,6 +61,8 @@ void	check_heredoc(char *delimiter)
 {
 	pid_t	pid;
 
+	if (!delimiter)
+		return ;
 	sig(2);
 	pid = fork();
 	if (pid < 0)
@@ -71,6 +73,7 @@ void	check_heredoc(char *delimiter)
 	{
 		waitpid(pid, 0, 0);
 		sig(1);
+		check_infile(".tmp_f.txt");
 	}
 }
 
@@ -119,7 +122,6 @@ void	redirct(t_cmd *cmds)
 		{
 			remove(".tmp_f.txt");
 			check_heredoc(cmds->red[i]);
-			check_infile(".tmp_f.txt");
 		}
 	}
 }

@@ -14,6 +14,8 @@
 
 void	find_builtins(t_cmd *cmds)
 {
+	if (!cmds->cmd)
+		return ;
 	if (!ft_strncmp(cmds->cmd, "pwd", 3) && ft_strlen(cmds->cmd) == 3)
 		func_pwd();
 	else if (!ft_strncmp(cmds->cmd, "echo", 4) && ft_strlen(cmds->cmd) == 4)

@@ -13,6 +13,13 @@
 NAME	=	minishell
 CC		=	cc
 FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g
+VAL		=	--leak-check=full \
+			--show-leak-kinds=all \
+			--track-origins=yes \
+			--log-file=valgrind_log.txt \
+			--suppressions=readline.supp \
+			--track-fds=yes
+
 INC		=	inc/minishell.h
 SRC		=	src/minishell.c \
 			src/signals.c \
@@ -57,5 +64,6 @@ fclean:		clean
 			@rm -f $(NAME)
 
 re:			fclean all
+			env -i valgrind $(VAL) ./$(NAME)
 
 .PHONY:		all clean fclean re

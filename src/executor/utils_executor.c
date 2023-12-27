@@ -80,6 +80,8 @@ int	is_path(char *cmd)
 
 int	is_builtin(t_cmd *cmds)
 {
+	if (!cmds->cmd)
+		return (1);
 	if (!ft_strncmp(cmds->cmd, "env", 3) && ft_strlen(cmds->cmd) == 3)
 		return (1);
 	else if (!ft_strncmp(cmds->cmd, "exit", 4) && ft_strlen(cmds->cmd) == 4)

@@ -91,8 +91,6 @@ void	func_exec(t_cmd *cmds)
 		data()->exit_status = 127;
 		return ;
 	}
-	if (cmds->arg[1])
-		printf("%s\n", cmds->arg[1]);
 	if (execve(path, cmds->arg, data()->copy_env) == -1)
 	{
 		dir = opendir(path);

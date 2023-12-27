@@ -121,6 +121,8 @@ void	executor(void);
 int		check_pipes(char *input, int flag);
 int		check_quotes(char *input);
 int		lexer(char *input);
+int		verify_redir(char *input);
+int		lex_err(int i);
 
 //parse_red
 void	write_redir(char *r_file, int r);

@@ -15,6 +15,8 @@
 int	check_pipes(char *input, int flag);
 int	check_quotes(char *input);
 int	lexer(char *input);
+int	verify_redir(char *input);
+int	lex_err(int i);
 
 int	check_pipes(char *input, int flag)
 {
@@ -38,7 +40,7 @@ int	check_pipes(char *input, int flag)
 			if (flag == 1)
 				flag = 0;
 			else
-				return (0);
+				return (lex_err(0));
 		}
 	}
 	return (flag);
@@ -68,9 +70,52 @@ int	check_quotes(char *input)
 	return (1);
 }
 
+int	lex_err(int i)
+{
+	if (i)
+	{
+		ft_putstr_fd("minishell: syntax error near ", 2);
+		ft_putendl_fd("unexpected token `newline'", 2);
+	}
+	else
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
+	data()->exit_status = 2;
+	return (0);
+}
+
+int	verify_redir(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (ft_isredir(input[i]))
+		{
+			i++;
+			if (ft_isredir(input[i]))
+				i++;
+			if (!input[i])
+				return (lex_err(1));
+			while (input[i])
+			{
+				if (!ft_isredir(input[i]) && !ft_isblank(input[i]))
+					break ;
+				if (input[i] == '|' || !input[i + 1])
+					return (lex_err(1));
+				i++;
+			}
+			i--;
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	lexer(char *input)
 {
-	if (!check_quotes(input) || !check_pipes(input, 0))
+	if (!check_quotes(input) || !check_pipes(input, 0)
+		|| !verify_redir(input))
 		return (0);
 	n_cmds(input);
 	parse_input(input);

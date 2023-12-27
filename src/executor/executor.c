@@ -67,7 +67,7 @@ void	pipe_create(int i, int *fd)
 {
 	pid_t	pids[MAX_ARG];
 
-	while (++i < data()->n_cmd && data()->cmds[i]->cmd)
+	while (++i < data()->n_cmd)
 	{
 		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
 		{
@@ -102,7 +102,6 @@ void	executor(void)
 	data()->std_fd[0] = dup(STDIN_FILENO);
 	data()->std_fd[1] = dup(STDOUT_FILENO);
 	data()->last_fd[0] = -1;
-	printf("%i\n", data()->n_cmd);
 	pipe_create(-1, fd);
 	close_fd();
 	clean_struct();
