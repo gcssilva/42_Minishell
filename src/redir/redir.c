@@ -82,6 +82,7 @@ void	do_heredoc(char *delimiter)
 	char	*input;
 
 	(data()->tmp_f) = open(".tmp_f.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
+	dup2(data()->std_fd[0], STDIN_FILENO);
 	while (1)
 	{
 		input = readline("> ");

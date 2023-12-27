@@ -64,6 +64,6 @@ fclean:		clean
 			@rm -f $(NAME)
 
 re:			fclean all
-			env -i valgrind $(VAL) ./$(NAME)
+			valgrind $(VAL) ./$(NAME)
 
 .PHONY:		all clean fclean re
