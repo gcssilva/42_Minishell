@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	check_unset(char *str)
 {
@@ -76,4 +76,13 @@ void	ft_wait(pid_t *pids)
 		if (WIFEXITED(e_status))
 			data()->exit_status = WEXITSTATUS(e_status);
 	}
+}
+
+int	clean_all(void)
+{
+	clean_env();
+	clean_struct();
+	close_fd();
+	close(data()->tmp_f);
+	return (0);
 }

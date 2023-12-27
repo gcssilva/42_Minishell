@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 t_data	*data(void);
 void	clean_struct(void);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*copy_var(char *cmd, char *var);
 char	*get_var(char *cmd, char *var);

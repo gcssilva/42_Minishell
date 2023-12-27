@@ -108,6 +108,7 @@ int		is_builtin(t_cmd *cmds);
 int		check_unset(char *str);
 void	check_export(t_cmd *cmds, int a);
 void	ft_wait(pid_t *pids);
+int		clean_all(void);
 
 //executor
 void	my_child(t_cmd *cmds, int *fd);
@@ -149,6 +150,7 @@ void	check_outfile(char *red, int flag);
 void	check_infile(char *red);
 void	check_heredoc(char *delimiter);
 void	redirct(t_cmd *cmds);
+void	do_heredoc(char *delimiter);
 
 //minishell
 t_data	*data(void);
@@ -158,5 +160,6 @@ void	start_minishell(int ac, char **av, char **env);
 void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
+void	fork_heredoc(int sig);
 
 #endif

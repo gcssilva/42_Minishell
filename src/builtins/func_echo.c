@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	last_space(char **arg, int i);
 void	echo_print(t_cmd *cmd, int flag);

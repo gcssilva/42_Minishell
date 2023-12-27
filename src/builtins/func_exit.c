@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	treat_exit_arg(char *str, int i, int s);
 void	func_exit(t_cmd *cmds);
@@ -40,9 +40,7 @@ void	treat_exit_arg(char *str, int i, int s)
 	}
 	if (s == '-')
 		n = -n;
-	close_fd();
-	clean_struct();
-	clean_env();
+	clean_all();
 	exit (n % 256);
 }
 
@@ -56,9 +54,7 @@ void	func_exit(t_cmd *cmds)
 			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(cmds->arg[1], STDERR_FILENO);
 			ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-			close_fd();
-			clean_struct();
-			clean_env();
+			clean_all();
 			exit (2);
 		}
 		else if (cmds->arg[1] && cmds->arg[2])

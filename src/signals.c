@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
+void	fork_heredoc(int sig);
 
 void	sig(int flag)
 {
@@ -22,6 +23,8 @@ void	sig(int flag)
 		signal(SIGINT, handle_sig);
 	else if (flag == 1)
 		signal(SIGINT, handle_fork_sig);
+	else
+		signal(SIGINT, fork_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -29,7 +32,7 @@ void	handle_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -40,8 +43,17 @@ void	handle_fork_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
+	}
+}
+
+void	fork_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		clean_all();
+		exit(130);
 	}
 }

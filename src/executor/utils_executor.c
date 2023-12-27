@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	print_aspas(char *str)
 {
@@ -21,12 +21,12 @@ int	print_aspas(char *str)
 	i = -1;
 	while (*str && str[++i])
 	{
-		printf("%c", str[i]);
+		ft_putchar_fd(str[i], 1);
 		if (str[i] == '=')
 		{
 			if (flag == 0)
 			{
-				printf("\"");
+				ft_putchar_fd('"', 1);
 				flag = 1;
 			}
 		}
@@ -51,15 +51,16 @@ void	print_export(char **env)
 	int	i;
 	int	flag;
 
-	i = 0;
-	while (env && env[i] != NULL)
+	i = -1;
+	while (env && env[++i] != NULL)
 	{
-		printf("declare -x ");
+		if (env[i][0] == '_' && env[i][1] == '=')
+			continue ;
+		ft_putstr_fd("declare -x ", 1);
 		flag = print_aspas(env[i]);
 		if (flag == 1)
-			printf("\"");
-		printf("\n");
-		i++;
+			ft_putchar_fd('"', 1);
+		ft_putchar_fd('\n', 1);
 	}
 }
 

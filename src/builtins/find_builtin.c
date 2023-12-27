@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	find_builtins(t_cmd *cmds)
 {
@@ -34,8 +34,6 @@ void	find_builtins(t_cmd *cmds)
 
 void	clean_exit(void)
 {
-	close_fd();
-	clean_struct();
-	clean_env();
+	clean_all();
 	exit (0);
 }

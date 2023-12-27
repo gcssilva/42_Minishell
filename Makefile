@@ -14,34 +14,34 @@ NAME	=	minishell
 CC		=	cc
 FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g
 INC		=	inc/minishell.h
-SRC		=	minishell.c \
-			signals.c \
-			parse/lexer.c \
-			parse/parse_red.c \
-			parse/parse_utils.c \
-			parse/parse_var.c \
-			parse/parse.c \
-			redir/redir.c \
-			executor/executor.c \
-			executor/utils_executor.c\
-			executor/utils_executor_2.c\
-			builtins/func_pwd.c \
-			builtins/func_echo.c \
-			builtins/func_env.c \
-			copy_env/copy_env.c \
-			builtins/func_exec.c \
-			builtins/find_builtin.c \
-			builtins/func_cd.c \
-			builtins/func_exit.c \
-			builtins/func_unset.c \
-			builtins/func_export.c \
+SRC		=	src/minishell.c \
+			src/signals.c \
+			src/parse/lexer.c \
+			src/parse/parse_red.c \
+			src/parse/parse_utils.c \
+			src/parse/parse_var.c \
+			src/parse/parse.c \
+			src/redir/redir.c \
+			src/executor/executor.c \
+			src/executor/utils_executor.c\
+			src/executor/utils_executor_2.c\
+			src/builtins/func_pwd.c \
+			src/builtins/func_echo.c \
+			src/builtins/func_env.c \
+			src/copy_env/copy_env.c \
+			src/builtins/func_exec.c \
+			src/builtins/find_builtin.c \
+			src/builtins/func_cd.c \
+			src/builtins/func_exit.c \
+			src/builtins/func_unset.c \
+			src/builtins/func_export.c \
 			
 
 OBJ		=	$(SRC:.c=.o)
 
 all:		$(NAME)
 
-$(NAME): $(OBJ)
+$(NAME):	$(OBJ)
 			@make -C ./libft
 			@$(CC) $(SRC) $(FLAGS) -o $(NAME)
 

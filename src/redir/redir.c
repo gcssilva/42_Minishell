@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	check_outfile(char *red, int flag);
 void	check_infile(char *red);
 void	check_heredoc(char *delimiter);
 void	redirct(t_cmd *cmds);
+void	do_heredoc(char *delimiter);
 
 void	check_outfile(char *red, int flag)
 {
@@ -58,9 +59,25 @@ void	check_infile(char *red)
 
 void	check_heredoc(char *delimiter)
 {
+	pid_t	pid;
+
+	sig(2);
+	pid = fork();
+	if (pid < 0)
+		perror("error: fork");
+	if (pid == 0)
+		do_heredoc(delimiter);
+	else
+	{
+		waitpid(pid, 0, 0);
+		sig(1);
+	}
+}
+
+void	do_heredoc(char *delimiter)
+{
 	char	*input;
 
-	sig(0);
 	(data()->tmp_f) = open(".tmp_f.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
 	while (1)
 	{
@@ -68,11 +85,13 @@ void	check_heredoc(char *delimiter)
 		if (!input)
 		{
 			write(1, "heredoc delimited by eof\n", 26);
-			break ;
+			exit(clean_all());
 		}
+		else if (!*input)
+			continue ;
 		else if (!ft_strncmp(delimiter, input, ft_strlen(delimiter))
 			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
-			break ;
+			exit(clean_all());
 		else
 		{
 			write(data()->tmp_f, input, ft_strlen(input));
@@ -80,14 +99,12 @@ void	check_heredoc(char *delimiter)
 			input = 0;
 		}
 	}
-	close(data()->tmp_f);
-	check_infile(".tmp_f.txt");
-	sig(1);
+	exit(clean_all());
 }
 
 void	redirct(t_cmd *cmds)
 {
-	int	i;
+	int		i;
 
 	i = -1;
 	while (cmds->red[++i])
@@ -102,6 +119,7 @@ void	redirct(t_cmd *cmds)
 		{
 			remove(".tmp_f.txt");
 			check_heredoc(cmds->red[i]);
+			check_infile(".tmp_f.txt");
 		}
 	}
 }
