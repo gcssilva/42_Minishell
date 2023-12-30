@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/22 17:41:40 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/30 13:16:32 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	do_heredoc(char *delimiter)
 
 	(data()->tmp_f) = open(".tmp_f.txt", O_WRONLY | O_CREAT | O_APPEND, 0777);
 	dup2(data()->std_fd[0], STDIN_FILENO);
+	dup2(data()->std_fd[1], STDOUT_FILENO);
 	while (1)
 	{
 		input = readline("> ");
@@ -121,8 +122,8 @@ void	redirct(t_cmd *cmds)
 			check_outfile(cmds->red[i], 1);
 		else
 		{
-			remove(".tmp_f.txt");
 			check_heredoc(cmds->red[i]);
+			unlink(".tmp_f.txt");
 		}
 	}
 }

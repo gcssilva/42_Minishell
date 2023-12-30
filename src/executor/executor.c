@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/22 18:03:36 by gsilva           ###   ########.fr       */
+/*   Updated: 2023/12/30 13:11:53 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ pid_t	creat_pid(t_cmd *cmds, int *fd)
 
 void	pipe_create(int i, int *fd)
 {
+	int		e_status;
 	pid_t	pids[MAX_ARG];
 
 	while (++i < data()->n_cmd)
@@ -83,9 +84,11 @@ void	pipe_create(int i, int *fd)
 				return ;
 			}
 			pids[i] = creat_pid(data()->cmds[i], fd);
+			waitpid(pids[i], &e_status, 0);
 		}
 	}
-	ft_wait(pids);
+	if (WIFEXITED(e_status))
+		data()->exit_status = WEXITSTATUS(e_status);
 }
 
 void	last_cmd(int i)
@@ -105,5 +108,4 @@ void	executor(void)
 	pipe_create(-1, fd);
 	close_fd();
 	clean_struct();
-	remove(".tmp_f.txt");
 }
