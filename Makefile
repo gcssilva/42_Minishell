@@ -6,7 +6,7 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2023/12/22 16:15:17 by gsilva           ###   ########.fr        #
+#    Updated: 2024/01/03 15:55:14 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC		=	src/minishell.c \
 			src/parse/parse_var.c \
 			src/parse/parse.c \
 			src/redir/redir.c \
+			src/redir/redir_utils.c \
 			src/executor/executor.c \
 			src/executor/utils_executor.c\
 			src/executor/utils_executor_2.c\

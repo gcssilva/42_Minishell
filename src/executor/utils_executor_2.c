@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_executer_2.c                                 :+:      :+:    :+:   */
+/*   utils_executor_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:32:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/22 17:35:27 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:05:36 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	check_export(t_cmd *cmds, int a)
 	ord = exist_var(cmds, a);
 	while (cmds->arg[a][++i])
 	{
-		if (cmds->arg[a][++i] == '=')
+		if (cmds->arg[a][i] == '=')
 		{
 			free(data()->ord_env[ord]);
 			data()->ord_env[ord] = ft_strdup(cmds->arg[a]);

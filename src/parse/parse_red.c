@@ -29,7 +29,10 @@ void	write_redir(char *r_file, int r)
 	else if (r == 62)
 		data()->cmds[i]->order[j] = ft_strdup("out");
 	else if (r == 120)
+	{
 		data()->cmds[i]->order[j] = ft_strdup("del");
+		data()->delimiter[get_pos(data()->delimiter)] = ft_strdup(r_file);
+	}
 	else
 		data()->cmds[i]->order[j] = ft_strdup("ap");
 	data()->cmds[i]->order[j + 1] = 0;

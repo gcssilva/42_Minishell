@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/30 13:11:33 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 17:54:51 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
+	int		sig_flag;
 	int		path;
 	int		tmp_f;
 	int		exit_status;
@@ -46,6 +47,7 @@ typedef struct s_data
 	int		last_fd[2];
 	char	**copy_env;
 	char	**ord_env;
+	char	*delimiter[MAX_RED];
 	t_cmd	**cmds;
 }	t_data;
 
@@ -154,6 +156,10 @@ void	check_heredoc(char *delimiter);
 void	redirct(t_cmd *cmds);
 void	do_heredoc(char *delimiter);
 
+//redir_utils
+void    fake_hd(char *del);
+void	 check_fake_hd(char *del);
+
 //minishell
 t_data	*data(void);
 void	start_minishell(int ac, char **av, char **env);
@@ -163,5 +169,6 @@ void	sig(int flag);
 void	handle_sig(int sig);
 void	handle_fork_sig(int sig);
 void	fork_heredoc(int sig);
+void	fork_hd_2(int sig);
 
 #endif

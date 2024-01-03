@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/30 13:11:53 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:02:17 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,26 @@ pid_t	creat_pid(t_cmd *cmds, int *fd)
 
 void	pipe_create(int i, int *fd)
 {
-	int		e_status;
 	pid_t	pids[MAX_ARG];
 
 	while (++i < data()->n_cmd)
 	{
-		if (data()->n_cmd == (i + 1) && is_builtin(data()->cmds[i]))
+		if (!data()->cmds[i]->cmd)
+			continue ;
+		if (data()->n_cmd == 1 && is_builtin(data()->cmds[i]))
 		{
 			last_cmd(i);
+		}
+		else if (pipe(fd) == -1)
+		{
+			ft_putstr_fd("Error: ", 2);
+			ft_putendl_fd(strerror(errno), 2);
 			return ;
 		}
 		else
-		{
-			if (pipe(fd) == -1)
-			{
-				ft_putstr_fd("Error: ", 2);
-				ft_putendl_fd(strerror(errno), 2);
-				return ;
-			}
 			pids[i] = creat_pid(data()->cmds[i], fd);
-			waitpid(pids[i], &e_status, 0);
-		}
 	}
-	if (WIFEXITED(e_status))
-		data()->exit_status = WEXITSTATUS(e_status);
+	ft_wait(pids);
 }
 
 void	last_cmd(int i)
@@ -101,11 +97,25 @@ void	last_cmd(int i)
 void	executor(void)
 {
 	int	fd[2];
+	int	i;
 
+	i = 0;
+	data()->sig_flag = 0;
 	data()->std_fd[0] = dup(STDIN_FILENO);
 	data()->std_fd[1] = dup(STDOUT_FILENO);
 	data()->last_fd[0] = -1;
-	pipe_create(-1, fd);
+	while (data()->delimiter[i])
+	{
+		if (data()->delimiter[++i])
+			check_fake_hd(data()->delimiter[i - 1]);
+		if (data()->sig_flag)
+			break ;
+	}
+	if (i > 0 && !data()->sig_flag)
+		check_heredoc(data()->delimiter[i - 1]);
+	if (!data()->sig_flag)
+		pipe_create(-1, fd);
+	unlink(".tmp_f.txt");
 	close_fd();
 	clean_struct();
 }

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/22 18:17:14 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 16:00:00 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,7 @@ void	clean_struct(void)
 		free(data()->cmds[i]);
 	}
 	free(data()->cmds);
+	i = -1;
+	while (data()->delimiter[++i])
+		free(data()->delimiter[i]);
 }

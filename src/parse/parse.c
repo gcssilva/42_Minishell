@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:47:01 by gsilva            #+#    #+#             */
-/*   Updated: 2023/12/22 18:10:00 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 16:44:22 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ int	split_cmd(char *str, int flag)
 		data()->cmds[c]->arg[a++] = ft_strdup(str);
 		data()->cmds[c]->arg[a] = 0;
 		if (a == 1)
-		{
 			data()->cmds[c]->cmd = ft_strdup(str);
-			data()->cmds[c]->index = c + 1;
-		}
 	}
 	if (flag == 0 || flag == 124)
 	{

@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2023/12/30 13:16:32 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 17:16:19 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,21 @@ void	check_heredoc(char *delimiter)
 {
 	pid_t	pid;
 
+	sig(3);
 	if (!delimiter)
 		return ;
-	sig(2);
 	pid = fork();
 	if (pid < 0)
 		perror("error: fork");
 	if (pid == 0)
+	{
+		sig(2);
 		do_heredoc(delimiter);
+	}
 	else
 	{
 		waitpid(pid, 0, 0);
 		sig(1);
-		check_infile(".tmp_f.txt");
 	}
 }
 
@@ -121,9 +123,6 @@ void	redirct(t_cmd *cmds)
 		else if (!ft_strncmp(cmds->order[i], "ap", 2))
 			check_outfile(cmds->red[i], 1);
 		else
-		{
-			check_heredoc(cmds->red[i]);
-			unlink(".tmp_f.txt");
-		}
+			check_infile(".tmp_f.txt");
 	}
 }
