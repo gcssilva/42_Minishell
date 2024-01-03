@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 17:57:07 by gsilva            #+#    #+#             */
-/*   Updated: 2024/01/03 17:54:51 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:30:50 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,8 @@ void	redirct(t_cmd *cmds);
 void	do_heredoc(char *delimiter);
 
 //redir_utils
-void    fake_hd(char *del);
-void	 check_fake_hd(char *del);
+void	fake_hd(char *del);
+void	check_fake_hd(char *del);
 
 //minishell
 t_data	*data(void);

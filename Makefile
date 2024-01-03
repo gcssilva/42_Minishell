@@ -6,19 +6,13 @@
 #    By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 12:48:20 by gmorais-          #+#    #+#              #
-#    Updated: 2024/01/03 15:55:14 by gsilva           ###   ########.fr        #
+#    Updated: 2024/01/03 18:44:43 by gsilva           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	cc
 FLAGS	=	-Wall -Werror -Wextra -lreadline -L ./libft -lft -g
-VAL		=	--leak-check=full \
-			--show-leak-kinds=all \
-			--track-origins=yes \
-			--log-file=valgrind_log.txt \
-			--suppressions=readline.supp \
-			--track-fds=yes
 
 INC		=	inc/minishell.h
 SRC		=	src/minishell.c \
@@ -65,6 +59,5 @@ fclean:		clean
 			@rm -f $(NAME)
 
 re:			fclean all
-			valgrind $(VAL) ./$(NAME)
 
 .PHONY:		all clean fclean re

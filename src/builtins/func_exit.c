@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 11:03:57 by gmorais-          #+#    #+#             */
-/*   Updated: 2024/01/03 16:00:00 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:35:01 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	is_numeric(char *arg)
 		if (!ft_isdigit(arg[i]))
 			return (0);
 	}
+	if (i > 18)
+		return (0);
 	return (1);
 }
 

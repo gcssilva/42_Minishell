@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:18:39 by gsilva            #+#    #+#             */
-/*   Updated: 2024/01/03 17:10:55 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:27:40 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int ac, char **av, char **env)
 		add_history(input);
 		if (lexer(input))
 			executor();
+		free(input);
 	}
 	clean_env();
 	ft_putendl_fd("exit", 1);

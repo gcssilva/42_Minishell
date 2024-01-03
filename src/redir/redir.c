@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 09:47:58 by gmorais-          #+#    #+#             */
-/*   Updated: 2024/01/03 17:16:19 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:28:07 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,8 @@ void	do_heredoc(char *delimiter)
 			&& ((ft_strlen(delimiter)) == ft_strlen(input)))
 			exit(clean_all());
 		else
-		{
-			write(data()->tmp_f, input, ft_strlen(input));
-			write(data()->tmp_f, "\n", 1);
-			input = 0;
-		}
+			ft_putendl_fd(input, data()->tmp_f);
+		free(input);
 	}
 	exit(clean_all());
 }

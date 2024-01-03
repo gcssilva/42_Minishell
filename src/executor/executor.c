@@ -6,7 +6,7 @@
 /*   By: gsilva <gsilva@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 14:46:36 by gmorais-          #+#    #+#             */
-/*   Updated: 2024/01/03 18:02:17 by gsilva           ###   ########.fr       */
+/*   Updated: 2024/01/03 18:23:10 by gsilva           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	pipe_create(int i, int *fd)
 		if (data()->n_cmd == 1 && is_builtin(data()->cmds[i]))
 		{
 			last_cmd(i);
+			return ;
 		}
 		else if (pipe(fd) == -1)
 		{
@@ -81,8 +82,7 @@ void	pipe_create(int i, int *fd)
 			ft_putendl_fd(strerror(errno), 2);
 			return ;
 		}
-		else
-			pids[i] = creat_pid(data()->cmds[i], fd);
+		pids[i] = creat_pid(data()->cmds[i], fd);
 	}
 	ft_wait(pids);
 }
